@@ -1,0 +1,34 @@
+\doxysection{ovo\+\_\+parser.\+hpp}
+\hypertarget{ovo__parser_8hpp_source}{}\label{ovo__parser_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}mesh.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}node.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}object.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}light.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}material.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_o_v_o_parser}{OVOParser}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Object>\ from\_file(\textcolor{keyword}{const}\ std::string\ file\_path);}
+\DoxyCodeLine{00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ std::pair<std::shared\_ptr<Node>,\ uint32\_t>\ \ \ \ \ \ \ \ parse\_node\_chunk(\textcolor{keyword}{const}\ uint8\_t*\ chunk\_data,\ \textcolor{keyword}{const}\ uint32\_t\ chunk\_size);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ std::pair<std::shared\_ptr<Mesh>,\ uint32\_t>\ \ \ \ \ \ \ \ parse\_mesh\_chunk(\textcolor{keyword}{const}\ uint8\_t*\ chunk\_data,\ \textcolor{keyword}{const}\ uint32\_t\ chunk\_size);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ std::pair<std::shared\_ptr<Material>,\ std::string>\ parse\_material\_chunk(\textcolor{keyword}{const}\ uint8\_t*\ chunk\_data,\ \textcolor{keyword}{const}\ uint32\_t\ chunk\_size);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ std::pair<std::shared\_ptr<Light>,\ uint32\_t>\ \ \ \ \ \ \ parse\_light\_chunk(\textcolor{keyword}{const}\ uint8\_t*\ chunk\_data,\ \textcolor{keyword}{const}\ uint32\_t\ chunk\_size);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ parse\_string(\textcolor{keyword}{const}\ uint8\_t*\ data);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ std::shared\_ptr<Material>>\ materials;}
+\DoxyCodeLine{00032\ \};}
+
+\end{DoxyCode}

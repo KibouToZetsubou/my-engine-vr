@@ -1,0 +1,192 @@
+\doxysection{Mesh Class Reference}
+\hypertarget{class_mesh}{}\label{class_mesh}\index{Mesh@{Mesh}}
+
+
+{\ttfamily \#include $<$mesh.\+hpp$>$}
+
+Inheritance diagram for Mesh\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_mesh}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mesh_a6fa51a818f3b9271423d7d1a32cf7037}{Mesh}} ()
+\item 
+void \mbox{\hyperlink{class_mesh_a9d972f79832b94d8f6d5698169b46f7a}{render}} (const glm\+::mat4 world\+\_\+matrix) const override
+\item 
+void \mbox{\hyperlink{class_mesh_a1eb6c2f71092978b1b75f93106225785}{set\+\_\+material}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_material}{Material}} $>$ new\+\_\+material)
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_material}{Material}} $>$ \mbox{\hyperlink{class_mesh_a7834fd70d22caccbfd2389a21c11a846}{get\+\_\+material}} () const
+\item 
+void \mbox{\hyperlink{class_mesh_a0ba2392928c813c90cd00016ddfea05e}{set\+\_\+cast\+\_\+shadows}} (const bool new\+\_\+cast\+\_\+shadows)
+\item 
+bool \mbox{\hyperlink{class_mesh_a86c96391b181930955d29729161ff265}{get\+\_\+cast\+\_\+shadows}} () const
+\item 
+void \mbox{\hyperlink{class_mesh_af24011ca6c86d3fa1d991ebacb6ebd5a}{set\+\_\+mesh\+\_\+data}} (const std\+::vector$<$ glm\+::vec3 $>$ new\+\_\+vertices, const std\+::vector$<$ std\+::tuple$<$ uint32\+\_\+t, uint32\+\_\+t, uint32\+\_\+t $>$ $>$ new\+\_\+faces, const std\+::vector$<$ glm\+::vec3 $>$ new\+\_\+normals, const std\+::vector$<$ glm\+::vec2 $>$ new\+\_\+uvs)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\item 
+void \mbox{\hyperlink{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8}{render}} (const glm\+::mat4 world\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A mesh represents a shape that can be rendered inside a scene. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_mesh_a6fa51a818f3b9271423d7d1a32cf7037}\label{class_mesh_a6fa51a818f3b9271423d7d1a32cf7037} 
+\index{Mesh@{Mesh}!Mesh@{Mesh}}
+\index{Mesh@{Mesh}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{Mesh()}{Mesh()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Mesh\+::\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new empty \doxylink{class_mesh}{Mesh} with the default material and shadow casting activated. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_mesh_a86c96391b181930955d29729161ff265}\label{class_mesh_a86c96391b181930955d29729161ff265} 
+\index{Mesh@{Mesh}!get\_cast\_shadows@{get\_cast\_shadows}}
+\index{get\_cast\_shadows@{get\_cast\_shadows}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{get\_cast\_shadows()}{get\_cast\_shadows()}}
+{\footnotesize\ttfamily bool LIB\+\_\+\+API Mesh\+::get\+\_\+cast\+\_\+shadows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns whether this mesh casts shadows or not.
+
+\begin{DoxyReturn}{Returns}
+Whether this mesh casts shadows. 
+\end{DoxyReturn}
+\Hypertarget{class_mesh_a7834fd70d22caccbfd2389a21c11a846}\label{class_mesh_a7834fd70d22caccbfd2389a21c11a846} 
+\index{Mesh@{Mesh}!get\_material@{get\_material}}
+\index{get\_material@{get\_material}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{get\_material()}{get\_material()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_material}{Material}} $>$ LIB\+\_\+\+API Mesh\+::get\+\_\+material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the material used by this mesh.
+
+\begin{DoxyReturn}{Returns}
+The material used by this mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_mesh_a9d972f79832b94d8f6d5698169b46f7a}\label{class_mesh_a9d972f79832b94d8f6d5698169b46f7a} 
+\index{Mesh@{Mesh}!render@{render}}
+\index{render@{render}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Mesh\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{world\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the mesh.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_object}{Object}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class_sphere_a69cdcaeedbd5bab4b20efa74eae30fa4}{Sphere}}.
+
+\Hypertarget{class_mesh_a0ba2392928c813c90cd00016ddfea05e}\label{class_mesh_a0ba2392928c813c90cd00016ddfea05e} 
+\index{Mesh@{Mesh}!set\_cast\_shadows@{set\_cast\_shadows}}
+\index{set\_cast\_shadows@{set\_cast\_shadows}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{set\_cast\_shadows()}{set\_cast\_shadows()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Mesh\+::set\+\_\+cast\+\_\+shadows (\begin{DoxyParamCaption}\item[{const bool}]{new\+\_\+cast\+\_\+shadows }\end{DoxyParamCaption})}
+
+Sets whether this mesh should cast shadows or not.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+cast\+\_\+shadows} & Whether this mesh should cast shadows. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_mesh_a1eb6c2f71092978b1b75f93106225785}\label{class_mesh_a1eb6c2f71092978b1b75f93106225785} 
+\index{Mesh@{Mesh}!set\_material@{set\_material}}
+\index{set\_material@{set\_material}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{set\_material()}{set\_material()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Mesh\+::set\+\_\+material (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_material}{Material}} $>$}]{new\+\_\+material }\end{DoxyParamCaption})}
+
+Changes the material applied to this mesh.
+
+NOTE\+: A value of nullptr causes undefined behaviour.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+material} & The new material for the mesh. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_mesh_af24011ca6c86d3fa1d991ebacb6ebd5a}\label{class_mesh_af24011ca6c86d3fa1d991ebacb6ebd5a} 
+\index{Mesh@{Mesh}!set\_mesh\_data@{set\_mesh\_data}}
+\index{set\_mesh\_data@{set\_mesh\_data}!Mesh@{Mesh}}
+\doxysubsubsection{\texorpdfstring{set\_mesh\_data()}{set\_mesh\_data()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Mesh\+::set\+\_\+mesh\+\_\+data (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ glm\+::vec3 $>$}]{new\+\_\+vertices,  }\item[{const std\+::vector$<$ std\+::tuple$<$ uint32\+\_\+t, uint32\+\_\+t, uint32\+\_\+t $>$ $>$}]{new\+\_\+faces,  }\item[{const std\+::vector$<$ glm\+::vec3 $>$}]{new\+\_\+normals,  }\item[{const std\+::vector$<$ glm\+::vec2 $>$}]{new\+\_\+uvs }\end{DoxyParamCaption})}
+
+Sets the vertex, face, normal and UV data for this mesh.
+
+NOTE\+: Incorrectly sized vectors cause undefined behaviour.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+vertices} & The new vertex data for the mesh. \\
+\hline
+{\em new\+\_\+faces} & The new face data for the mesh. \\
+\hline
+{\em new\+\_\+normals} & The new normal data for the mesh. \\
+\hline
+{\em new\+\_\+uvs} & The new UV data for the mesh. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+mesh.\+hpp\item 
+mesh.\+cpp\end{DoxyCompactItemize}

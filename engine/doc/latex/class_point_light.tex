@@ -1,0 +1,156 @@
+\doxysection{Point\+Light Class Reference}
+\hypertarget{class_point_light}{}\label{class_point_light}\index{PointLight@{PointLight}}
+
+
+{\ttfamily \#include $<$point\+\_\+light.\+hpp$>$}
+
+Inheritance diagram for Point\+Light\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_point_light}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_point_light_a8853a6b930eb4f82131367b4bf8cb446}{Point\+Light}} ()
+\item 
+void \mbox{\hyperlink{class_point_light_a5d74f3b8d6b54ebc04ca9a67d3b10380}{render}} (const glm\+::mat4 world\+\_\+matrix) const override
+\item 
+void \mbox{\hyperlink{class_point_light_a38ce4191ed38b4c765ecd08e99b682bc}{set\+\_\+radius}} (const float new\+\_\+radius)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_light_a4e7d08a2f49d65899aaaadec82c53549}{Light}} ()
+\item 
+int \mbox{\hyperlink{class_light_ac17769fa1812febb0ae612f274cfd7c6}{get\+\_\+priority}} () const override
+\item 
+void \mbox{\hyperlink{class_light_a2aba5f164d56040bad9a8ac4665be0a5}{set\+\_\+ambient\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+void \mbox{\hyperlink{class_light_a4eb230f1a67f7265b38581a09ef932c0}{set\+\_\+diffuse\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+void \mbox{\hyperlink{class_light_ac3a13f06fd85025a007eb88765d24416}{set\+\_\+specular\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_light_a554112320b733b77d0aa4bb8c68e7fd4}{get\+\_\+current\+\_\+light}} (const int light\+\_\+id) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries ambient\+\_\+color}
+\item 
+glm\+::vec3 {\bfseries diffuse\+\_\+color}
+\item 
+glm\+::vec3 {\bfseries specular\+\_\+color}
+\item 
+int {\bfseries light\+\_\+id}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+static int {\bfseries next\+\_\+light\+\_\+id} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A point light that can be placed inside a scene.
+
+A point light emits light in any direction with a limited range. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_point_light_a8853a6b930eb4f82131367b4bf8cb446}\label{class_point_light_a8853a6b930eb4f82131367b4bf8cb446} 
+\index{PointLight@{PointLight}!PointLight@{PointLight}}
+\index{PointLight@{PointLight}!PointLight@{PointLight}}
+\doxysubsubsection{\texorpdfstring{PointLight()}{PointLight()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Point\+Light\+::\+Point\+Light (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_point_light}{Point\+Light} with the following default parameters\+:
+
+Radius\+: 1.\+0f 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_point_light_a5d74f3b8d6b54ebc04ca9a67d3b10380}\label{class_point_light_a5d74f3b8d6b54ebc04ca9a67d3b10380} 
+\index{PointLight@{PointLight}!render@{render}}
+\index{render@{render}!PointLight@{PointLight}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Point\+Light\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{world\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the point light.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8}{Node}}.
+
+\Hypertarget{class_point_light_a38ce4191ed38b4c765ecd08e99b682bc}\label{class_point_light_a38ce4191ed38b4c765ecd08e99b682bc} 
+\index{PointLight@{PointLight}!set\_radius@{set\_radius}}
+\index{set\_radius@{set\_radius}!PointLight@{PointLight}}
+\doxysubsubsection{\texorpdfstring{set\_radius()}{set\_radius()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Point\+Light\+::set\+\_\+radius (\begin{DoxyParamCaption}\item[{const float}]{new\+\_\+radius }\end{DoxyParamCaption})}
+
+Sets the radius of the point light. This is the radius in which the light has an effect.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+radius} & The new radius of this point light. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+point\+\_\+light.\+hpp\item 
+point\+\_\+light.\+cpp\end{DoxyCompactItemize}

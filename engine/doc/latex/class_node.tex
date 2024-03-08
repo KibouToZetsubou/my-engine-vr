@@ -1,0 +1,226 @@
+\doxysection{Node Class Reference}
+\hypertarget{class_node}{}\label{class_node}\index{Node@{Node}}
+
+
+{\ttfamily \#include $<$node.\+hpp$>$}
+
+Inheritance diagram for Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.442748cm]{class_node}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\item 
+void \mbox{\hyperlink{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8}{render}} (const glm\+::mat4 world\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A node represents an invisible object inside the scene with a position, rotation and scale. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_node_ab63cea815ecf38711d96ef9c12027a00}\label{class_node_ab63cea815ecf38711d96ef9c12027a00} 
+\index{Node@{Node}!Node@{Node}}
+\index{Node@{Node}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{Node()}{Node()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Node\+::\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_node}{Node} with the following default parameters\+:
+
+Base matrix\+: Identity
+
+Position\+: 0.\+0f, 0.\+0f, 0.\+0f
+
+Rotation\+: 0.\+0f, 0.\+0f, 0.\+0f
+
+Scale\+: 1.\+0f, 1.\+0f, 1.\+0f 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_node_a977d3c2462732fc73308039b91714009}\label{class_node_a977d3c2462732fc73308039b91714009} 
+\index{Node@{Node}!get\_local\_matrix@{get\_local\_matrix}}
+\index{get\_local\_matrix@{get\_local\_matrix}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{get\_local\_matrix()}{get\_local\_matrix()}}
+{\footnotesize\ttfamily glm\+::mat4 LIB\+\_\+\+API Node\+::get\+\_\+local\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the local model matrix. This is used by the engine.
+
+The local matrix is calculated in the following order\+:
+
+
+\begin{DoxyEnumerate}
+\item Base matrix
+\item Scale matrix
+\item X rotation matrix
+\item Y rotation matrix
+\item Z rotation matrix
+\item Translation matrix
+\end{DoxyEnumerate}
+
+\begin{DoxyReturn}{Returns}
+The model matrix for this node. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{Object}}.
+
+\Hypertarget{class_node_ac61fa177237ff638039e8fd298c13053}\label{class_node_ac61fa177237ff638039e8fd298c13053} 
+\index{Node@{Node}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Node\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the position offset from the base matrix.
+
+\begin{DoxyReturn}{Returns}
+The position offset. 
+\end{DoxyReturn}
+\Hypertarget{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}\label{class_node_a570c8058e4a0e61c5000c4b6b58f6c91} 
+\index{Node@{Node}!get\_rotation@{get\_rotation}}
+\index{get\_rotation@{get\_rotation}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{get\_rotation()}{get\_rotation()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Node\+::get\+\_\+rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the rotation offset from the base matrix.
+
+\begin{DoxyReturn}{Returns}
+The rotation offset. 
+\end{DoxyReturn}
+\Hypertarget{class_node_ab752d2ebdb896835e8c163667c0cbfc6}\label{class_node_ab752d2ebdb896835e8c163667c0cbfc6} 
+\index{Node@{Node}!get\_scale@{get\_scale}}
+\index{get\_scale@{get\_scale}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{get\_scale()}{get\_scale()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Node\+::get\+\_\+scale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the scale offset from the base matrix.
+
+\begin{DoxyReturn}{Returns}
+The scale offset. 
+\end{DoxyReturn}
+\Hypertarget{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8}\label{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8} 
+\index{Node@{Node}!render@{render}}
+\index{render@{render}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Node\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{world\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the node. Nodes do not actually have an appearance, instead they are supposed to be used as empty parents or as base class for other nodes.
+
+This function just loads the model matrix for this node.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_object}{Object}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class_ortho_camera_a2cd6b3fadeb09447cc42949c281182de}{Ortho\+Camera}}, \mbox{\hyperlink{class_perspective_camera_a170c855e4b048784e57e25124c60c85e}{Perspective\+Camera}}, \mbox{\hyperlink{class_point_light_a5d74f3b8d6b54ebc04ca9a67d3b10380}{Point\+Light}}, \mbox{\hyperlink{class_sphere_a69cdcaeedbd5bab4b20efa74eae30fa4}{Sphere}}, and \mbox{\hyperlink{class_spot_light_ae1ef42ede052d9d6471db7e52f459ed2}{Spot\+Light}}.
+
+\Hypertarget{class_node_a05a04af3fc959cb028c1559805024e0c}\label{class_node_a05a04af3fc959cb028c1559805024e0c} 
+\index{Node@{Node}!set\_base\_matrix@{set\_base\_matrix}}
+\index{set\_base\_matrix@{set\_base\_matrix}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{set\_base\_matrix()}{set\_base\_matrix()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Node\+::set\+\_\+base\+\_\+matrix (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{new\+\_\+base\+\_\+matrix }\end{DoxyParamCaption})}
+
+Sets the base model matrix for this node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+base\+\_\+matrix} & The new base matrix. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_node_aa6464442af30187f79300e28c91577f5}\label{class_node_aa6464442af30187f79300e28c91577f5} 
+\index{Node@{Node}!set\_position@{set\_position}}
+\index{set\_position@{set\_position}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{set\_position()}{set\_position()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Node\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+position }\end{DoxyParamCaption})}
+
+Sets the position offset from the base matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+position} & The new position offset. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_node_a633a15221de876b7edeea544c97a6858}\label{class_node_a633a15221de876b7edeea544c97a6858} 
+\index{Node@{Node}!set\_rotation@{set\_rotation}}
+\index{set\_rotation@{set\_rotation}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{set\_rotation()}{set\_rotation()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Node\+::set\+\_\+rotation (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+rotation }\end{DoxyParamCaption})}
+
+Sets the rotation offset from the base matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+rotation} & The new rotation offset. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_node_ab5c946d1911aace52655249788fada06}\label{class_node_ab5c946d1911aace52655249788fada06} 
+\index{Node@{Node}!set\_scale@{set\_scale}}
+\index{set\_scale@{set\_scale}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{set\_scale()}{set\_scale()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Node\+::set\+\_\+scale (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+scale }\end{DoxyParamCaption})}
+
+Sets the scale offset from the base matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+scale} & The new scale offset. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+node.\+hpp\item 
+node.\+cpp\end{DoxyCompactItemize}

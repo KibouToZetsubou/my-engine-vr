@@ -1,0 +1,23 @@
+\doxysection{ortho\+\_\+camera.\+hpp}
+\hypertarget{ortho__camera_8hpp_source}{}\label{ortho__camera_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}camera.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_ortho_camera}{OrthoCamera}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_camera}{Camera}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_afbfa2dd6ad2266fa2f85d135bd8023a8}{render}}(\textcolor{keyword}{const}\ glm::mat4\ world\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_zoom(\textcolor{keywordtype}{float}\ new\_zoom);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ get\_zoom();}
+\DoxyCodeLine{00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ zoom;}
+\DoxyCodeLine{00021\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,32 @@
+\doxysection{camera.\+hpp}
+\hypertarget{camera_8hpp_source}{}\label{camera_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}node.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_camera}{Camera}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_node}{Node}}}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\_priority}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_window\_size(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ new\_width,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ new\_height);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_fov(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_fov);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_clipping(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_near\_clipping,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_far\_clipping);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_active(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ new\_is\_active);}
+\DoxyCodeLine{00025\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ fov;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ near\_clipping;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ far\_clipping;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ window\_width;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ window\_height;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_active;}
+\DoxyCodeLine{00032\ \};}
+
+\end{DoxyCode}

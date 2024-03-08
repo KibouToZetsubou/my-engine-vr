@@ -1,0 +1,36 @@
+\doxysection{material.\+hpp}
+\hypertarget{material_8hpp_source}{}\label{material_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}object.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}texture.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_material}{Material}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_object}{Object}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_material}{Material}}();}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ render(\textcolor{keyword}{const}\ glm::mat4\ world\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_emission\_color(\textcolor{keyword}{const}\ glm::vec3\ new\_color);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_ambient\_color(\textcolor{keyword}{const}\ glm::vec3\ new\_color);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_diffuse\_color(\textcolor{keyword}{const}\ glm::vec3\ new\_color);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_specular\_color(\textcolor{keyword}{const}\ glm::vec3\ new\_color);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_shininess(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_shininess);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_texture(\textcolor{keyword}{const}\ std::shared\_ptr<Texture>\ new\_texture);}
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ glm::vec3\ emission\_color;}
+\DoxyCodeLine{00029\ \ \ \ \ glm::vec3\ ambient\_color;}
+\DoxyCodeLine{00030\ \ \ \ \ glm::vec3\ diffuse\_color;}
+\DoxyCodeLine{00031\ \ \ \ \ glm::vec3\ specular\_color;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ shininess;}
+\DoxyCodeLine{00033\ \ \ \ \ std::shared\_ptr<Texture>\ texture;}
+\DoxyCodeLine{00034\ \};}
+
+\end{DoxyCode}

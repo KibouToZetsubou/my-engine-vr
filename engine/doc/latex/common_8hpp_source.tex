@@ -1,0 +1,33 @@
+\doxysection{common.\+hpp}
+\hypertarget{common_8hpp_source}{}\label{common_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifdef\ \_WINDOWS}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifdef\ SIMPLEDYNLIB\_EXPORTS}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ LIB\_API\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ LIB\_API\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ LIB\_API}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ \_DEBUG}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ \#define\ DEBUG(\ message\ )\ \(\backslash\)}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ std::cout\ <<\ "{}[DEBUG]\ "{}\ <<\ message\ <<\ std::endl;}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \ \ \#define\ DEBUG(\ message\ )}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ WARNING(\ message\ )\ \(\backslash\)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\ \ \ \ std::cout\ <<\ "{}[WARNING]\ "{}\ <<\ message\ <<\ std::endl;}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ ERROR(\ message\ )\ \(\backslash\)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\ \ \ \ std::cerr\ <<\ "{}[ERROR]\ "{}\ <<\ message\ <<\ std::endl;}}
+
+\end{DoxyCode}
