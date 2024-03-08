@@ -23,6 +23,7 @@
 					<Add library="GL" />
 					<Add library="glut" />
 					<Add library="freeimage" />
+					<Add library="GLEW" />
 				</Linker>
 			</Target>
 			<Target title="Release">
