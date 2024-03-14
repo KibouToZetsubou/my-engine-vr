@@ -36,34 +36,38 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     this->material->render(world_matrix);
 
-    glBindVertexArray(this->vao);
+    //glBindVertexArray(this->vao);
 
-    glDrawElements(GL_TRIANGLES, this->vertices.size() * sizeof(float), GL_UNSIGNED_INT, nullptr);
+    //glDrawElements(GL_TRIANGLES, this->vertices.size() * sizeof(float), GL_UNSIGNED_INT, nullptr);
     //std::cout << "Errors: " << glGetError() << std::endl;
 
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
 
-    /*glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
     glBindBuffer(GL_ARRAY_BUFFER, this->vertexVbo);
     glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
 
-    glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, this->normalsVbo);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
+    glNormalPointer(GL_FLOAT, 0, nullptr);
 
-    glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, this->uvVbo);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
-
-    glEnableClientState(GL_VERTEX_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+    //glDrawArrays(GL_TRIANGLES, 0, this->vertices.size()); //???
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesVbo);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());*/
+    glDrawElements(GL_TRIANGLES, this->vertices.size() * 3, GL_UNSIGNED_INT, nullptr);
 
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 /**
@@ -114,11 +118,12 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3> new_vertices, cons
 
 Mesh::~Mesh()
 {
-    //glDeleteBuffers(1, &this->vertexVbo);
-    //glDeleteBuffers(1, &this->normalsVbo);
-    //glDeleteBuffers(1, &this->uvVbo);
+    glDeleteBuffers(1, &this->vertexVbo);
+    glDeleteBuffers(1, &this->normalsVbo);
+    glDeleteBuffers(1, &this->uvVbo);
+    glDeleteBuffers(1, &this->facesVbo);
 
-    glDeleteVertexArrays(1, &this->vao);
+    //glDeleteVertexArrays(1, &this->vao);
     std::cout << "Destructor " << std::endl;
 
 }

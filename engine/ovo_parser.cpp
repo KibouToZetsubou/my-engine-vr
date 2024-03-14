@@ -383,13 +383,19 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
 
         mesh->set_mesh_data(vertices, faces, normals, uvs);
 
+
+
+        /*
         unsigned int vao;
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
+        */
+
+
 
         unsigned int vertexVbo;
 
-        glEnableClientState(GL_VERTEX_ARRAY);
+        //glEnableClientState(GL_VERTEX_ARRAY);
 
         glGenBuffers(1, &vertexVbo);
         glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
@@ -401,7 +407,7 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
 
         unsigned int normalsVbo;
 
-        glEnableClientState(GL_NORMAL_ARRAY);
+        //glEnableClientState(GL_NORMAL_ARRAY);
 
         glGenBuffers(1, &normalsVbo);
         glBindBuffer(GL_ARRAY_BUFFER, normalsVbo);
@@ -412,7 +418,7 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
 
         unsigned int uvsVbo;
 
-        glEnableClientState(GL_VERTEX_ARRAY);
+        //glEnableClientState(GL_VERTEX_ARRAY);
 
         glGenBuffers(1, &uvsVbo);
         glBindBuffer(GL_ARRAY_BUFFER, uvsVbo);
@@ -423,7 +429,7 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
 
         unsigned int facesVbo;
 
-        glEnableClientState(GL_VERTEX_ARRAY);
+        //glEnableClientState(GL_VERTEX_ARRAY);
 
         glGenBuffers(1, &facesVbo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, facesVbo);
@@ -433,12 +439,17 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
             face_vector.data(), GL_STATIC_DRAW);
         //glEnableVertexAttribArray(0);
 
-        mesh->setVAO(vao);
+        //mesh->setVAO(vao);
         mesh->setVBO(vertexVbo, normalsVbo, uvsVbo, facesVbo);
+
+
+
+
+
 
         std::cout << "Errors: " << glGetError() << std::endl;
         
-        glBindVertexArray(0);
+        //glBindVertexArray(0);
         // We only consider the first LOD.
         break;
     }
