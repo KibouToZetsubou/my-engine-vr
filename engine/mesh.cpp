@@ -59,7 +59,8 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
     //glDrawArrays(GL_TRIANGLES, 0, this->vertices.size()); //???
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesVbo);
-    glDrawElements(GL_TRIANGLES, this->vertices.size() * 3, GL_UNSIGNED_INT, nullptr);
+    
+    glDrawElements(GL_TRIANGLES, this->vertices.size() * 4, GL_UNSIGNED_INT, nullptr);
 
 
     glDisableClientState(GL_VERTEX_ARRAY);
