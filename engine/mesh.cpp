@@ -36,36 +36,34 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     this->material->render(world_matrix);
 
-    for (const auto& face : this->faces)
-    {
-        glBegin(GL_TRIANGLES);
+    glBindVertexArray(this->vao);
 
-        const glm::vec3 vertex_0 = this->vertices[std::get<0>(face)];
-        const glm::vec3 vertex_1 = this->vertices[std::get<1>(face)];
-        const glm::vec3 vertex_2 = this->vertices[std::get<2>(face)];
+    glDrawElements(GL_TRIANGLES, this->vertices.size() * sizeof(float), GL_UNSIGNED_INT, nullptr);
+    //std::cout << "Errors: " << glGetError() << std::endl;
 
-        const glm::vec3 normal_0 = this->normals[std::get<0>(face)];
-        const glm::vec3 normal_1 = this->normals[std::get<1>(face)];
-        const glm::vec3 normal_2 = this->normals[std::get<2>(face)];
+    glBindVertexArray(0);
 
-        const glm::vec2 uv_0 = this->uvs[std::get<0>(face)];
-        const glm::vec2 uv_1 = this->uvs[std::get<1>(face)];
-        const glm::vec2 uv_2 = this->uvs[std::get<2>(face)];
+    /*glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, this->vertexVbo);
+    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
 
-        glTexCoord2f(uv_0.x, uv_0.y);
-        glNormal3f(normal_0.x, normal_0.y, normal_0.z);
-        glVertex3f(vertex_0.x, vertex_0.y, vertex_0.z);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, this->normalsVbo);
+    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
 
-        glTexCoord2f(uv_1.x, uv_1.y);
-        glNormal3f(normal_1.x, normal_1.y, normal_1.z);
-        glVertex3f(vertex_1.x, vertex_1.y, vertex_1.z);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, this->uvVbo);
+    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
 
-        glTexCoord2f(uv_2.x, uv_2.y);
-        glNormal3f(normal_2.x, normal_2.y, normal_2.z);
-        glVertex3f(vertex_2.x, vertex_2.y, vertex_2.z);
+    glEnableClientState(GL_VERTEX_ARRAY);
 
-        glEnd();
-    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesVbo);
+    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());*/
+
 }
 
 /**
@@ -106,14 +104,38 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3> new_vertices, cons
     this->faces = new_faces;
     this->normals = new_normals;
     this->uvs = new_uvs;
+
+    /*glGenBuffers(1, &this->vertexVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, this->vertexVbo);
+
+    glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(glm::vec3),
+        this->vertices.data(), GL_STATIC_DRAW);*/
 }
 
 Mesh::~Mesh()
 {
-    glDeleteBuffers(1, &this->vertexVbo);
-    glDeleteBuffers(1, &this->normalsVbo);
-    glDeleteBuffers(1, &this->uvVbo);
+    //glDeleteBuffers(1, &this->vertexVbo);
+    //glDeleteBuffers(1, &this->normalsVbo);
+    //glDeleteBuffers(1, &this->uvVbo);
 
+    glDeleteVertexArrays(1, &this->vao);
+    std::cout << "Destructor " << std::endl;
+
+}
+
+void Mesh::setVAO(unsigned int new_vao)
+{
+    this->vao = new_vao;
+    //std::cout << "setVAO: " << this->vao << std::endl;
+
+}
+
+void Mesh::setVBO(unsigned int vertex, unsigned int normals, unsigned int uvs, unsigned int faces)
+{
+    this->vertexVbo = vertex;
+    this->normalsVbo = normals;
+    this->uvVbo = uvs;
+    this->facesVbo = faces;
 }
 
 /**

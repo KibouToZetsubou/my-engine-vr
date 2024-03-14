@@ -30,6 +30,10 @@ public:
         const std::vector<glm::vec2> new_uvs);
     ~Mesh();
 
+    void setVAO(unsigned int new_vao);
+    void setVBO(unsigned int vertex, unsigned int normals, unsigned int uvs, unsigned int faces);
+
+
 private:
     std::shared_ptr<Material> material;
     std::vector<glm::vec3> vertices;
@@ -40,6 +44,9 @@ private:
     unsigned int vertexVbo = 0;
     unsigned int normalsVbo = 0;
     unsigned int uvVbo = 0;
+    unsigned int facesVbo = 0;
+
+    unsigned int vao = 0;
 
     bool cast_shadows;
 };
