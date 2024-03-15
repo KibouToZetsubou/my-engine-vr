@@ -9,6 +9,7 @@
 #include <vector>
 #include <sstream>
 
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 #include "camera.hpp"
