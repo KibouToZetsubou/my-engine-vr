@@ -38,7 +38,7 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     glBindVertexArray(this->vao);
 
-    glDrawElements(GL_TRIANGLES, vertices.size() * 4, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, faces.size() * 3, GL_UNSIGNED_INT, nullptr);
     //std::cout << "Errors: " << glGetError() << std::endl;
 
     glBindVertexArray(0);
