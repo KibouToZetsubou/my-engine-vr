@@ -165,14 +165,16 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::is_running_flag = true;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+#ifdef _DEBUG
 /**
  * Debug message callback for OpenGL. See https://www.opengl.org/wiki/Debug_Output
  */
 void LIB_API __stdcall MyEngine::DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {
     std::cout << "OpenGL says: \"" << std::string(message) << "\"" << std::endl;
+    std::cout << "  - Source: \"" << source << "\"" << std::endl;
 }
+#endif
 
 /**
  * Sets a custom callback to be called when the user presses a key.
