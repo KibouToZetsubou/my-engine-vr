@@ -385,71 +385,76 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
 
 
 
-        /*
+        //VAO
         unsigned int vao;
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
-        */
+        
+
+        //Setup States for VBOs
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 
-
+        //VertexVBO
         unsigned int vertexVbo;
-
-        //glEnableClientState(GL_VERTEX_ARRAY);
-
         glGenBuffers(1, &vertexVbo);
         glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
 
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
             vertices.data(), GL_STATIC_DRAW);
-        //glEnableVertexAttribArray(0);
+        glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
 
+        //NormalsVBO
         unsigned int normalsVbo;
-
-        //glEnableClientState(GL_NORMAL_ARRAY);
-
         glGenBuffers(1, &normalsVbo);
         glBindBuffer(GL_ARRAY_BUFFER, normalsVbo);
 
         glBufferData(GL_ARRAY_BUFFER, normals.size()  * sizeof(glm::vec3),
             normals.data(), GL_STATIC_DRAW);
-        //glEnableVertexAttribArray(0);
+        glNormalPointer(GL_FLOAT, 0, nullptr);
 
+
+        //UvsVBO
         unsigned int uvsVbo;
-
-        //glEnableClientState(GL_VERTEX_ARRAY);
-
         glGenBuffers(1, &uvsVbo);
         glBindBuffer(GL_ARRAY_BUFFER, uvsVbo);
 
         glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2),
             uvs.data(), GL_STATIC_DRAW);
-        //glEnableVertexAttribArray(0);
+        glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
 
+
+        //FacesVBO
         unsigned int facesVbo;
-
-        //glEnableClientState(GL_VERTEX_ARRAY);
-
         glGenBuffers(1, &facesVbo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, facesVbo);
-        //std::cout << "Number of faces: " << faces.data() << std::endl;
 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, face_vector.size() * sizeof(unsigned int),
             face_vector.data(), GL_STATIC_DRAW);
-        //glEnableVertexAttribArray(0);
+       
 
-        //mesh->setVAO(vao);
+        //Close VAO
+        glBindVertexArray(0);
+
+
+        //Clean FSM
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_NORMAL_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
+        //Save VAO & VBOs to mesh
+        mesh->setVAO(vao);
         mesh->setVBO(vertexVbo, normalsVbo, uvsVbo, facesVbo);
-
-
-
-
 
 
         std::cout << "Errors: " << glGetError() << std::endl;
         
-        //glBindVertexArray(0);
         // We only consider the first LOD.
         break;
     }

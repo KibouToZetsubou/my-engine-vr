@@ -36,13 +36,14 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     this->material->render(world_matrix);
 
-    //glBindVertexArray(this->vao);
+    glBindVertexArray(this->vao);
 
-    //glDrawElements(GL_TRIANGLES, this->vertices.size() * sizeof(float), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, vertices.size() * 4, GL_UNSIGNED_INT, nullptr);
     //std::cout << "Errors: " << glGetError() << std::endl;
 
-    //glBindVertexArray(0);
+    glBindVertexArray(0);
 
+    /*
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -69,6 +70,7 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    */
 }
 
 /**
