@@ -13,14 +13,15 @@
 #endif
 
 #include <GL/glew.h>
-
 #include <GL/freeglut.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <FreeImage.h>
 
+#include "camera.hpp"
 #include "common.hpp"
 #include "material.hpp"
 #include "mesh.hpp"
+#include "object.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -78,8 +79,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     MyEngine::window_id = glutCreateWindow(window_title.c_str());
     glutReshapeWindow(window_width, window_height);
-    // Init Glew (*after* the context creation):
-    //glewExperimental = GL_TRUE;
     glewInit();
 
     // Setup callbacks
@@ -93,11 +92,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glEnable(GL_LIGHTING);
     glEnable(GL_CULL_FACE);
     glEnable(GL_TEXTURE_2D);
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-
 
     // Configure lighting
     const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
@@ -155,16 +149,14 @@ void LIB_API MyEngine::render()
 
     MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
 
-    //Light management
-    int maxNrOfLights;
-    glGetIntegerv(GL_MAX_LIGHTS, &maxNrOfLights);
-    //std::cout << "MaxLights: " << maxNrOfLights << std::endl;
-    for (int i = 0; i < maxNrOfLights; i++)
+    // Disable all lights
+    int max_lights;
+    glGetIntegerv(GL_MAX_LIGHTS, &max_lights);
+    for (int i = 0; i < max_lights; ++i)
     {
         glDisable(GL_LIGHT0 + i);
     }
 
-    // Normal rendering
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
         return a.first->get_priority() > b.first->get_priority();
@@ -196,9 +188,9 @@ void LIB_API MyEngine::render()
     glDepthFunc(GL_LESS);
 
     // Screen text rendering
-    glClear(GL_DEPTH_BUFFER_BIT); //Così la victory screen appare avanti
+    glClear(GL_DEPTH_BUFFER_BIT); // Make the text always appear in front
 
-    //Set orthographic projection
+    // Set orthographic projection
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(glm::value_ptr(glm::ortho(0.0f, (float) MyEngine::window_width, 0.0f, (float) MyEngine::window_height, -1.0f, 1.0f)));
     glMatrixMode(GL_MODELVIEW);
@@ -211,15 +203,13 @@ void LIB_API MyEngine::render()
     glColor3f(1.0f, 1.0f, 1.0f);
 
     glRasterPos2f(16.0f, 5.0f);
-
     std::string fps = "FPS: " + std::to_string((int) MyEngine::fps);
-
     glutBitmapString(GLUT_BITMAP_8_BY_13, (unsigned char*) fps.c_str());
 
     glRasterPos2f(16.0f, MyEngine::window_height - 32.0f);
     glutBitmapString(GLUT_BITMAP_8_BY_13, (unsigned char*) MyEngine::screen_text.c_str());
 
-    // Activate lighting
+    // Re-activate lighting
     glEnable(GL_LIGHTING);
 
 
@@ -229,7 +219,7 @@ void LIB_API MyEngine::render()
 
 /**
 * Handles the FPS counting.
-* 
+*
 * @param value Parameter used by glutTimerFunc().
 */
 void LIB_API MyEngine::timerCallback(int value)
@@ -377,10 +367,10 @@ void LIB_API MyEngine::resize_callback(const int width, const int height)
 
 /**
 * Returns the list of objects to be rendered inside of the scene.
-* 
+*
 * @param scene_root The root object of the scene.
 * @param parent_world_matrix The world matrix used to render the scene.
-* 
+*
 * @return The list of objects to be rendered.
 */
 std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> LIB_API MyEngine::build_render_list(const std::shared_ptr<Object> scene_root, const glm::mat4 parent_world_matrix)
