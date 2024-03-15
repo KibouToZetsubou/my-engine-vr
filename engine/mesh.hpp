@@ -14,6 +14,7 @@ class LIB_API Mesh : public Node
 {
 public:
     Mesh();
+    ~Mesh();
 
     void render(const glm::mat4 world_matrix) const override;
 
@@ -24,29 +25,20 @@ public:
     bool get_cast_shadows() const;
 
     void set_mesh_data(
-        const std::vector<glm::vec3> new_vertices,
-        const std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> new_faces,
-        const std::vector<glm::vec3> new_normals,
-        const std::vector<glm::vec2> new_uvs);
-    ~Mesh();
-
-    void setVAO(unsigned int new_vao);
-    void setVBO(unsigned int vertex, unsigned int normals, unsigned int uvs, unsigned int faces);
-
+        const std::vector<glm::vec3>& new_vertices,
+        const std::vector<uint32_t>& new_faces,
+        const std::vector<glm::vec3>& new_normals,
+        const std::vector<glm::vec2>& new_uvs);
 
 private:
     std::shared_ptr<Material> material;
-    std::vector<glm::vec3> vertices;
-    std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> faces;
-    std::vector<glm::vec3> normals;
-    std::vector<glm::vec2> uvs;
+    int number_of_faces;
 
-    unsigned int vertexVbo = 0;
-    unsigned int normalsVbo = 0;
-    unsigned int uvVbo = 0;
-    unsigned int facesVbo = 0;
-
-    unsigned int vao = 0;
+    unsigned int vbo_vertices;
+    unsigned int vbo_normals;
+    unsigned int vbo_uvs;
+    unsigned int vbo_faces;
+    unsigned int vao_id;
 
     bool cast_shadows;
 };
