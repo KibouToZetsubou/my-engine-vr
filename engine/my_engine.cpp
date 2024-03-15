@@ -74,12 +74,65 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitContextVersion(4, 4);
+    glutInitContextProfile(GLUT_CORE_PROFILE);
+    glutInitContextFlags(GLUT_DEBUG);
+
     int argc = 0;
     glutInit(&argc, NULL);
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     MyEngine::window_id = glutCreateWindow(window_title.c_str());
     glutReshapeWindow(window_width, window_height);
-    glewInit();
+    GLenum error = glewInit();
+    if (error != GLEW_OK)
+    {
+        std::cout << "[ERROR] " << glewGetErrorString(error) << std::endl;
+        return;
+    }
+    else if (GLEW_VERSION_4_4) 
+    {
+        std::cout << "Driver supports OpenGL 4.4\n" << std::endl;
+    }
+    else
+    {
+        std::cout << "[ERROR] OpenGL 4.4 not supported\n" << std::endl;
+        return;
+    }
+
+    // Register OpenGL debug callback
+    glDebugMessageCallback((GLDEBUGPROC)DebugCallback, nullptr);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+
+    // Log context properties:
+    std::cout << "OpenGL properties:" << std::endl;
+    std::cout << "   Vendor . . . :  " << glGetString(GL_VENDOR) << std::endl;
+    std::cout << "   Driver . . . :  " << glGetString(GL_RENDERER) << std::endl;
+
+    int oglVersion[2];
+    glGetIntegerv(GL_MAJOR_VERSION, &oglVersion[0]);
+    glGetIntegerv(GL_MINOR_VERSION, &oglVersion[1]);
+    std::cout << "   Version  . . :  " << glGetString(GL_VERSION) << " [" << oglVersion[0] << "." << oglVersion[1] << "]" << std::endl;
+
+    int oglContextProfile;
+    glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &oglContextProfile);
+    if (oglContextProfile & GL_CONTEXT_CORE_PROFILE_BIT)
+        std::cout << "                :  " << "Core profile" << std::endl;
+    if (oglContextProfile & GL_CONTEXT_COMPATIBILITY_PROFILE_BIT)
+        std::cout << "                :  " << "Compatibility profile" << std::endl;
+
+    int oglContextFlags;
+    glGetIntegerv(GL_CONTEXT_FLAGS, &oglContextFlags);
+    if (oglContextFlags & GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT)
+        std::cout << "                :  " << "Forward compatible" << std::endl;
+    if (oglContextFlags & GL_CONTEXT_FLAG_DEBUG_BIT)
+        std::cout << "                :  " << "Debug flag" << std::endl;
+    if (oglContextFlags & GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT)
+        std::cout << "                :  " << "Robust access flag" << std::endl;
+    if (oglContextFlags & GL_CONTEXT_FLAG_NO_ERROR_BIT)
+        std::cout << "                :  " << "No error flag" << std::endl;
+
+    std::cout << "   GLSL . . . . :  " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << std::endl;
 
     // Setup callbacks
     glutDisplayFunc(render);
@@ -110,6 +163,15 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Start the engine
     MyEngine::is_initialized_flag = true;
     MyEngine::is_running_flag = true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+/**
+ * Debug message callback for OpenGL. See https://www.opengl.org/wiki/Debug_Output
+ */
+void LIB_API __stdcall MyEngine::DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
+{
+    std::cout << "OpenGL says: \"" << std::string(message) << "\"" << std::endl;
 }
 
 /**

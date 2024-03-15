@@ -38,6 +38,8 @@ public:
 
     static void timerCallback(int value);
 
+    static void DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam);
+
     static void update();
 
     static void clear_screen();
