@@ -22,6 +22,7 @@
 #include "material.hpp"
 #include "mesh.hpp"
 #include "object.hpp"
+#include "simple_shader.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -32,6 +33,7 @@ std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 std::shared_ptr<Material> MyEngine::shadow_material = std::make_shared<Material>();
+std::shared_ptr<Shader> MyEngine::global_shader = nullptr;
 
 // Frames:
 int MyEngine::frames = 0;
@@ -51,6 +53,8 @@ int APIENTRY DllMain(HANDLE instDLL, DWORD reason, LPVOID _reserved)
 
     return true;
 }
+#else
+    #define __stdcall
 #endif
 
 
@@ -89,7 +93,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
         std::cout << "[ERROR] " << glewGetErrorString(error) << std::endl;
         return;
     }
-    else if (GLEW_VERSION_4_4) 
+    else if (GLEW_VERSION_4_4)
     {
         std::cout << "Driver supports OpenGL 4.4\n" << std::endl;
     }
@@ -99,9 +103,12 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
         return;
     }
 
+    // TODO: Figure out why this is always true, even in release mode.
+    #ifdef _DEBUG
     // Register OpenGL debug callback
-    glDebugMessageCallback((GLDEBUGPROC)DebugCallback, nullptr);
+    glDebugMessageCallback((GLDEBUGPROC) debug_callback, nullptr);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    #endif
 
     // Log context properties:
     std::cout << "OpenGL properties:" << std::endl;
@@ -137,7 +144,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Setup callbacks
     glutDisplayFunc(render);
     glutReshapeFunc(resize_callback);
-    glutTimerFunc(1000, timerCallback, 0);
+    glutTimerFunc(1000, timer_callback, 0);
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
@@ -160,21 +167,28 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_shininess(0.0f);
 
+    // Configure the global shader
+    MyEngine::global_shader = std::make_shared<SimpleShader>();
+    if (global_shader->compile() == false)
+    {
+        std::cout << "[ERROR] Failed to compile global shader." << std::endl;
+
+        return;
+    }
+
     // Start the engine
     MyEngine::is_initialized_flag = true;
     MyEngine::is_running_flag = true;
 }
 
-#ifdef _DEBUG
 /**
  * Debug message callback for OpenGL. See https://www.opengl.org/wiki/Debug_Output
  */
-void LIB_API __stdcall MyEngine::DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
+void LIB_API __stdcall MyEngine::debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {
     std::cout << "OpenGL says: \"" << std::string(message) << "\"" << std::endl;
     std::cout << "  - Source: \"" << source << "\"" << std::endl;
 }
-#endif
 
 /**
  * Sets a custom callback to be called when the user presses a key.
@@ -210,6 +224,7 @@ void LIB_API MyEngine::render()
         return;
     }
 
+    MyEngine::global_shader->render(glm::mat4());
 
     MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
 
@@ -286,14 +301,14 @@ void LIB_API MyEngine::render()
 *
 * @param value Parameter used by glutTimerFunc().
 */
-void LIB_API MyEngine::timerCallback(int value)
+void LIB_API MyEngine::timer_callback(int value)
 {
     MyEngine::fps = MyEngine::frames;
     MyEngine::frames = 0;
     std::cout << "fps: " << MyEngine::fps << std::endl;
 
     // Register the next update:
-    glutTimerFunc(1000, timerCallback, 0);
+    glutTimerFunc(1000, timer_callback, 0);
 }
 
 /**
