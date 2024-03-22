@@ -4,20 +4,20 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         // Vertex shader
         #version 440 core
 
-        uniform mat4 projection;
-        uniform mat4 modelview;
+        uniform mat4 matrix;
 
         layout(location = 0) in vec3 in_Position;
-        layout(location = 1) in vec4 in_Color;
+        //layout(location = 1) in vec4 in_Color;
 
         out vec3 out_Color;
         out float dist;
 
         void main(void)
         {
-            gl_Position = projection * modelview * vec4(in_Position, 1.0f);
+            gl_Position = matrix * vec4(in_Position, 1.0f);
             dist = abs(gl_Position.z / 100.0f);
-            out_Color = in_Color.rgb;
+            //out_Color = in_Color.rgb;
+            out_Color = vec3(1.0f, 0.0f, 1.0f);
         }
     )", R"(
         // Fragment shader

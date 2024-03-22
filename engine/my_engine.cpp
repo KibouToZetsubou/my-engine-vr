@@ -22,7 +22,6 @@
 #include "material.hpp"
 #include "mesh.hpp"
 #include "object.hpp"
-#include "simple_shader.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -33,7 +32,6 @@ std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 std::shared_ptr<Material> MyEngine::shadow_material = std::make_shared<Material>();
-std::shared_ptr<Shader> MyEngine::global_shader = nullptr;
 
 // Frames:
 int MyEngine::frames = 0;
@@ -148,15 +146,15 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_NORMALIZE);
+    //glEnable(GL_LIGHTING);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_TEXTURE_2D);
+    //glEnable(GL_TEXTURE_2D);
 
     // Configure lighting
     const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambient));
-    glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0f);
+    //glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambient));
+    //glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0f);
 
     // Initialize FreeImage
     FreeImage_Initialise();
@@ -166,15 +164,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::shadow_material->set_diffuse_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_shininess(0.0f);
-
-    // Configure the global shader
-    MyEngine::global_shader = std::make_shared<SimpleShader>();
-    if (global_shader->compile() == false)
-    {
-        std::cout << "[ERROR] Failed to compile global shader." << std::endl;
-
-        return;
-    }
 
     // Start the engine
     MyEngine::is_initialized_flag = true;
@@ -224,8 +213,6 @@ void LIB_API MyEngine::render()
         return;
     }
 
-    MyEngine::global_shader->render(glm::mat4());
-
     MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
 
     // Disable all lights
@@ -233,7 +220,7 @@ void LIB_API MyEngine::render()
     glGetIntegerv(GL_MAX_LIGHTS, &max_lights);
     for (int i = 0; i < max_lights; ++i)
     {
-        glDisable(GL_LIGHT0 + i);
+        //glDisable(GL_LIGHT0 + i);
     }
 
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
@@ -267,7 +254,7 @@ void LIB_API MyEngine::render()
     glDepthFunc(GL_LESS);
 
     // Screen text rendering
-    glClear(GL_DEPTH_BUFFER_BIT); // Make the text always appear in front
+    /*glClear(GL_DEPTH_BUFFER_BIT); // Make the text always appear in front
 
     // Set orthographic projection
     glMatrixMode(GL_PROJECTION);
@@ -289,11 +276,12 @@ void LIB_API MyEngine::render()
     glutBitmapString(GLUT_BITMAP_8_BY_13, (unsigned char*) MyEngine::screen_text.c_str());
 
     // Re-activate lighting
-    glEnable(GL_LIGHTING);
-
+    glEnable(GL_LIGHTING);*/
 
     // Inc. frames:
     MyEngine::frames++;
+
+    MyEngine::stop();
 }
 
 /**

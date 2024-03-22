@@ -30,6 +30,6 @@ void LIB_API PerspectiveCamera::render(const glm::mat4 world_matrix) const
 
     const glm::mat4 perspective_matrix = glm::perspective(glm::radians(this->fov), aspect_ratio, this->near_clipping, this->far_clipping);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(glm::value_ptr(perspective_matrix));
+    /*glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(glm::value_ptr(perspective_matrix));*/
 }

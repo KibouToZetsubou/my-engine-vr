@@ -13,6 +13,9 @@ public:
 
     void render(const glm::mat4 world_matrix) const override;
 
+    // TODO: Find a better way of passing VBOs
+    void set_vbo_vertices(const unsigned int new_vbo_vertices);
+
     bool compile();
 protected:
     std::string vertex_shader_source;
@@ -21,4 +24,6 @@ protected:
     unsigned int vertex_shader_id;
     unsigned int fragment_shader_id;
     unsigned int program_id;
+
+    unsigned int vbo_vertices;
 };

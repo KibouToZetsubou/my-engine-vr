@@ -13,6 +13,8 @@
 
 #include "common.hpp"
 #include "node.hpp"
+#include "shader.hpp"
+#include "simple_shader.hpp"
 
 /**
  * Creates a new empty Mesh with the default material and shadow casting activated.
@@ -20,10 +22,12 @@
 LIB_API Mesh::Mesh()
 {
     this->set_material(std::make_shared<Material>());
+    this->set_shader(std::make_shared<SimpleShader>());
     this->set_cast_shadows(true);
 
     this->vao_id = -1;
     this->number_of_faces = 0;
+    this->shader->compile();
 }
 
 /**
@@ -37,7 +41,9 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 {
     Node::render(world_matrix);
 
-    this->material->render(world_matrix);
+    //this->material->render(world_matrix);
+
+    this->shader->render(this->get_local_matrix());
 
     if (this->vao_id == -1 || this->number_of_faces == 0)
     {
@@ -69,6 +75,16 @@ void LIB_API Mesh::set_material(const std::shared_ptr<Material> new_material)
 std::shared_ptr<Material> LIB_API Mesh::get_material() const
 {
     return this->material;
+}
+
+void LIB_API Mesh::set_shader(const std::shared_ptr<Shader> new_shader)
+{
+    this->shader = new_shader;
+}
+
+std::shared_ptr<Shader> LIB_API Mesh::get_shader() const
+{
+    return this->shader;
 }
 
 /**
@@ -126,6 +142,8 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    this->shader->set_vbo_vertices(this->vbo_vertices);
 }
 
 Mesh::~Mesh()

@@ -38,13 +38,13 @@ void LIB_API OrthoCamera::render(const glm::mat4 world_matrix) const
 
     const glm::mat4 ortho_matrix = glm::ortho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, this->near_clipping, this->far_clipping);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(glm::value_ptr(ortho_matrix));
+    /*glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(glm::value_ptr(ortho_matrix));*/
 }
 
 /**
 * Sets the value of the camera zoom.
-* 
+*
 * @param new_zoom The value of the camera zoom.
 */
 void LIB_API OrthoCamera::set_zoom(float new_zoom)

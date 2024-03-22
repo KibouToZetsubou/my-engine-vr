@@ -24,7 +24,7 @@ int Light::next_light_id = 0;
  */
 LIB_API Light::Light()
 {
-    int max_number_of_lights;
+    /*int max_number_of_lights;
     glGetIntegerv(GL_MAX_LIGHTS, &max_number_of_lights);
 
 
@@ -46,7 +46,7 @@ LIB_API Light::Light()
     this->set_diffuse_color(glm::vec3(1.0f, 1.0f, 1.0f));
     this->set_specular_color(glm::vec3(1.0f, 1.0f, 1.0f));
 
-    glEnable(current_light);
+    glEnable(current_light);*/
 }
 
 /**
@@ -93,8 +93,8 @@ void LIB_API Light::set_specular_color(const glm::vec3 new_color)
 
 /**
  * Returns the current light name based on the light id.
- * 
- * @param light_id The id of the light you want the name of. 
+ *
+ * @param light_id The id of the light you want the name of.
  * @return The light name of the light.
  */
 int LIB_API Light::get_current_light(const int light_id) const

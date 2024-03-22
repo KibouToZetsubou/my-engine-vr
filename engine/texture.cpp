@@ -13,7 +13,7 @@
  */
 LIB_API Texture::Texture(const std::string path)
 {
-    FIBITMAP* bmp = FreeImage_Load(FreeImage_GetFileType(path.c_str(), 0), path.c_str());
+    /*FIBITMAP* bmp = FreeImage_Load(FreeImage_GetFileType(path.c_str(), 0), path.c_str());
 
     if (bmp == nullptr)
     {
@@ -38,7 +38,7 @@ LIB_API Texture::Texture(const std::string path)
 
     const int width = FreeImage_GetWidth((FIBITMAP*) this->bitmap);
     const int height = FreeImage_GetHeight((FIBITMAP*) this->bitmap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*) FreeImage_GetBits((FIBITMAP*) this->bitmap));
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*) FreeImage_GetBits((FIBITMAP*) this->bitmap));*/
 }
 
 /**
@@ -46,14 +46,14 @@ LIB_API Texture::Texture(const std::string path)
  */
 LIB_API Texture::~Texture()
 {
-    glDeleteTextures(1, &this->texture_id);
+    /*glDeleteTextures(1, &this->texture_id);
 
     // Ugly fix for when trying to free an empty bitmap.
     // TODO: Actually handle invalid textures.
     if (this->bitmap != nullptr)
     {
         FreeImage_Unload((FIBITMAP*) this->bitmap);
-    }
+    }*/
 }
 
 /**
@@ -65,6 +65,6 @@ LIB_API Texture::~Texture()
  */
 void LIB_API Texture::render(const glm::mat4 world_matrix) const
 {
-    glBindTexture(GL_TEXTURE_2D, this->texture_id);
-    glEnable(GL_TEXTURE_2D);
+    /*glBindTexture(GL_TEXTURE_2D, this->texture_id);
+    glEnable(GL_TEXTURE_2D);*/
 }
