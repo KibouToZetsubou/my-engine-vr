@@ -112,25 +112,25 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glBindVertexArray(this->vao_id);
 
     // Vertices
-    glEnableClientState(GL_VERTEX_ARRAY);
+    //glEnableClientState(GL_VERTEX_ARRAY);
     glGenBuffers(1, &this->vbo_vertices);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_vertices);
     glBufferData(GL_ARRAY_BUFFER, new_vertices.size() * sizeof(glm::vec3), new_vertices.data(), GL_STATIC_DRAW);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    //glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
     // Normals
-    glEnableClientState(GL_NORMAL_ARRAY);
+    //glEnableClientState(GL_NORMAL_ARRAY);
     glGenBuffers(1, &this->vbo_normals);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_normals);
     glBufferData(GL_ARRAY_BUFFER, new_normals.size()  * sizeof(glm::vec3), new_normals.data(), GL_STATIC_DRAW);
-    glNormalPointer(GL_FLOAT, 0, nullptr);
+    //glNormalPointer(GL_FLOAT, 0, nullptr);
 
     // UVs
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glGenBuffers(1, &this->vbo_uvs);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_uvs);
     glBufferData(GL_ARRAY_BUFFER, new_uvs.size()  * sizeof(glm::vec2), new_uvs.data(), GL_STATIC_DRAW);
-    glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+    //glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
 
     // Faces
     glGenBuffers(1, &this->vbo_faces);
@@ -139,9 +139,9 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     this->number_of_faces = new_faces.size();
 
     glBindVertexArray(0);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glDisableClientState(GL_VERTEX_ARRAY);
+    //glDisableClientState(GL_NORMAL_ARRAY);
+    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     this->shader->set_vbo_vertices(this->vbo_vertices);
 }
