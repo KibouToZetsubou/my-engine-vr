@@ -280,8 +280,6 @@ void LIB_API MyEngine::render()
 
     // Inc. frames:
     MyEngine::frames++;
-
-    MyEngine::stop();
 }
 
 /**

@@ -43,14 +43,15 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     //this->material->render(world_matrix);
 
-    this->shader->render(this->get_local_matrix());
-
     if (this->vao_id == -1 || this->number_of_faces == 0)
     {
         return;
     }
 
     glBindVertexArray(this->vao_id);
+
+    this->shader->render(this->get_local_matrix());
+
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
@@ -142,8 +143,6 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     //glDisableClientState(GL_VERTEX_ARRAY);
     //glDisableClientState(GL_NORMAL_ARRAY);
     //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    this->shader->set_vbo_vertices(this->vbo_vertices);
 }
 
 Mesh::~Mesh()

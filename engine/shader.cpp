@@ -23,10 +23,6 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
     const int parameter_location_matrix = glGetUniformLocation(this->program_id, "matrix");
     glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(world_matrix));
 
-    std::cout << "1" << std::endl;
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo_vertices);
-    std::cout << "VBO ID: " << this->vbo_vertices << std::endl;
-    std::cout << "2" << std::endl;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(0);
 
@@ -73,9 +69,4 @@ bool LIB_API Shader::compile()
     glLinkProgram(this->program_id);
 
     return true;
-}
-
-void LIB_API Shader::set_vbo_vertices(const unsigned int new_vbo_vertices)
-{
-    this->vbo_vertices = new_vbo_vertices;
 }
