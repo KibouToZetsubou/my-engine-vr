@@ -23,11 +23,11 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         in vec3 color;
 
-        out vec3 fragment;
+        out vec4 fragment;
 
         void main(void)
         {
-            fragment = color;
+            fragment = vec4(color, 1.0f);
         }
     )")
     {}

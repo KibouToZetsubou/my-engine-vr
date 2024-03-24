@@ -20,20 +20,10 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
     glUseProgram(this->program_id);
 
     constexpr float aspect_ratio = 800.0f / 600.0f;
-    const glm::mat4 perspective_matrix = glm::perspective(glm::radians(90.0f), aspect_ratio, 0.01f, 1000.0f);
+    const glm::mat4 projection_matrix = glm::perspective(glm::radians(90.0f), aspect_ratio, 0.01f, 1000.0f);
 
     const int parameter_location_matrix = glGetUniformLocation(this->program_id, "matrix");
-    glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(perspective_matrix * world_matrix));
-
-    // TODO: If the rendering works fine, remove this
-    // Requires a bound buffer
-    /*glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);*/
-
-
-    /*glBindBuffer(GL_ARRAY_BUFFER, vbo_color); // TODO: Find a way to get the color VBO
-    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, nullptr);
-    glEnableVertexAttribArray(1);*/
+    glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(projection_matrix * world_matrix));
 }
 
 bool LIB_API Shader::compile()
