@@ -237,7 +237,7 @@ void LIB_API MyEngine::render()
     }
 
     // Shadow rendering
-    glDepthFunc(GL_LEQUAL);
+    /*glDepthFunc(GL_LEQUAL);
     const glm::mat4 shadow_model_scale_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.05f, 1.0f));
     for (const auto& node : render_list)
     {
@@ -251,7 +251,7 @@ void LIB_API MyEngine::render()
             mesh->set_material(original_material);
         }
     }
-    glDepthFunc(GL_LESS);
+    glDepthFunc(GL_LESS);*/
 
     // Screen text rendering
     /*glClear(GL_DEPTH_BUFFER_BIT); // Make the text always appear in front
@@ -406,7 +406,6 @@ void LIB_API MyEngine::set_active_camera(const std::shared_ptr<Camera> new_activ
 
     MyEngine::active_camera = new_active_camera;
 }
-
 
 /**
  * Handles the resizing of the window.

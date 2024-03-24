@@ -41,17 +41,14 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 {
     Node::render(world_matrix);
 
-    //this->material->render(world_matrix);
-
     if (this->vao_id == -1 || this->number_of_faces == 0)
     {
         return;
     }
 
-    glBindVertexArray(this->vao_id);
-
     this->shader->render(this->get_local_matrix());
 
+    glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
@@ -117,6 +114,8 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glGenBuffers(1, &this->vbo_vertices);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_vertices);
     glBufferData(GL_ARRAY_BUFFER, new_vertices.size() * sizeof(glm::vec3), new_vertices.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     //glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
     // Normals
@@ -124,6 +123,8 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glGenBuffers(1, &this->vbo_normals);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_normals);
     glBufferData(GL_ARRAY_BUFFER, new_normals.size()  * sizeof(glm::vec3), new_normals.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     //glNormalPointer(GL_FLOAT, 0, nullptr);
 
     // UVs
@@ -131,7 +132,9 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glGenBuffers(1, &this->vbo_uvs);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_uvs);
     glBufferData(GL_ARRAY_BUFFER, new_uvs.size()  * sizeof(glm::vec2), new_uvs.data(), GL_STATIC_DRAW);
-    //glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+    //glTexCoordPointer(2, GL_FLOAT, 0, nullptr);*/
 
     // Faces
     glGenBuffers(1, &this->vbo_faces);

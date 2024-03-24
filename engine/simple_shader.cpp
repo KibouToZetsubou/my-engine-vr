@@ -6,32 +6,28 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         uniform mat4 matrix;
 
-        layout(location = 0) in vec3 in_Position;
-        //layout(location = 1) in vec4 in_Color;
+        layout(location = 0) in vec3 position;
+        layout(location = 1) in vec3 normal;
+        layout(location = 2) in vec2 uv;
 
-        out vec3 out_Color;
-        out float dist;
+        out vec3 color;
 
         void main(void)
         {
-            gl_Position = matrix * vec4(in_Position, 1.0f);
-            dist = abs(gl_Position.z / 100.0f);
-            //out_Color = in_Color.rgb;
-            out_Color = vec3(1.0f, 0.0f, 1.0f);
+            gl_Position = matrix * vec4(position, 1.0f);
+            color = vec3(1.0f, 0.0f, 1.0f);
         }
     )", R"(
         // Fragment shader
         #version 440 core
 
-        in  vec3 out_Color;
-        in  float dist;
+        in vec3 color;
 
-        out vec4 frag_Output;
+        out vec3 fragment;
 
         void main(void)
         {
-            vec3 fog = vec3(1.0f, 1.0f, 1.0f);
-            frag_Output = vec4(mix(out_Color, fog, dist), 1.0f);
+            fragment = color;
         }
     )")
     {}

@@ -18,7 +18,5 @@ protected:
     std::string vertex_shader_source;
     std::string fragment_shader_source;
 
-    unsigned int vertex_shader_id;
-    unsigned int fragment_shader_id;
     unsigned int program_id;
 };
