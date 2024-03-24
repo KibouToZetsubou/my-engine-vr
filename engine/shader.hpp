@@ -5,6 +5,8 @@
 #include "common.hpp"
 #include "object.hpp"
 
+// TODO: Add setters for uniforms (ex: set_int(name, balue) )
+
 class LIB_API Shader : public Object
 {
 public:

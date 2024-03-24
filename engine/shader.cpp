@@ -19,11 +19,12 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
 {
     glUseProgram(this->program_id);
 
-    constexpr float aspect_ratio = 800.0f / 600.0f;
-    const glm::mat4 projection_matrix = glm::perspective(glm::radians(90.0f), aspect_ratio, 0.01f, 1000.0f);
+    // TODO: Make this dynamic
+    const glm::mat4 projection_matrix = glm::perspective(glm::radians(90.0f), 1.333333333333333f, 0.01f, 1000.0f);
+    const glm::mat4 matrix = projection_matrix * world_matrix;
 
     const int parameter_location_matrix = glGetUniformLocation(this->program_id, "matrix");
-    glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(projection_matrix * world_matrix));
+    glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 bool LIB_API Shader::compile()

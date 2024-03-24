@@ -44,10 +44,10 @@ void LIB_API DirectionalLight::render(const glm::mat4 world_matrix) const
 
     const int current_light = Light::get_current_light(this->light_id);
 
-    glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
+    /*glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
     glLightfv(current_light, GL_AMBIENT, glm::value_ptr(ambient));
     glLightfv(current_light, GL_DIFFUSE, glm::value_ptr(diffuse));
-    glLightfv(current_light, GL_SPECULAR, glm::value_ptr(specular));
+    glLightfv(current_light, GL_SPECULAR, glm::value_ptr(specular));*/
 }
 
 /**

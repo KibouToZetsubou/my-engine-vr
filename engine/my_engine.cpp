@@ -216,12 +216,12 @@ void LIB_API MyEngine::render()
     MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
 
     // Disable all lights
-    int max_lights;
+    /*int max_lights;
     glGetIntegerv(GL_MAX_LIGHTS, &max_lights);
     for (int i = 0; i < max_lights; ++i)
     {
-        //glDisable(GL_LIGHT0 + i);
-    }
+        glDisable(GL_LIGHT0 + i);
+    }*/
 
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
