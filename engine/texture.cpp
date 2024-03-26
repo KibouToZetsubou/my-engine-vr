@@ -3,7 +3,6 @@
 #include <GL/glew.h>
 
 #include <GL/freeglut.h>
-#define FREEIMAGE_LIB
 #include <FreeImage.h>
 
 /**
