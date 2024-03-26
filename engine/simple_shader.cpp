@@ -14,7 +14,6 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         void main(void)
         {
-            //gl_Position = matrix * vec4(position.x * 0.05f, position.y * 0.05f - 1.0f, position.z * 0.05f, 1.0f);
             gl_Position = matrix * vec4(position, 1.0f);
             color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
         }
