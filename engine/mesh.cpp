@@ -46,7 +46,7 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
         return;
     }
 
-    this->shader->render(this->get_local_matrix());
+    this->shader->render(world_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
