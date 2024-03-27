@@ -7,6 +7,8 @@
 #include "common.hpp"
 #include "node.hpp"
 
+// TODO: Add a function to return the projection matrix
+
 /**
  * This class works as a base to be inherited from to implement cameras into the scene.
  *

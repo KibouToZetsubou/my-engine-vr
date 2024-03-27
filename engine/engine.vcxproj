@@ -33,6 +33,8 @@
     <ClCompile Include="ovo_parser.cpp" />
     <ClCompile Include="perspective_camera.cpp" />
     <ClCompile Include="point_light.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="simple_shader.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="spot_light.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -52,6 +54,8 @@
     <ClInclude Include="ovo_parser.hpp" />
     <ClInclude Include="perspective_camera.hpp" />
     <ClInclude Include="point_light.hpp" />
+    <ClInclude Include="shader.hpp" />
+    <ClInclude Include="simple_shader.hpp" />
     <ClInclude Include="sphere.hpp" />
     <ClInclude Include="spot_light.hpp" />
     <ClInclude Include="texture.hpp" />
@@ -146,7 +150,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

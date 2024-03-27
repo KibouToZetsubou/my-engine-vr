@@ -136,6 +136,6 @@ glm::mat4 LIB_API Node::get_local_matrix() const
  */
 void LIB_API Node::render(const glm::mat4 world_matrix) const
 {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf(glm::value_ptr(world_matrix));
+    /*glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(glm::value_ptr(world_matrix));*/
 }

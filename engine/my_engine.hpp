@@ -16,7 +16,6 @@
 #include "common.hpp"
 #include "material.hpp"
 #include "object.hpp"
-#include "shader.hpp"
 
 /**
  * The main class of the engine.
@@ -78,7 +77,6 @@ private:
     static std::shared_ptr<Object> scene;
     static std::shared_ptr<Camera> active_camera;
     static std::shared_ptr<Material> shadow_material;
-    static std::shared_ptr<Shader> global_shader;
     static std::string screen_text;
     static int frames;
     static float fps;

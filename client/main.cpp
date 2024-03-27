@@ -17,7 +17,7 @@ std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
 std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
 bool perspective_camera_is_used = false;
 
-void start_level(int level_id) 
+void start_level(int level_id)
 {
     std::shared_ptr<Object> scene_root;
     if(level_id == 1)
@@ -40,7 +40,7 @@ void start_level(int level_id)
         MyEngine::set_sky_color(0.81f, 0.53f, 0.22f);
         MyEngine::set_scene(scene_root);
     }
-    else if (level_id == 3) 
+    else if (level_id == 3)
     {
         scene_root = OVOParser::from_file("./Level3.ovo");
         MyEngine::set_sky_color(0.53f, 0.81f, 0.92f);

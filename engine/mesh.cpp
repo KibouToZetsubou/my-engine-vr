@@ -13,6 +13,8 @@
 
 #include "common.hpp"
 #include "node.hpp"
+#include "shader.hpp"
+#include "simple_shader.hpp"
 
 /**
  * Creates a new empty Mesh with the default material and shadow casting activated.
@@ -20,10 +22,12 @@
 LIB_API Mesh::Mesh()
 {
     this->set_material(std::make_shared<Material>());
+    this->set_shader(std::make_shared<SimpleShader>());
     this->set_cast_shadows(true);
 
     this->vao_id = -1;
     this->number_of_faces = 0;
+    this->shader->compile();
 }
 
 /**
@@ -37,12 +41,12 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 {
     Node::render(world_matrix);
 
-    this->material->render(world_matrix);
-
     if (this->vao_id == -1 || this->number_of_faces == 0)
     {
         return;
     }
+
+    this->shader->render(world_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
@@ -71,6 +75,16 @@ std::shared_ptr<Material> LIB_API Mesh::get_material() const
     return this->material;
 }
 
+void LIB_API Mesh::set_shader(const std::shared_ptr<Shader> new_shader)
+{
+    this->shader = new_shader;
+}
+
+std::shared_ptr<Shader> LIB_API Mesh::get_shader() const
+{
+    return this->shader;
+}
+
 /**
  * Sets the vertex, face, normal and UV data for this mesh.
  *
@@ -96,25 +110,31 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glBindVertexArray(this->vao_id);
 
     // Vertices
-    glEnableClientState(GL_VERTEX_ARRAY);
+    //glEnableClientState(GL_VERTEX_ARRAY);
     glGenBuffers(1, &this->vbo_vertices);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_vertices);
-    glBufferData(GL_ARRAY_BUFFER, new_vertices.size() * sizeof(glm::vec3), new_vertices.data(), GL_STATIC_DRAW);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glBufferData(GL_ARRAY_BUFFER, new_vertices.size() * sizeof(new_vertices[0]), new_vertices.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    //glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
     // Normals
-    glEnableClientState(GL_NORMAL_ARRAY);
+    //glEnableClientState(GL_NORMAL_ARRAY);
     glGenBuffers(1, &this->vbo_normals);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_normals);
     glBufferData(GL_ARRAY_BUFFER, new_normals.size()  * sizeof(glm::vec3), new_normals.data(), GL_STATIC_DRAW);
-    glNormalPointer(GL_FLOAT, 0, nullptr);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    //glNormalPointer(GL_FLOAT, 0, nullptr);
 
     // UVs
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glGenBuffers(1, &this->vbo_uvs);
+    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    /*glGenBuffers(1, &this->vbo_uvs);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_uvs);
     glBufferData(GL_ARRAY_BUFFER, new_uvs.size()  * sizeof(glm::vec2), new_uvs.data(), GL_STATIC_DRAW);
-    glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);*/
+    //glTexCoordPointer(2, GL_FLOAT, 0, nullptr);*/
 
     // Faces
     glGenBuffers(1, &this->vbo_faces);
@@ -123,9 +143,9 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     this->number_of_faces = new_faces.size();
 
     glBindVertexArray(0);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glDisableClientState(GL_VERTEX_ARRAY);
+    //glDisableClientState(GL_NORMAL_ARRAY);
+    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 Mesh::~Mesh()
