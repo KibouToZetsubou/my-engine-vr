@@ -20,11 +20,19 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
     glUseProgram(this->program_id);
 
     // TODO: Make this dynamic
+    // Projection matrix
     const glm::mat4 projection_matrix = glm::perspective(glm::radians(90.0f), 1.333333333333333f, 0.01f, 1000.0f);
-    const glm::mat4 matrix = projection_matrix * world_matrix;
+    const int uniform_location_matrix = glGetUniformLocation(this->program_id, "projection_matrix");
+    glUniformMatrix4fv(uniform_location_matrix, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
-    const int parameter_location_matrix = glGetUniformLocation(this->program_id, "matrix");
-    glUniformMatrix4fv(parameter_location_matrix, 1, GL_FALSE, glm::value_ptr(matrix));
+    // View matrix
+    const int uniform_location_view_matrix = glGetUniformLocation(this->program_id, "view_matrix");
+    glUniformMatrix4fv(uniform_location_view_matrix, 1, GL_FALSE, glm::value_ptr(world_matrix));
+
+    // Inverse-Transpose of view matrix
+    const glm::mat4 inverse_transpose_view = glm::inverse(glm::transpose(world_matrix));
+    const int uniform_location_inverse_transpose_view = glGetUniformLocation(this->program_id, "inverse_transpose_view");
+    glUniformMatrix4fv(uniform_location_inverse_transpose_view, 1, GL_FALSE, glm::value_ptr(inverse_transpose_view));
 }
 
 bool LIB_API Shader::compile()

@@ -120,11 +120,11 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
 
     // Normals
     //glEnableClientState(GL_NORMAL_ARRAY);
-    /*glGenBuffers(1, &this->vbo_normals);
+    glGenBuffers(1, &this->vbo_normals);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_normals);
     glBufferData(GL_ARRAY_BUFFER, new_normals.size()  * sizeof(glm::vec3), new_normals.data(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);*/
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     //glNormalPointer(GL_FLOAT, 0, nullptr);
 
     // UVs
