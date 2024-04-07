@@ -67,6 +67,11 @@ void LIB_API Material::set_emission_color(const glm::vec3 new_color)
     this->emission_color = new_color;
 }
 
+glm::vec3 LIB_API Material::get_emission_color() const
+{
+    return this->emission_color;
+}
+
 /**
  * Changes the ambient color property of this material.
  *
@@ -75,6 +80,11 @@ void LIB_API Material::set_emission_color(const glm::vec3 new_color)
 void LIB_API Material::set_ambient_color(const glm::vec3 new_color)
 {
     this->ambient_color = new_color;
+}
+
+glm::vec3 LIB_API Material::get_ambient_color() const
+{
+    return this->ambient_color;
 }
 
 /**
@@ -87,6 +97,11 @@ void LIB_API Material::set_diffuse_color(const glm::vec3 new_color)
     this->diffuse_color = new_color;
 }
 
+glm::vec3 LIB_API Material::get_diffuse_color() const
+{
+    return this->diffuse_color;
+}
+
 /**
  * Changes the specular color property of this material.
  *
@@ -97,6 +112,11 @@ void LIB_API Material::set_specular_color(const glm::vec3 new_color)
     this->specular_color = new_color;
 }
 
+glm::vec3 LIB_API Material::get_specular_color() const
+{
+    return this->specular_color;
+}
+
 /**
  * Changes the shininess property of this material.
  *
@@ -105,6 +125,11 @@ void LIB_API Material::set_specular_color(const glm::vec3 new_color)
 void LIB_API Material::set_shininess(const float new_shininess)
 {
     this->shininess = new_shininess;
+}
+
+float LIB_API Material::get_shininess() const
+{
+    return this->shininess;
 }
 
 /**

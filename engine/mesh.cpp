@@ -48,6 +48,13 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
 
     this->shader->render(world_matrix);
 
+    // Load material information into the shader
+    this->shader->set_vec3("material_emission", this->material->get_emission_color());
+    this->shader->set_vec3("material_ambient", this->material->get_ambient_color());
+    this->shader->set_vec3("material_diffuse", this->material->get_diffuse_color());
+    this->shader->set_vec3("material_specular", this->material->get_specular_color());
+    this->shader->set_float("material_shininess", this->material->get_shininess());
+
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);

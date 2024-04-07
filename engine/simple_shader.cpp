@@ -8,23 +8,6 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform mat4 view_matrix;
         uniform mat4 inverse_transpose_view;
 
-        // Material
-        uniform vec3 material_emission;
-        uniform vec3 material_ambient;
-        uniform vec3 material_diffuse;
-        uniform vec3 material_specular;
-        uniform float material_shininess;
-
-        // Light
-        uniform int light_type; // 0 = Directional; 1 = Point; 2 = Spot
-        uniform vec3 light_ambient;
-        uniform vec3 light_diffuse;
-        uniform vec3 light_specular;
-        uniform vec3 light_direction; // Directional, Spot
-        uniform float light_radius; // Point, Spot
-        uniform float light_cutoff; // Spot
-        uniform float light_exponent; // Spot
-
         layout(location = 0) in vec3 position;
         layout(location = 1) in vec3 normal;
         //layout(location = 2) in vec2 uv;
@@ -45,6 +28,26 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         // Fragment shader
         #version 440 core
 
+        #define MAX_LIGHTS 8
+
+        // Material
+        uniform vec3 material_emission;
+        uniform vec3 material_ambient;
+        uniform vec3 material_diffuse;
+        uniform vec3 material_specular;
+        uniform float material_shininess;
+
+        // Light
+        uniform int   light_type[MAX_LIGHTS]; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
+        uniform vec3  light_ambient[MAX_LIGHTS];
+        uniform vec3  light_diffuse[MAX_LIGHTS];
+        uniform vec3  light_specular[MAX_LIGHTS];
+        uniform vec3  light_position[MAX_LIGHTS];
+        uniform vec3  light_direction[MAX_LIGHTS]; // Directional, Spot
+        uniform float light_radius[MAX_LIGHTS]; // Point, Spot
+        uniform float light_cutoff[MAX_LIGHTS]; // Spot
+        uniform float light_exponent[MAX_LIGHTS]; // Spot
+
         in vec4 view_normal;
         in vec4 position_eyes;
 
@@ -52,7 +55,15 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         void main(void)
         {
-            fragment = view_normal;
+            vec3 total_light_ambient = vec3(0.0f, 0.0f, 0.0f);
+            for (int i = 0; i < MAX_LIGHTS; ++i)
+                if (light_type[i] != 0)
+                    total_light_ambient += light_ambient[i];
+
+            //const vec3 base_color = material_emission + material_ambient * total_light_ambient;
+            const vec3 base_color = material_diffuse;
+
+            fragment = vec4(base_color, 1.0f);
         }
     )")
     {}

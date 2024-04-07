@@ -57,7 +57,7 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
     {
         // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
-        glUniform3fv(uniform_location, 3, glm::value_ptr(i->second));
+        glUniform3fv(uniform_location, 1, glm::value_ptr(i->second));
     }
 }
 
