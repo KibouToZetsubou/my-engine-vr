@@ -71,6 +71,11 @@ void LIB_API Light::set_ambient_color(const glm::vec3 new_color)
     this->ambient_color = new_color;
 }
 
+glm::vec3 LIB_API Light::get_ambient_color() const
+{
+    return this->ambient_color;
+}
+
 /**
  * Changes the diffuse color property of this light.
  *
@@ -81,6 +86,11 @@ void LIB_API Light::set_diffuse_color(const glm::vec3 new_color)
     this->diffuse_color = new_color;
 }
 
+glm::vec3 LIB_API Light::get_diffuse_color() const
+{
+    return this->diffuse_color;
+}
+
 /**
  * Changes the specular color property of this light.
  *
@@ -89,6 +99,11 @@ void LIB_API Light::set_diffuse_color(const glm::vec3 new_color)
 void LIB_API Light::set_specular_color(const glm::vec3 new_color)
 {
     this->specular_color = new_color;
+}
+
+glm::vec3 LIB_API Light::get_specular_color() const
+{
+    return this->specular_color;
 }
 
 /**

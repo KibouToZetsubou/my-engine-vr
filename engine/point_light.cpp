@@ -17,6 +17,8 @@
 LIB_API PointLight::PointLight()
 {
     this->set_radius(1.0f);
+
+    std::cout << "PointLight" << std::endl;
 }
 
 /**

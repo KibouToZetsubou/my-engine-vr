@@ -12,15 +12,13 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         layout(location = 1) in vec3 normal;
         //layout(location = 2) in vec2 uv;
 
-        out vec4 view_normal; // The normal position in world coordinates
-        out vec4 position_eyes; // The vertex position in eye coordinates
+        out vec3 normal_eyes; // The normal position in eye coordinates
+        out vec3 position_eyes; // The vertex position in eye coordinates
 
         void main(void)
         {
-            //view_normal = normalize(view_matrix * vec4(normal, 1.0f));
-            //view_normal = normalize(inverse_transpose_view * vec4(normal, 1.0f));
-            view_normal = vec4(normal, 1.0f);
-            position_eyes = view_matrix * vec4(position, 1.0f);
+            normal_eyes = normalize(inverse_transpose_view * vec4(normal, 1.0f)).xyz;
+            position_eyes = (view_matrix * vec4(position, 1.0f)).xyz;
 
             gl_Position = projection_matrix * view_matrix * vec4(position, 1.0f);
         }
@@ -38,30 +36,39 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform float material_shininess;
 
         // Light
-        uniform int   light_type[MAX_LIGHTS]; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
-        uniform vec3  light_ambient[MAX_LIGHTS];
-        uniform vec3  light_diffuse[MAX_LIGHTS];
-        uniform vec3  light_specular[MAX_LIGHTS];
-        uniform vec3  light_position[MAX_LIGHTS];
-        uniform vec3  light_direction[MAX_LIGHTS]; // Directional, Spot
-        uniform float light_radius[MAX_LIGHTS]; // Point, Spot
-        uniform float light_cutoff[MAX_LIGHTS]; // Spot
-        uniform float light_exponent[MAX_LIGHTS]; // Spot
+        // TODO: Support multiple lights (make these arrays)
+        uniform int   light_type; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
+        uniform vec3  light_ambient;
+        uniform vec3  light_diffuse;
+        uniform vec3  light_specular;
+        uniform vec3  light_position;
+        uniform vec3  light_direction; // Directional, Spot
+        uniform float light_radius; // Point, Spot
+        uniform float light_cutoff; // Spot
+        uniform float light_exponent; // Spot
 
-        in vec4 view_normal;
-        in vec4 position_eyes;
+        in vec3 normal_eyes;
+        in vec3 position_eyes;
 
         out vec4 fragment;
 
         void main(void)
         {
-            vec3 total_light_ambient = vec3(0.0f, 0.0f, 0.0f);
+            /*vec3 total_light_ambient = vec3(0.0f, 0.0f, 0.0f);
             for (int i = 0; i < MAX_LIGHTS; ++i)
                 if (light_type[i] != 0)
-                    total_light_ambient += light_ambient[i];
+                    total_light_ambient += light_ambient[i];*/
 
             //const vec3 base_color = material_emission + material_ambient * total_light_ambient;
-            const vec3 base_color = material_diffuse;
+            const vec3 L = normalize(light_position - position_eyes.xyz); // Light direction
+            const float L_dot_N = dot(L, normal_eyes);
+            const vec3 H = normalize(L + normalize(-position_eyes.xyz));
+            const float H_dot_N = dot(normal_eyes, H);
+
+            // TODO:
+            const vec3 base_color = material_emission + material_ambient * light_ambient +
+                material_diffuse * L_dot_N * light_diffuse * 64.0f +
+                material_specular * H_dot_N * light_specular * 64.0f;
 
             fragment = vec4(base_color, 1.0f);
         }

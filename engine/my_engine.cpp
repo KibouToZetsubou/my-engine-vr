@@ -22,6 +22,7 @@
 #include "material.hpp"
 #include "mesh.hpp"
 #include "object.hpp"
+#include "point_light.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -228,11 +229,36 @@ void LIB_API MyEngine::render()
         return a.first->get_priority() > b.first->get_priority();
     });
 
+    // Gather all point lights
+    std::vector<std::shared_ptr<PointLight>> point_lights;
+    for (const auto& object : render_list)
+    {
+        const std::shared_ptr<PointLight> point_light = std::dynamic_pointer_cast<PointLight>(object.first);
+
+        if (point_light != nullptr)
+        {
+            point_lights.push_back(point_light);
+        }
+    }
+
+    // TODO: Also handle directional lights and spot lights
+
     const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
 
     // Normal rendering
     for (const auto& node : render_list)
     {
+        const std::shared_ptr<Mesh> mesh = std::dynamic_pointer_cast<Mesh>(node.first);
+        if (mesh != nullptr && point_lights.size() >= 1)
+        {
+            // TODO: Do this stuff for every light
+            const std::shared_ptr<Shader> shader = mesh->get_shader();
+            shader->set_vec3("light_ambient", point_lights.at(0)->get_ambient_color());
+            shader->set_vec3("light_diffuse", point_lights.at(0)->get_diffuse_color());
+            shader->set_vec3("light_specular", point_lights.at(0)->get_specular_color());
+            shader->set_vec3("light_position", point_lights.at(0)->get_position());
+        }
+
         node.first->render(inverse_camera_matrix * node.second);
     }
 

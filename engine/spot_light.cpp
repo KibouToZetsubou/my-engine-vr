@@ -31,6 +31,8 @@ LIB_API SpotLight::SpotLight()
     this->set_cutoff(45.0f);
     this->set_exponent(8.0f); // 0.0f (no attenuation) - 128.0f
     this->set_radius(1.0f);
+
+    std::cout << "SpotLight" << std::endl;
 }
 
 /**
