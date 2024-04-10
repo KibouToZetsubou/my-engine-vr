@@ -31,8 +31,6 @@ LIB_API SpotLight::SpotLight()
     this->set_cutoff(45.0f);
     this->set_exponent(8.0f); // 0.0f (no attenuation) - 128.0f
     this->set_radius(1.0f);
-
-    std::cout << "SpotLight" << std::endl;
 }
 
 /**
@@ -40,11 +38,11 @@ LIB_API SpotLight::SpotLight()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API SpotLight::render(const glm::mat4 world_matrix) const
+void LIB_API SpotLight::render(const glm::mat4 view_matrix) const
 {
-    Node::render(world_matrix);
+    Node::render(view_matrix);
 
     //glEnable(GL_LIGHT0 + this->light_id);
 

@@ -229,21 +229,25 @@ void LIB_API MyEngine::render()
         return a.first->get_priority() > b.first->get_priority();
     });
 
+    const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
+    for (auto& item : render_list)
+    {
+        item.second = inverse_camera_matrix * item.second;
+    }
+
     // Gather all point lights
-    std::vector<std::shared_ptr<PointLight>> point_lights;
+    std::vector<std::pair<std::shared_ptr<PointLight>, glm::mat4>> point_lights;
     for (const auto& object : render_list)
     {
         const std::shared_ptr<PointLight> point_light = std::dynamic_pointer_cast<PointLight>(object.first);
 
         if (point_light != nullptr)
         {
-            point_lights.push_back(point_light);
+            point_lights.push_back(std::make_pair(point_light, object.second));
         }
     }
 
     // TODO: Also handle directional lights and spot lights
-
-    const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
 
     // Normal rendering
     for (const auto& node : render_list)
@@ -252,14 +256,15 @@ void LIB_API MyEngine::render()
         if (mesh != nullptr && point_lights.size() >= 1)
         {
             // TODO: Do this stuff for every light
+            const auto& light = point_lights.at(0);
             const std::shared_ptr<Shader> shader = mesh->get_shader();
-            shader->set_vec3("light_ambient", point_lights.at(0)->get_ambient_color());
-            shader->set_vec3("light_diffuse", point_lights.at(0)->get_diffuse_color());
-            shader->set_vec3("light_specular", point_lights.at(0)->get_specular_color());
-            shader->set_vec3("light_position", point_lights.at(0)->get_position());
+            shader->set_vec3("light_ambient", light.first->get_ambient_color());
+            shader->set_vec3("light_diffuse", light.first->get_diffuse_color());
+            shader->set_vec3("light_specular", light.first->get_specular_color());
+            shader->set_vec3("light_position", light.second * glm::vec4(light.first->get_position(), 1.0f));
         }
 
-        node.first->render(inverse_camera_matrix * node.second);
+        node.first->render(node.second);
     }
 
     // Shadow rendering

@@ -134,7 +134,7 @@ glm::mat4 LIB_API Node::get_local_matrix() const
  *
  * @param world_matrix The world matrix to use to render this object.
  */
-void LIB_API Node::render(const glm::mat4 world_matrix) const
+void LIB_API Node::render(const glm::mat4 view_matrix) const
 {
     /*glMatrixMode(GL_MODELVIEW);
     glLoadMatrixf(glm::value_ptr(world_matrix));*/

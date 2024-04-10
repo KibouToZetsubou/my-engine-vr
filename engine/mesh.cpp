@@ -34,11 +34,11 @@ LIB_API Mesh::Mesh()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API Mesh::render(const glm::mat4 world_matrix) const
+void LIB_API Mesh::render(const glm::mat4 view_matrix) const
 {
-    Node::render(world_matrix);
+    Node::render(view_matrix);
 
     if (this->vao_id == -1 || this->number_of_faces == 0)
     {
@@ -52,7 +52,7 @@ void LIB_API Mesh::render(const glm::mat4 world_matrix) const
     this->shader->set_vec3("material_specular", this->material->get_specular_color());
     this->shader->set_float("material_shininess", this->material->get_shininess());
 
-    this->shader->render(world_matrix);
+    this->shader->render(view_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);

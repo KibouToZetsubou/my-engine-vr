@@ -17,16 +17,16 @@
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API OrthoCamera::render(const glm::mat4 world_matrix) const
+void LIB_API OrthoCamera::render(const glm::mat4 view_matrix) const
 {
     if (!this->is_active)
     {
         return;
     }
 
-    Node::render(world_matrix);
+    Node::render(view_matrix);
 
     const float width = static_cast<float>(this->window_width);
     const float height = static_cast<float>(this->window_height);

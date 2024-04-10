@@ -1,5 +1,4 @@
 #include "camera.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
 
 #include "common.hpp"
 

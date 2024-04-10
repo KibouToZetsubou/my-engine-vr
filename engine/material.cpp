@@ -39,9 +39,9 @@ LIB_API Material::Material()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API Material::render(const glm::mat4 world_matrix) const
+void LIB_API Material::render(const glm::mat4 view_matrix) const
 {
     /*glDisable(GL_TEXTURE_2D);
 
@@ -53,7 +53,7 @@ void LIB_API Material::render(const glm::mat4 world_matrix) const
 
     if (this->texture != nullptr)
     {
-        this->texture->render(world_matrix);
+        this->texture->render(view_matrix);
     }
 }
 

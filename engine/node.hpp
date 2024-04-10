@@ -27,7 +27,7 @@ public:
 
     glm::mat4 get_local_matrix() const override;
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 private:
     glm::mat4 base_matrix;
     glm::vec3 position;

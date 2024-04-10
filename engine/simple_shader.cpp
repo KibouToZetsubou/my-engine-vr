@@ -6,7 +6,7 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         uniform mat4 projection_matrix;
         uniform mat4 view_matrix;
-        uniform mat4 inverse_transpose_view;
+        uniform mat4 inverse_transpose_world;
 
         layout(location = 0) in vec3 position;
         layout(location = 1) in vec3 normal;
@@ -17,7 +17,7 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         void main(void)
         {
-            normal_eyes = normalize(inverse_transpose_view * vec4(normal, 1.0f)).xyz;
+            normal_eyes = normalize(inverse_transpose_world * vec4(normal, 1.0f)).xyz;
             position_eyes = (view_matrix * vec4(position, 1.0f)).xyz;
 
             gl_Position = projection_matrix * view_matrix * vec4(position, 1.0f);
@@ -41,7 +41,7 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform vec3  light_ambient;
         uniform vec3  light_diffuse;
         uniform vec3  light_specular;
-        uniform vec3  light_position;
+        uniform vec3  light_position; // Light position in eye coordinates
         uniform vec3  light_direction; // Directional, Spot
         uniform float light_radius; // Point, Spot
         uniform float light_cutoff; // Spot
@@ -59,16 +59,16 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
                 if (light_type[i] != 0)
                     total_light_ambient += light_ambient[i];*/
 
-            //const vec3 base_color = material_emission + material_ambient * total_light_ambient;
-            const vec3 L = normalize(light_position - position_eyes.xyz); // Light direction
+            const vec3 L = normalize(light_position - position_eyes.xyz);
             const float L_dot_N = dot(L, normal_eyes);
             const vec3 H = normalize(L + normalize(-position_eyes.xyz));
-            const float H_dot_N = dot(normal_eyes, H);
+            const float N_dot_H = dot(normal_eyes, H);
 
-            // TODO:
-            const vec3 base_color = material_emission + material_ambient * light_ambient +
+            // TODO: Find out why the light is so dark
+            const vec3 base_color = material_emission +
+                material_ambient * light_ambient +
                 material_diffuse * L_dot_N * light_diffuse * 64.0f +
-                material_specular * H_dot_N * light_specular * 64.0f;
+                material_specular * pow(N_dot_H, material_shininess) * light_specular * 64.0f;
 
             fragment = vec4(base_color, 1.0f);
         }

@@ -19,7 +19,7 @@ LIB_API Shader::~Shader()
     glDeleteProgram(this->program_id);
 }
 
-void LIB_API Shader::render(const glm::mat4 world_matrix) const
+void LIB_API Shader::render(const glm::mat4 view_matrix) const
 {
     glUseProgram(this->program_id);
 
@@ -31,12 +31,12 @@ void LIB_API Shader::render(const glm::mat4 world_matrix) const
 
     // View matrix
     const int uniform_location_view_matrix = glGetUniformLocation(this->program_id, "view_matrix");
-    glUniformMatrix4fv(uniform_location_view_matrix, 1, GL_FALSE, glm::value_ptr(world_matrix));
+    glUniformMatrix4fv(uniform_location_view_matrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
     // Inverse-Transpose of view matrix
-    const glm::mat4 inverse_transpose_view = glm::inverseTranspose(world_matrix);
-    const int uniform_location_inverse_transpose_view = glGetUniformLocation(this->program_id, "inverse_transpose_view");
-    glUniformMatrix4fv(uniform_location_inverse_transpose_view, 1, GL_FALSE, glm::value_ptr(inverse_transpose_view));
+    const glm::mat4 inverse_transpose_world = glm::inverseTranspose(view_matrix);
+    const int uniform_location_inverse_transpose_world = glGetUniformLocation(this->program_id, "inverse_transpose_world");
+    glUniformMatrix4fv(uniform_location_inverse_transpose_world, 1, GL_FALSE, glm::value_ptr(inverse_transpose_world));
 
     for (auto i = this->floats.begin(); i != this->floats.end(); ++i)
     {

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include "common.hpp"
 #include "shader.hpp"
 

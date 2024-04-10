@@ -15,7 +15,7 @@ class LIB_API DirectionalLight : public Light
 public:
     DirectionalLight();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void set_direction(const glm::vec3 new_direction);
 private:

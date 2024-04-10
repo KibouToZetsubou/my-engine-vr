@@ -14,7 +14,7 @@ public:
     Shader(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
     ~Shader();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void clear_uniforms();
     void set_float(const std::string name, const float value);

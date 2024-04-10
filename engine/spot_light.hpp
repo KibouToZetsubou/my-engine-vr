@@ -13,7 +13,7 @@ class LIB_API SpotLight : public Light
 public:
     SpotLight();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void set_cutoff(const float new_cutoff);
     void set_radius(const float new_radius);

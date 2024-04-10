@@ -25,7 +25,7 @@ public:
     Texture(const std::string path);
     ~Texture();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 private:
     void* bitmap;
     unsigned int texture_id;

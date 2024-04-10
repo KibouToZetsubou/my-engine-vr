@@ -1,10 +1,11 @@
 #include "point_light.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 
-#include <GL/freeglut.h>
+//#define GLM_ENABLE_EXPERIMENTAL
+//#include <GL/glew.h>
+
+//#include <GL/freeglut.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+//#include <glm/gtc/type_ptr.hpp>
 
 #include "common.hpp"
 #include "node.hpp"
@@ -17,8 +18,6 @@
 LIB_API PointLight::PointLight()
 {
     this->set_radius(1.0f);
-
-    std::cout << "PointLight" << std::endl;
 }
 
 /**
@@ -26,13 +25,13 @@ LIB_API PointLight::PointLight()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API PointLight::render(const glm::mat4 world_matrix) const
+void LIB_API PointLight::render(const glm::mat4 view_matrix) const
 {
-    Node::render(world_matrix);
+    Node::render(view_matrix);
 
-    //glEnable(GL_LIGHT0 + this->light_id);
+    /*glEnable(GL_LIGHT0 + this->light_id);
 
     const glm::vec4 light_position(0.0f, 0.0f, 0.0f, 1.0f);
     const glm::vec4 ambient(this->ambient_color, 1.0f);
@@ -43,7 +42,7 @@ void LIB_API PointLight::render(const glm::mat4 world_matrix) const
 
     const int current_light = Light::get_current_light(this->light_id);
 
-    /*glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
+    glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
     glLightfv(current_light, GL_AMBIENT, glm::value_ptr(ambient));
     glLightfv(current_light, GL_DIFFUSE, glm::value_ptr(diffuse));
     glLightfv(current_light, GL_SPECULAR, glm::value_ptr(specular));

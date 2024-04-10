@@ -20,8 +20,6 @@
 LIB_API DirectionalLight::DirectionalLight()
 {
     this->set_direction(glm::vec3(0.0f, 1.0f, 0.0f));
-
-    std::cout << "DirectionalLight" << std::endl;
 }
 
 /**
@@ -29,11 +27,11 @@ LIB_API DirectionalLight::DirectionalLight()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API DirectionalLight::render(const glm::mat4 world_matrix) const
+void LIB_API DirectionalLight::render(const glm::mat4 view_matrix) const
 {
-    Node::render(world_matrix);
+    Node::render(view_matrix);
 
     //glEnable(GL_LIGHT0 + this->light_id);
 

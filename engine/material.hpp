@@ -16,7 +16,7 @@ class LIB_API Material : public Object
 public:
     Material();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void set_emission_color(const glm::vec3 new_color);
     glm::vec3 get_emission_color() const;

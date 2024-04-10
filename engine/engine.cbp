@@ -55,8 +55,6 @@
 		<Unit filename="camera.cpp" />
 		<Unit filename="camera.hpp" />
 		<Unit filename="common.hpp" />
-		<Unit filename="cube.cpp" />
-		<Unit filename="cube.hpp" />
 		<Unit filename="directional_light.cpp" />
 		<Unit filename="directional_light.hpp" />
 		<Unit filename="light.cpp" />
@@ -83,8 +81,6 @@
 		<Unit filename="shader.hpp" />
 		<Unit filename="simple_shader.cpp" />
 		<Unit filename="simple_shader.hpp" />
-		<Unit filename="sphere.cpp" />
-		<Unit filename="sphere.hpp" />
 		<Unit filename="spot_light.cpp" />
 		<Unit filename="spot_light.hpp" />
 		<Unit filename="texture.cpp" />

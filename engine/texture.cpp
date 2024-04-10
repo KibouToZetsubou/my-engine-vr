@@ -62,7 +62,7 @@ LIB_API Texture::~Texture()
  *
  * @param world_matrix The world matrix to use to render this object.
  */
-void LIB_API Texture::render(const glm::mat4 world_matrix) const
+void LIB_API Texture::render(const glm::mat4 view_matrix) const
 {
     /*glBindTexture(GL_TEXTURE_2D, this->texture_id);
     glEnable(GL_TEXTURE_2D);*/

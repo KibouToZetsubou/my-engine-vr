@@ -28,7 +28,7 @@ public:
     virtual glm::mat4 get_local_matrix() const;
     virtual int get_priority() const;
 
-    virtual void render(const glm::mat4 world_matrix) const = 0;
+    virtual void render(const glm::mat4 view_matrix) const = 0;
 protected:
     std::vector<std::shared_ptr<Object>> children;
 private:

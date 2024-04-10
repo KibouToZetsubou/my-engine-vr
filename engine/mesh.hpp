@@ -17,7 +17,7 @@ public:
     Mesh();
     ~Mesh();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void set_material(const std::shared_ptr<Material> new_material);
     std::shared_ptr<Material> get_material() const;
