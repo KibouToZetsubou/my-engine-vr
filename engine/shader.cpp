@@ -1,6 +1,5 @@
 #include "shader.hpp"
 
-#include <iostream>
 #include <map>
 #include <string>
 
@@ -58,6 +57,13 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
         glUniform3fv(uniform_location, 1, glm::value_ptr(i->second));
     }
+
+    for (auto i = this->bools.begin(); i != this->bools.end(); ++i)
+    {
+        // TODO: Handle case where the uniform in the map does not exists in the shader.
+        const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+        glUniform1i(uniform_location, i->second);
+    }
 }
 
 void LIB_API Shader::clear_uniforms()
@@ -65,6 +71,7 @@ void LIB_API Shader::clear_uniforms()
     this->floats.clear();
     this->ints.clear();
     this->vec3s.clear();
+    this->bools.clear();
 }
 
 void LIB_API Shader::set_float(const std::string name, const float value)
@@ -80,6 +87,11 @@ void LIB_API Shader::set_int(const std::string name, const int value)
 void LIB_API Shader::set_vec3(const std::string name, const glm::vec3 value)
 {
     this->vec3s[name] = value;
+}
+
+void LIB_API Shader::set_bool(const std::string name, const bool value)
+{
+    this->bools[name] = value;
 }
 
 void LIB_API Shader::compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source)

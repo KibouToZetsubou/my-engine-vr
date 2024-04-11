@@ -141,3 +141,8 @@ void LIB_API Material::set_texture(const std::shared_ptr<Texture> new_texture)
 {
     this->texture = new_texture;
 }
+
+std::shared_ptr<Texture> LIB_API Material::get_texture() const
+{
+    return this->texture;
+}

@@ -10,15 +10,17 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         layout(location = 0) in vec3 position;
         layout(location = 1) in vec3 normal;
-        //layout(location = 2) in vec2 uv;
+        layout(location = 2) in vec2 uv;
 
         out vec3 normal_eyes; // The normal position in eye coordinates
         out vec3 position_eyes; // The vertex position in eye coordinates
+        out vec2 uv_;
 
         void main(void)
         {
             normal_eyes = normalize(inverse_transpose_world * vec4(normal, 1.0f)).xyz;
             position_eyes = (view_matrix * vec4(position, 1.0f)).xyz;
+            uv_ = uv;
 
             gl_Position = projection_matrix * view_matrix * vec4(position, 1.0f);
         }
@@ -34,6 +36,8 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform vec3 material_diffuse;
         uniform vec3 material_specular;
         uniform float material_shininess;
+        uniform bool use_texture;
+        uniform sampler2D material_texture;
 
         // Light
         // TODO: Support multiple lights (make these arrays)
@@ -49,6 +53,7 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         in vec3 normal_eyes;
         in vec3 position_eyes;
+        in vec2 uv_;
 
         out vec4 fragment;
 
@@ -70,7 +75,14 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
                 material_diffuse * L_dot_N * light_diffuse * 64.0f +
                 material_specular * pow(N_dot_H, material_shininess) * light_specular * 64.0f;
 
-            fragment = vec4(base_color, 1.0f);
+            if (use_texture)
+            {
+                fragment = texture(material_texture, uv_) * vec4(base_color, 1.0f);
+            }
+            else
+            {
+                fragment = vec4(base_color, 1.0f);
+            }
         }
     )")
     {}

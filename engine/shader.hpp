@@ -20,6 +20,7 @@ public:
     void set_float(const std::string name, const float value);
     void set_int(const std::string name, const int value);
     void set_vec3(const std::string name, const glm::vec3 value);
+    void set_bool(const std::string name, const bool value);
 protected:
     void compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
 
@@ -28,4 +29,5 @@ protected:
     std::map<std::string, float> floats;
     std::map<std::string, int> ints;
     std::map<std::string, glm::vec3> vec3s;
+    std::map<std::string, bool> bools;
 };

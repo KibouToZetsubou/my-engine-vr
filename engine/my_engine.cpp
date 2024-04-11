@@ -25,6 +25,7 @@
 #include "point_light.hpp"
 #include "shader.hpp"
 #include "simple_shader.hpp"
+#include "texture.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -257,6 +258,7 @@ void LIB_API MyEngine::render()
     // TODO: Also handle directional lights and spot lights
 
     // Setup shader
+    MyEngine::shader->clear_uniforms();
     // TODO: Do this stuff for every light
     const auto& light = point_lights.at(0);
     MyEngine::shader->set_vec3("light_ambient", light.first->get_ambient_color());
@@ -272,11 +274,15 @@ void LIB_API MyEngine::render()
         {
             // Load material information into the shader
             const std::shared_ptr<Material> material = mesh->get_material();
+            material->render(node.second);
             MyEngine::shader->set_vec3("material_emission", material->get_emission_color());
             MyEngine::shader->set_vec3("material_ambient", material->get_ambient_color());
             MyEngine::shader->set_vec3("material_diffuse", material->get_diffuse_color());
             MyEngine::shader->set_vec3("material_specular", material->get_specular_color());
             MyEngine::shader->set_float("material_shininess", material->get_shininess());
+
+            const std::shared_ptr<Texture> texture = material->get_texture();
+            MyEngine::shader->set_bool("use_texture", texture != nullptr);
         }
 
         MyEngine::shader->render(node.second);

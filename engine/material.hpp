@@ -34,6 +34,7 @@ public:
     float get_shininess() const;
 
     void set_texture(const std::shared_ptr<Texture> new_texture);
+    std::shared_ptr<Texture> get_texture() const;
 private:
     glm::vec3 emission_color;
     glm::vec3 ambient_color;

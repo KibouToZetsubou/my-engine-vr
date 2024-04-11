@@ -1,13 +1,11 @@
 #include "mesh.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-
-#include <GL/glew.h>
 
 #include <memory>
 #include <tuple>
 #include <variant>
 #include <vector>
 
+#include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 
@@ -113,11 +111,11 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
 
     // UVs
     //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    /*glGenBuffers(1, &this->vbo_uvs);
+    glGenBuffers(1, &this->vbo_uvs);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_uvs);
     glBufferData(GL_ARRAY_BUFFER, new_uvs.size()  * sizeof(glm::vec2), new_uvs.data(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);*/
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
     //glTexCoordPointer(2, GL_FLOAT, 0, nullptr);*/
 
     // Faces
