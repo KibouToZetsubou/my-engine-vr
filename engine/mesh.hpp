@@ -6,7 +6,6 @@
 #include "common.hpp"
 #include "material.hpp"
 #include "node.hpp"
-#include "shader.hpp"
 
 /**
  * A mesh represents a shape that can be rendered inside a scene.
@@ -22,9 +21,6 @@ public:
     void set_material(const std::shared_ptr<Material> new_material);
     std::shared_ptr<Material> get_material() const;
 
-    void set_shader(const std::shared_ptr<Shader> new_shader);
-    std::shared_ptr<Shader> get_shader() const;
-
     void set_cast_shadows(const bool new_cast_shadows);
     bool get_cast_shadows() const;
 
@@ -36,7 +32,6 @@ public:
 
 private:
     std::shared_ptr<Material> material;
-    std::shared_ptr<Shader> shader;
     int number_of_faces;
 
     unsigned int vbo_vertices;

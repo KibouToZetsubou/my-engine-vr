@@ -13,8 +13,6 @@
 
 #include "common.hpp"
 #include "node.hpp"
-#include "shader.hpp"
-#include "simple_shader.hpp"
 
 /**
  * Creates a new empty Mesh with the default material and shadow casting activated.
@@ -22,7 +20,6 @@
 LIB_API Mesh::Mesh()
 {
     this->set_material(std::make_shared<Material>());
-    this->set_shader(std::make_shared<SimpleShader>());
     this->set_cast_shadows(true);
 
     this->vao_id = -1;
@@ -44,15 +41,6 @@ void LIB_API Mesh::render(const glm::mat4 view_matrix) const
     {
         return;
     }
-
-    // Load material information into the shader
-    this->shader->set_vec3("material_emission", this->material->get_emission_color());
-    this->shader->set_vec3("material_ambient", this->material->get_ambient_color());
-    this->shader->set_vec3("material_diffuse", this->material->get_diffuse_color());
-    this->shader->set_vec3("material_specular", this->material->get_specular_color());
-    this->shader->set_float("material_shininess", this->material->get_shininess());
-
-    this->shader->render(view_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
@@ -79,16 +67,6 @@ void LIB_API Mesh::set_material(const std::shared_ptr<Material> new_material)
 std::shared_ptr<Material> LIB_API Mesh::get_material() const
 {
     return this->material;
-}
-
-void LIB_API Mesh::set_shader(const std::shared_ptr<Shader> new_shader)
-{
-    this->shader = new_shader;
-}
-
-std::shared_ptr<Shader> LIB_API Mesh::get_shader() const
-{
-    return this->shader;
 }
 
 /**

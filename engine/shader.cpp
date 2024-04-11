@@ -40,7 +40,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
     for (auto i = this->floats.begin(); i != this->floats.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
+        // TODO: Handle case where the uniform in the map does not exist in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
         glUniform1f(uniform_location, i->second);
     }

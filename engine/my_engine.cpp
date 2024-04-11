@@ -23,6 +23,8 @@
 #include "mesh.hpp"
 #include "object.hpp"
 #include "point_light.hpp"
+#include "shader.hpp"
+#include "simple_shader.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -32,7 +34,8 @@ std::shared_ptr<Camera> MyEngine::active_camera;
 std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
-std::shared_ptr<Material> MyEngine::shadow_material = std::make_shared<Material>();
+std::shared_ptr<Material> MyEngine::shadow_material = nullptr;
+std::shared_ptr<Shader> MyEngine::shader = nullptr;
 
 // Frames:
 int MyEngine::frames = 0;
@@ -160,7 +163,11 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Initialize FreeImage
     FreeImage_Initialise();
 
+    // Configure global shader
+    MyEngine::shader = std::make_shared<SimpleShader>();
+
     // Configure the material used to draw shadows.
+    MyEngine::shadow_material = std::make_shared<Material>();
     MyEngine::shadow_material->set_ambient_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_diffuse_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -249,21 +256,30 @@ void LIB_API MyEngine::render()
 
     // TODO: Also handle directional lights and spot lights
 
+    // Setup shader
+    // TODO: Do this stuff for every light
+    const auto& light = point_lights.at(0);
+    MyEngine::shader->set_vec3("light_ambient", light.first->get_ambient_color());
+    MyEngine::shader->set_vec3("light_diffuse", light.first->get_diffuse_color());
+    MyEngine::shader->set_vec3("light_specular", light.first->get_specular_color());
+    MyEngine::shader->set_vec3("light_position", light.second * glm::vec4(light.first->get_position(), 1.0f));
+
     // Normal rendering
     for (const auto& node : render_list)
     {
         const std::shared_ptr<Mesh> mesh = std::dynamic_pointer_cast<Mesh>(node.first);
         if (mesh != nullptr && point_lights.size() >= 1)
         {
-            // TODO: Do this stuff for every light
-            const auto& light = point_lights.at(0);
-            const std::shared_ptr<Shader> shader = mesh->get_shader();
-            shader->set_vec3("light_ambient", light.first->get_ambient_color());
-            shader->set_vec3("light_diffuse", light.first->get_diffuse_color());
-            shader->set_vec3("light_specular", light.first->get_specular_color());
-            shader->set_vec3("light_position", light.second * glm::vec4(light.first->get_position(), 1.0f));
+            // Load material information into the shader
+            const std::shared_ptr<Material> material = mesh->get_material();
+            MyEngine::shader->set_vec3("material_emission", material->get_emission_color());
+            MyEngine::shader->set_vec3("material_ambient", material->get_ambient_color());
+            MyEngine::shader->set_vec3("material_diffuse", material->get_diffuse_color());
+            MyEngine::shader->set_vec3("material_specular", material->get_specular_color());
+            MyEngine::shader->set_float("material_shininess", material->get_shininess());
         }
 
+        MyEngine::shader->render(node.second);
         node.first->render(node.second);
     }
 
