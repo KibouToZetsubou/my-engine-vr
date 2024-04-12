@@ -14,7 +14,6 @@ LIB_API Camera::Camera()
     this->set_fov(90.0f);
     this->set_clipping(0.01f, 1000.0f);
     this->is_active = false;
-    this->set_window_size(0, 0);
 }
 
 /**
@@ -27,20 +26,6 @@ LIB_API Camera::Camera()
 int LIB_API Camera::get_priority() const
 {
     return 200;
-}
-
-/**
- * Sets the size of the camera frame.
- *
- * This function is called automatically by MyEngine and there's no need to manually call this function.
- *
- * @param new_width The width of the frame in pixels.
- * @param new_height The height of the frame in pixels.
- */
-void LIB_API Camera::set_window_size(const int new_width, const int new_height)
-{
-    this->window_width = new_width;
-    this->window_height = new_height;
 }
 
 /**

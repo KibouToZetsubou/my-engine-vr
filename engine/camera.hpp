@@ -5,8 +5,6 @@
 #include "common.hpp"
 #include "node.hpp"
 
-// TODO: Add a function to return the projection matrix
-
 /**
  * This class works as a base to be inherited from to implement cameras into the scene.
  *
@@ -18,7 +16,9 @@ public:
     Camera();
 
     int get_priority() const override;
-    void set_window_size(const int new_width, const int new_height);
+
+    virtual glm::mat4 get_projection_matrix(const unsigned int window_width, const unsigned int window_height) const = 0;
+
     void set_fov(const float new_fov);
     void set_clipping(const float new_near_clipping, const float new_far_clipping);
     void set_active(const bool new_is_active);
@@ -26,7 +26,5 @@ protected:
     float fov;
     float near_clipping;
     float far_clipping;
-    int window_width;
-    int window_height;
     bool is_active;
 };

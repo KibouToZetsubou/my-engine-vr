@@ -11,22 +11,20 @@
  */
 void LIB_API OrthoCamera::render(const glm::mat4 view_matrix) const
 {
-    if (!this->is_active)
-    {
-        return;
-    }
-
     Node::render(view_matrix);
+}
 
-    const float width = static_cast<float>(this->window_width);
-    const float height = static_cast<float>(this->window_height);
+glm::mat4 LIB_API OrthoCamera::get_projection_matrix(const unsigned int window_width, const unsigned int window_height) const
+{
+    const float width = static_cast<float>(window_width);
+    const float height = static_cast<float>(window_height);
 
     const float max = std::max(width, height);
 
     const float w = (width / max) * this->zoom;
     const float h = (height / max) * this->zoom;
 
-    const glm::mat4 ortho_matrix = glm::ortho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, this->near_clipping, this->far_clipping);
+    return glm::ortho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, this->near_clipping, this->far_clipping);
 }
 
 /**

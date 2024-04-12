@@ -208,8 +208,6 @@ void LIB_API MyEngine::render()
         return;
     }
 
-    MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
-
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
         return a.first->get_priority() > b.first->get_priority();
@@ -305,6 +303,9 @@ void LIB_API MyEngine::render()
     //MyEngine::shader->set_vector_float("light_radius", light_radiuses);
     //MyEngine::shader->set_vector_float("light_cutoff", light_cutoffs);
     //MyEngine::shader->set_vector_float("light_exponent", light_exponents);
+
+    const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(MyEngine::window_width, MyEngine::window_height);
+    MyEngine::shader->set_mat4("projection_matrix", projection_matrix);
 
     // Normal rendering
     for (const auto& node : render_list)
@@ -491,7 +492,6 @@ void LIB_API MyEngine::set_active_camera(const std::shared_ptr<Camera> new_activ
         MyEngine::active_camera->set_active(false);
     }
 
-    new_active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
     new_active_camera->set_active(true);
 
     MyEngine::active_camera = new_active_camera;
@@ -507,14 +507,6 @@ void LIB_API MyEngine::resize_callback(const int width, const int height)
 {
     MyEngine::window_width = width;
     MyEngine::window_height = height;
-
-    std::cout << "width: " << MyEngine::window_width << std::endl;
-    std::cout << "height: " << MyEngine::window_height << std::endl;
-
-    if (MyEngine::active_camera != nullptr)
-    {
-        MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
-    }
 
     glViewport(0, 0, width, height);
 }

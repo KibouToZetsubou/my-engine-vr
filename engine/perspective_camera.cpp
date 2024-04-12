@@ -11,14 +11,12 @@
  */
 void LIB_API PerspectiveCamera::render(const glm::mat4 view_matrix) const
 {
-    if (!this->is_active)
-    {
-        return;
-    }
-
     Node::render(view_matrix);
+}
 
-    const float aspect_ratio = static_cast<float>(this->window_width) / static_cast<float>(this->window_height);
+glm::mat4 LIB_API PerspectiveCamera::get_projection_matrix(const unsigned int window_width, const unsigned int window_height) const
+{
+    const float aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
 
-    const glm::mat4 perspective_matrix = glm::perspective(glm::radians(this->fov), aspect_ratio, this->near_clipping, this->far_clipping);
+    return glm::perspective(glm::radians(this->fov), aspect_ratio, this->near_clipping, this->far_clipping);
 }
