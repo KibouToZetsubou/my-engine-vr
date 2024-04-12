@@ -1,15 +1,9 @@
 #include "spot_light.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 
-#include <GL/freeglut.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 
 #include "glm/ext.hpp"
-#include "glm/gtx/string_cast.hpp"
-
 
 #include "common.hpp"
 #include "node.hpp"
@@ -43,26 +37,6 @@ LIB_API SpotLight::SpotLight()
 void LIB_API SpotLight::render(const glm::mat4 view_matrix) const
 {
     Node::render(view_matrix);
-
-    //glEnable(GL_LIGHT0 + this->light_id);
-
-    const glm::vec4 light_position(this->direction, 1.0f);
-    const glm::vec3 light_direction(0.0f, -0.1f, 0.0f);
-    const glm::vec4 ambient(this->ambient_color, 1.0f);
-    const glm::vec4 diffuse(this->diffuse_color, 1.0f);
-    const glm::vec4 specular(this->specular_color, 1.0f);
-    const float constant_attenuation = 1.0f / this->radius;
-
-    const int current_light = Light::get_current_light(this->light_id);
-
-    /*glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
-    glLightfv(current_light, GL_SPOT_DIRECTION, glm::value_ptr(light_direction));
-    glLightfv(current_light, GL_AMBIENT, glm::value_ptr(ambient));
-    glLightfv(current_light, GL_DIFFUSE, glm::value_ptr(diffuse));
-    glLightfv(current_light, GL_SPECULAR, glm::value_ptr(specular));
-    glLightfv(current_light, GL_SPOT_CUTOFF, &this->cutoff);
-    glLightf(current_light, GL_CONSTANT_ATTENUATION, constant_attenuation);
-    glLightf(current_light, GL_SPOT_EXPONENT, this->exponent);*/
 }
 
 /**

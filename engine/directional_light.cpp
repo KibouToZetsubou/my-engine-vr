@@ -1,13 +1,6 @@
 #include "directional_light.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 
-#include <GL/freeglut.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-
-#include <glm/gtx/string_cast.hpp>
 
 #include "common.hpp"
 #include "node.hpp"
@@ -32,22 +25,6 @@ LIB_API DirectionalLight::DirectionalLight()
 void LIB_API DirectionalLight::render(const glm::mat4 view_matrix) const
 {
     Node::render(view_matrix);
-
-    //glEnable(GL_LIGHT0 + this->light_id);
-
-    //const glm::vec4 light_position(this->direction, 0.0f);
-    const glm::vec4 light_position(0.0f, 100.0f, 0.0f, 0.0f);
-    //const glm::vec4 light_position(this->get_position(), 0.0f);
-    const glm::vec4 ambient(this->ambient_color, 1.0f);
-    const glm::vec4 diffuse(this->diffuse_color, 1.0f);
-    const glm::vec4 specular(this->specular_color, 1.0f);
-
-    const int current_light = Light::get_current_light(this->light_id);
-
-    /*glLightfv(current_light, GL_POSITION, glm::value_ptr(light_position));
-    glLightfv(current_light, GL_AMBIENT, glm::value_ptr(ambient));
-    glLightfv(current_light, GL_DIFFUSE, glm::value_ptr(diffuse));
-    glLightfv(current_light, GL_SPECULAR, glm::value_ptr(specular));*/
 }
 
 /**

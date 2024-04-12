@@ -18,7 +18,7 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
 
         void main(void)
         {
-            normal_eyes = normalize(inverse_transpose_world * vec4(normal, 1.0f)).xyz;
+            normal_eyes = (inverse_transpose_world * vec4(normal, 1.0f)).xyz;
             position_eyes = (view_matrix * vec4(position, 1.0f)).xyz;
             uv_ = uv;
 
@@ -65,16 +65,16 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
             for (int i = 0; i < number_of_lights; ++i)
             {
                 const vec3 L = normalize(light_position[i] - position_eyes.xyz);
-                const float L_dot_N = dot(L, normal_eyes);
+                const float L_dot_N = dot(L, normalize(normal_eyes));
                 const vec3 H = normalize(L + normalize(-position_eyes.xyz));
-                const float H_dot_N = dot(H, normal_eyes);
+                const float H_dot_N = dot(H, normalize(normal_eyes));
 
                 total_light_ambient += light_ambient[i];
 
                 if (L_dot_N > 0.0f)
                 {
-                    total_diffuse += material_diffuse * L_dot_N * light_diffuse[i] * 256.0f;
-                    total_specular += material_specular * pow(H_dot_N, material_shininess) * light_specular[i] * 256.0f;
+                    total_diffuse += material_diffuse * L_dot_N * light_diffuse[i];
+                    total_specular += material_specular * pow(H_dot_N, material_shininess) * light_specular[i];
                 }
             }
 
@@ -88,6 +88,8 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
             {
                 fragment = vec4(base_color, 1.0f);
             }
+
+            //fragment = vec4(light_ambient[0], 1.0f);
         }
     )")
     {}
