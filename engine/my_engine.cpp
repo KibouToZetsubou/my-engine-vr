@@ -255,6 +255,8 @@ void LIB_API MyEngine::render()
     std::vector<float> light_cutoffs; // Spot
     std::vector<float> light_exponents; // Spot
 
+    int number_of_lights = 0;
+
     // Gather all point lights
     for (const auto& object : render_list)
     {
@@ -262,7 +264,8 @@ void LIB_API MyEngine::render()
 
         if (point_light != nullptr)
         {
-            light_types.push_back(2);
+            ++number_of_lights;
+            light_types.push_back(1);
             light_ambients.push_back(point_light->get_ambient_color());
             light_diffuses.push_back(point_light->get_diffuse_color());
             light_speculars.push_back(point_light->get_specular_color());
@@ -281,7 +284,8 @@ void LIB_API MyEngine::render()
 
         if (directional_light != nullptr)
         {
-            light_types.push_back(1);
+            ++number_of_lights;
+            light_types.push_back(0);
             light_ambients.push_back(directional_light->get_ambient_color());
             light_diffuses.push_back(directional_light->get_diffuse_color());
             light_speculars.push_back(directional_light->get_specular_color());
@@ -300,7 +304,8 @@ void LIB_API MyEngine::render()
 
         if (spot_light != nullptr)
         {
-            light_types.push_back(3);
+            ++number_of_lights;
+            light_types.push_back(2);
             light_ambients.push_back(spot_light->get_ambient_color());
             light_diffuses.push_back(spot_light->get_diffuse_color());
             light_speculars.push_back(spot_light->get_specular_color());
@@ -314,15 +319,16 @@ void LIB_API MyEngine::render()
 
     // Setup shader
     MyEngine::shader->clear_uniforms();
-    MyEngine::shader->set_vector_int("light_type", light_types);
+    MyEngine::shader->set_int("number_of_lights", number_of_lights);
+    //MyEngine::shader->set_vector_int("light_type", light_types);
     MyEngine::shader->set_vector_vec3("light_ambient", light_ambients);
     MyEngine::shader->set_vector_vec3("light_diffuse", light_diffuses);
     MyEngine::shader->set_vector_vec3("light_specular", light_speculars);
     MyEngine::shader->set_vector_vec3("light_position", light_positions);
-    MyEngine::shader->set_vector_vec3("light_directions", light_directions);
-    MyEngine::shader->set_vector_float("light_radius", light_radiuses);
-    MyEngine::shader->set_vector_float("light_cutoff", light_cutoffs);
-    MyEngine::shader->set_vector_float("light_exponent", light_exponents);
+    //MyEngine::shader->set_vector_vec3("light_direction", light_directions);
+    //MyEngine::shader->set_vector_float("light_radius", light_radiuses);
+    //MyEngine::shader->set_vector_float("light_cutoff", light_cutoffs);
+    //MyEngine::shader->set_vector_float("light_exponent", light_exponents);
 
     // Normal rendering
     for (const auto& node : render_list)

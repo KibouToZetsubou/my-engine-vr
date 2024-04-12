@@ -46,43 +46,73 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
     for (auto i = this->ints.begin(); i != this->ints.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
         glUniform1i(uniform_location, i->second);
     }
 
     for (auto i = this->vec3s.begin(); i != this->vec3s.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
         glUniform3fv(uniform_location, 1, glm::value_ptr(i->second));
     }
 
     for (auto i = this->bools.begin(); i != this->bools.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
         glUniform1i(uniform_location, i->second);
     }
 
     for (auto i = this->vector_ints.begin(); i != this->vector_ints.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
         glUniform1iv(uniform_location, i->second.size(), i->second.data());
     }
 
     for (auto i = this->vector_vec3s.begin(); i != this->vector_vec3s.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
-        glUniform3fv(uniform_location, i->second.size(), &(i->second.data()[0].x) ); // Very ugly hack to pass the array
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
+        glUniform3fv(uniform_location, i->second.size(), &(i->second[0].x) ); // Very ugly hack to pass the array
     }
 
     for (auto i = this->vector_floats.begin(); i != this->vector_floats.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exists in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+
+        if (uniform_location == -1)
+        {
+            throw "Uniform not found";
+        }
+
         glUniform1fv(uniform_location, i->second.size(), i->second.data());
     }
 }

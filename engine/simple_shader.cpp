@@ -40,7 +40,8 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform sampler2D material_texture;
 
         // Light
-        uniform int   light_type[MAX_LIGHTS]; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
+        uniform int   number_of_lights;
+        //uniform int   light_type[MAX_LIGHTS]; // 0 = Directional; 1 = Point; 2 = Spot
         uniform vec3  light_ambient[MAX_LIGHTS];
         uniform vec3  light_diffuse[MAX_LIGHTS];
         uniform vec3  light_specular[MAX_LIGHTS];
@@ -61,21 +62,20 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
             vec3 total_light_ambient = vec3(0.0f, 0.0f, 0.0f);
             vec3 total_diffuse = vec3(0.0f, 0.0f, 0.0f);
             vec3 total_specular = vec3(0.0f, 0.0f, 0.0f);
-            for (int i = 0; i < MAX_LIGHTS; ++i)
+            for (int i = 0; i < number_of_lights; ++i)
             {
-                if (light_type[i] == 0)
-                {
-                    continue;
-                }
-
                 const vec3 L = normalize(light_position[i] - position_eyes.xyz);
                 const float L_dot_N = dot(L, normal_eyes);
                 const vec3 H = normalize(L + normalize(-position_eyes.xyz));
                 const float H_dot_N = dot(H, normal_eyes);
 
                 total_light_ambient += light_ambient[i];
-                total_diffuse += material_diffuse * L_dot_N * light_diffuse[i];
-                total_specular += material_specular * pow(H_dot_N, material_shininess) * light_specular[i];
+
+                if (L_dot_N > 0.0f)
+                {
+                    total_diffuse += material_diffuse * L_dot_N * light_diffuse[i] * 256.0f;
+                    total_specular += material_specular * pow(H_dot_N, material_shininess) * light_specular[i] * 256.0f;
+                }
             }
 
             const vec3 base_color = material_emission + material_ambient * total_light_ambient + total_diffuse + total_specular;
