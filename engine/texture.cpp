@@ -37,7 +37,9 @@ LIB_API Texture::Texture(const std::string path)
 
     const int width = FreeImage_GetWidth((FIBITMAP*) this->bitmap);
     const int height = FreeImage_GetHeight((FIBITMAP*) this->bitmap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*) FreeImage_GetBits((FIBITMAP*) this->bitmap));
+
+    //Have GL_RGBA -> GL_RGBA8 to make it work on openvr
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*) FreeImage_GetBits((FIBITMAP*) this->bitmap));
 }
 
 /**
