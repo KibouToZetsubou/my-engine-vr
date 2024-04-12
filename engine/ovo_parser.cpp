@@ -210,24 +210,16 @@ std::pair<std::shared_ptr<Node>, uint32_t> LIB_API OVOParser::parse_node_chunk(c
 */
 std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(const uint8_t* chunk_data, const uint32_t chunk_size)
 {
-    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-
     uint32_t chunk_pointer = 0;
 
     // Name
-    {
-        const std::string mesh_name = OVOParser::parse_string(chunk_data + chunk_pointer);
-        chunk_pointer += mesh_name.length() + 1;
-        mesh->set_name(mesh_name);
-    }
+    const std::string mesh_name = OVOParser::parse_string(chunk_data + chunk_pointer);
+    chunk_pointer += mesh_name.length() + 1;
 
     // Matrix
-    {
-        glm::mat4 matrix;
-        memcpy(&matrix, chunk_data + chunk_pointer, sizeof(glm::mat4));
-        chunk_pointer += sizeof(glm::mat4);
-        mesh->set_base_matrix(matrix);
-    }
+    glm::mat4 matrix;
+    memcpy(&matrix, chunk_data + chunk_pointer, sizeof(glm::mat4));
+    chunk_pointer += sizeof(glm::mat4);
 
     // Number of children
     uint32_t number_of_children;
@@ -243,22 +235,21 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
     chunk_pointer += sizeof(uint8_t);
 
     // Parse material name
-    {
-        const std::string material_name = OVOParser::parse_string(chunk_data + chunk_pointer);
-        chunk_pointer += material_name.length() + 1;
+    const std::string material_name = OVOParser::parse_string(chunk_data + chunk_pointer);
+    std::shared_ptr<Material> material = nullptr;
+    chunk_pointer += material_name.length() + 1;
 
-        if (material_name == "[none]")
-        {
-            // Leave the default material.
-        }
-        else if (OVOParser::materials.find(material_name) == OVOParser::materials.end())
-        {
-            WARNING("Out-of-order material loading is not supported.");
-        }
-        else
-        {
-            mesh->set_material(OVOParser::materials[material_name]);
-        }
+    if (material_name == "[none]")
+    {
+        // Leave the default material.
+    }
+    else if (OVOParser::materials.find(material_name) == OVOParser::materials.end())
+    {
+        WARNING("Out-of-order material loading is not supported.");
+    }
+    else
+    {
+        material = OVOParser::materials[material_name];
     }
 
     // Mesh radius size
@@ -312,67 +303,63 @@ std::pair<std::shared_ptr<Mesh>, uint32_t> LIB_API OVOParser::parse_mesh_chunk(c
         WARNING("Only one LOD is supported (current mesh has " << number_of_lods << "). Using the first one.");
     }
 
-    for (uint32_t i = 0; i < number_of_lods; ++i)
+    uint32_t number_of_vertices;
+    memcpy(&number_of_vertices, chunk_data + chunk_pointer, sizeof(uint32_t));
+    chunk_pointer += sizeof(uint32_t);
+
+    uint32_t number_of_faces;
+    memcpy(&number_of_faces, chunk_data + chunk_pointer, sizeof(uint32_t));
+    chunk_pointer += sizeof(uint32_t);
+
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> uvs;
+
+    for (uint32_t j = 0; j < number_of_vertices; ++j)
     {
-        uint32_t number_of_vertices;
-        memcpy(&number_of_vertices, chunk_data + chunk_pointer, sizeof(uint32_t));
+        glm::vec3 vertex;
+        memcpy(&vertex, chunk_data + chunk_pointer, sizeof(glm::vec3));
+        chunk_pointer += sizeof(glm::vec3);
+        vertices.push_back(vertex);
+
+        uint32_t normal_raw;
+        memcpy(&normal_raw, chunk_data + chunk_pointer, sizeof(uint32_t));
         chunk_pointer += sizeof(uint32_t);
+        const glm::vec3 normal = glm::vec3(glm::unpackSnorm3x10_1x2(normal_raw));
+        normals.push_back(normal);
 
-        uint32_t number_of_faces;
-        memcpy(&number_of_faces, chunk_data + chunk_pointer, sizeof(uint32_t));
+        uint32_t uv_raw;
+        memcpy(&uv_raw, chunk_data + chunk_pointer, sizeof(uint32_t));
         chunk_pointer += sizeof(uint32_t);
+        const glm::vec2 uv = glm::unpackHalf2x16(uv_raw);
+        uvs.push_back(uv);
 
-        std::vector<glm::vec3> vertices;
-        std::vector<glm::vec3> normals;
-        std::vector<glm::vec2> uvs;
-
-        for (uint32_t j = 0; j < number_of_vertices; ++j)
-        {
-            glm::vec3 vertex;
-            memcpy(&vertex, chunk_data + chunk_pointer, sizeof(glm::vec3));
-            chunk_pointer += sizeof(glm::vec3);
-            vertices.push_back(vertex);
-
-            uint32_t normal_raw;
-            memcpy(&normal_raw, chunk_data + chunk_pointer, sizeof(uint32_t));
-            chunk_pointer += sizeof(uint32_t);
-            const glm::vec3 normal = glm::vec3(glm::unpackSnorm3x10_1x2(normal_raw));
-            normals.push_back(normal);
-
-            uint32_t uv_raw;
-            memcpy(&uv_raw, chunk_data + chunk_pointer, sizeof(uint32_t));
-            chunk_pointer += sizeof(uint32_t);
-            const glm::vec2 uv = glm::unpackHalf2x16(uv_raw);
-            uvs.push_back(uv);
-
-            chunk_pointer += sizeof(uint32_t);
-        }
-
-        std::vector<uint32_t> faces;
-        for (uint32_t j = 0; j < number_of_faces; ++j)
-        {
-            uint32_t face_0;
-            memcpy(&face_0, chunk_data + chunk_pointer, sizeof(uint32_t));
-            chunk_pointer += sizeof(uint32_t);
-            faces.push_back(face_0);
-
-            uint32_t face_1;
-            memcpy(&face_1, chunk_data + chunk_pointer, sizeof(uint32_t));
-            chunk_pointer += sizeof(uint32_t);
-            faces.push_back(face_1);
-
-            uint32_t face_2;
-            memcpy(&face_2, chunk_data + chunk_pointer, sizeof(uint32_t));
-            chunk_pointer += sizeof(uint32_t);
-            faces.push_back(face_2);
-        }
-
-        mesh->set_mesh_data(vertices, faces, normals, uvs);
-
-        // We only consider the first LOD.
-        break;
+        chunk_pointer += sizeof(uint32_t);
     }
 
+    std::vector<uint32_t> faces;
+    for (uint32_t j = 0; j < number_of_faces; ++j)
+    {
+        uint32_t face_0;
+        memcpy(&face_0, chunk_data + chunk_pointer, sizeof(uint32_t));
+        chunk_pointer += sizeof(uint32_t);
+        faces.push_back(face_0);
+
+        uint32_t face_1;
+        memcpy(&face_1, chunk_data + chunk_pointer, sizeof(uint32_t));
+        chunk_pointer += sizeof(uint32_t);
+        faces.push_back(face_1);
+
+        uint32_t face_2;
+        memcpy(&face_2, chunk_data + chunk_pointer, sizeof(uint32_t));
+        chunk_pointer += sizeof(uint32_t);
+        faces.push_back(face_2);
+    }
+
+    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(vertices, faces, normals, uvs);
+    mesh->set_name(mesh_name);
+    mesh->set_base_matrix(matrix);
+    mesh->set_material(material);
 
     return std::make_pair(mesh, number_of_children);
 }

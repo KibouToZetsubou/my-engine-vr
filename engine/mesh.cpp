@@ -5,78 +5,10 @@
 /**
  * Creates a new empty Mesh with the default material and shadow casting activated.
  */
-LIB_API Mesh::Mesh()
+LIB_API Mesh::Mesh(const std::vector<glm::vec3>& new_vertices, const std::vector<uint32_t>& new_faces, const std::vector<glm::vec3>& new_normals, const std::vector<glm::vec2>& new_uvs)
 {
     this->set_material(std::make_shared<Material>());
     this->set_cast_shadows(true);
-
-    this->vao_id = -1;
-    this->number_of_faces = 0;
-}
-
-/**
- * Renders the mesh.
- *
- * This function is called automatically by MyEngine and there's no need to manually call this function.
- *
- * @param view_matrix The world matrix to use to render this object.
- */
-void LIB_API Mesh::render(const glm::mat4 view_matrix) const
-{
-    Node::render(view_matrix);
-
-    if (this->vao_id == -1 || this->number_of_faces == 0)
-    {
-        return;
-    }
-
-    glBindVertexArray(this->vao_id);
-    glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
-}
-
-/**
- * Changes the material applied to this mesh.
- *
- * NOTE: A value of nullptr causes undefined behaviour.
- *
- * @param new_material The new material for the mesh.
- */
-void LIB_API Mesh::set_material(const std::shared_ptr<Material> new_material)
-{
-    this->material = new_material;
-}
-
-/**
- * Returns the material used by this mesh.
- *
- * @return The material used by this mesh.
- */
-std::shared_ptr<Material> LIB_API Mesh::get_material() const
-{
-    return this->material;
-}
-
-/**
- * Sets the vertex, face, normal and UV data for this mesh.
- *
- * NOTE: Incorrectly sized vectors cause undefined behaviour.
- *
- * @param new_vertices The new vertex data for the mesh.
- * @param new_faces The new face data for the mesh.
- * @param new_normals The new normal data for the mesh.
- * @param new_uvs The new UV data for the mesh.
- */
-void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, const std::vector<uint32_t>& new_faces, const std::vector<glm::vec3>& new_normals, const std::vector<glm::vec2>& new_uvs)
-{
-    if (this->vao_id != -1)
-    {
-        glDeleteVertexArrays(1, &this->vao_id);
-        glDeleteBuffers(1, &this->vbo_vertices);
-        glDeleteBuffers(1, &this->vbo_normals);
-        glDeleteBuffers(1, &this->vbo_uvs);
-        glDeleteBuffers(1, &this->vbo_faces);
-    }
 
     glGenVertexArrays(1, &this->vao_id);
     glBindVertexArray(this->vao_id);
@@ -111,18 +43,51 @@ void LIB_API Mesh::set_mesh_data(const std::vector<glm::vec3>& new_vertices, con
     glBindVertexArray(0);
 }
 
+/**
+ * Renders the mesh.
+ *
+ * This function is called automatically by MyEngine and there's no need to manually call this function.
+ *
+ * @param view_matrix The world matrix to use to render this object.
+ */
+void LIB_API Mesh::render(const glm::mat4 view_matrix) const
+{
+    Node::render(view_matrix);
+
+    glBindVertexArray(this->vao_id);
+    glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
+}
+
+/**
+ * Changes the material applied to this mesh.
+ *
+ * NOTE: A value of nullptr causes undefined behaviour.
+ *
+ * @param new_material The new material for the mesh.
+ */
+void LIB_API Mesh::set_material(const std::shared_ptr<Material> new_material)
+{
+    this->material = new_material;
+}
+
+/**
+ * Returns the material used by this mesh.
+ *
+ * @return The material used by this mesh.
+ */
+std::shared_ptr<Material> LIB_API Mesh::get_material() const
+{
+    return this->material;
+}
+
 Mesh::~Mesh()
 {
-    if (this->vao_id != -1)
-    {
-        glDeleteVertexArrays(1, &this->vao_id);
-        glDeleteBuffers(1, &this->vbo_vertices);
-        glDeleteBuffers(1, &this->vbo_normals);
-        glDeleteBuffers(1, &this->vbo_uvs);
-        glDeleteBuffers(1, &this->vbo_faces);
-    }
-
-    this->number_of_faces = 0;
+    glDeleteVertexArrays(1, &this->vao_id);
+    glDeleteBuffers(1, &this->vbo_vertices);
+    glDeleteBuffers(1, &this->vbo_normals);
+    glDeleteBuffers(1, &this->vbo_uvs);
+    glDeleteBuffers(1, &this->vbo_faces);
 }
 
 /**

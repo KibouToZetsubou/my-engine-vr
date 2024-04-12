@@ -13,7 +13,11 @@
 class LIB_API Mesh : public Node
 {
 public:
-    Mesh();
+    Mesh(const std::vector<glm::vec3>& new_vertices,
+        const std::vector<uint32_t>& new_faces,
+        const std::vector<glm::vec3>& new_normals,
+        const std::vector<glm::vec2>& new_uvs);
+
     ~Mesh();
 
     void render(const glm::mat4 view_matrix) const override;
@@ -23,13 +27,6 @@ public:
 
     void set_cast_shadows(const bool new_cast_shadows);
     bool get_cast_shadows() const;
-
-    void set_mesh_data(
-        const std::vector<glm::vec3>& new_vertices,
-        const std::vector<uint32_t>& new_faces,
-        const std::vector<glm::vec3>& new_normals,
-        const std::vector<glm::vec2>& new_uvs);
-
 private:
     std::shared_ptr<Material> material;
     int number_of_faces;
