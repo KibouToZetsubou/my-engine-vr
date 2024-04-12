@@ -61,3 +61,8 @@ void LIB_API DirectionalLight::set_direction(const glm::vec3 new_direction)
 {
     this->direction = new_direction;
 }
+
+glm::vec3 LIB_API DirectionalLight::get_direction() const
+{
+    return this->direction;
+}

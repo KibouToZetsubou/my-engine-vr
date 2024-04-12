@@ -19,12 +19,14 @@
 
 #include "camera.hpp"
 #include "common.hpp"
+#include "directional_light.hpp"
 #include "material.hpp"
 #include "mesh.hpp"
 #include "object.hpp"
 #include "point_light.hpp"
 #include "shader.hpp"
 #include "simple_shader.hpp"
+#include "spot_light.hpp"
 #include "texture.hpp"
 
 bool MyEngine::is_initialized_flag = false;
@@ -243,34 +245,90 @@ void LIB_API MyEngine::render()
         item.second = inverse_camera_matrix * item.second;
     }
 
+    std::vector<int> light_types; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
+    std::vector<glm::vec3> light_ambients;
+    std::vector<glm::vec3> light_diffuses;
+    std::vector<glm::vec3> light_speculars;
+    std::vector<glm::vec3> light_positions; // Light position in eye coordinates
+    std::vector<glm::vec3> light_directions; // Directional, Spot
+    std::vector<float> light_radiuses; // Point, Spot
+    std::vector<float> light_cutoffs; // Spot
+    std::vector<float> light_exponents; // Spot
+
     // Gather all point lights
-    std::vector<std::pair<std::shared_ptr<PointLight>, glm::mat4>> point_lights;
     for (const auto& object : render_list)
     {
         const std::shared_ptr<PointLight> point_light = std::dynamic_pointer_cast<PointLight>(object.first);
 
         if (point_light != nullptr)
         {
-            point_lights.push_back(std::make_pair(point_light, object.second));
+            light_types.push_back(2);
+            light_ambients.push_back(point_light->get_ambient_color());
+            light_diffuses.push_back(point_light->get_diffuse_color());
+            light_speculars.push_back(point_light->get_specular_color());
+            light_positions.push_back(object.second * glm::vec4(point_light->get_position(), 1.0f));
+            light_directions.push_back(glm::vec4()); // Unused
+            light_radiuses.push_back(point_light->get_radius());
+            light_cutoffs.push_back(0.0f); // Unused
+            light_exponents.push_back(0.0f); // Unused
         }
     }
 
-    // TODO: Also handle directional lights and spot lights
+    // Gather all directional lights
+    for (const auto& object : render_list)
+    {
+        const std::shared_ptr<DirectionalLight> directional_light = std::dynamic_pointer_cast<DirectionalLight>(object.first);
+
+        if (directional_light != nullptr)
+        {
+            light_types.push_back(1);
+            light_ambients.push_back(directional_light->get_ambient_color());
+            light_diffuses.push_back(directional_light->get_diffuse_color());
+            light_speculars.push_back(directional_light->get_specular_color());
+            light_positions.push_back(object.second * glm::vec4(directional_light->get_position(), 1.0f));
+            light_directions.push_back(object.second * glm::vec4(directional_light->get_direction(), 1.0f));
+            light_radiuses.push_back(0.0f); // Unused
+            light_cutoffs.push_back(0.0f); // Unused
+            light_exponents.push_back(0.0f); // Unused
+        }
+    }
+
+    // Gather all spot lights
+    for (const auto& object : render_list)
+    {
+        const std::shared_ptr<SpotLight> spot_light = std::dynamic_pointer_cast<SpotLight>(object.first);
+
+        if (spot_light != nullptr)
+        {
+            light_types.push_back(3);
+            light_ambients.push_back(spot_light->get_ambient_color());
+            light_diffuses.push_back(spot_light->get_diffuse_color());
+            light_speculars.push_back(spot_light->get_specular_color());
+            light_positions.push_back(object.second * glm::vec4(spot_light->get_position(), 1.0f));
+            light_directions.push_back(object.second * glm::vec4(spot_light->get_direction(), 1.0f));
+            light_radiuses.push_back(spot_light->get_radius());
+            light_cutoffs.push_back(spot_light->get_cutoff());
+            light_exponents.push_back(spot_light->get_exponent());
+        }
+    }
 
     // Setup shader
     MyEngine::shader->clear_uniforms();
-    // TODO: Do this stuff for every light
-    const auto& light = point_lights.at(0);
-    MyEngine::shader->set_vec3("light_ambient", light.first->get_ambient_color());
-    MyEngine::shader->set_vec3("light_diffuse", light.first->get_diffuse_color());
-    MyEngine::shader->set_vec3("light_specular", light.first->get_specular_color());
-    MyEngine::shader->set_vec3("light_position", light.second * glm::vec4(light.first->get_position(), 1.0f));
+    MyEngine::shader->set_vector_int("light_type", light_types);
+    MyEngine::shader->set_vector_vec3("light_ambient", light_ambients);
+    MyEngine::shader->set_vector_vec3("light_diffuse", light_diffuses);
+    MyEngine::shader->set_vector_vec3("light_specular", light_speculars);
+    MyEngine::shader->set_vector_vec3("light_position", light_positions);
+    MyEngine::shader->set_vector_vec3("light_directions", light_directions);
+    MyEngine::shader->set_vector_float("light_radius", light_radiuses);
+    MyEngine::shader->set_vector_float("light_cutoff", light_cutoffs);
+    MyEngine::shader->set_vector_float("light_exponent", light_exponents);
 
     // Normal rendering
     for (const auto& node : render_list)
     {
         const std::shared_ptr<Mesh> mesh = std::dynamic_pointer_cast<Mesh>(node.first);
-        if (mesh != nullptr && point_lights.size() >= 1)
+        if (mesh != nullptr)
         {
             // Load material information into the shader
             const std::shared_ptr<Material> material = mesh->get_material();

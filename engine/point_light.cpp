@@ -59,3 +59,8 @@ void LIB_API PointLight::set_radius(const float new_radius)
 {
     this->radius = new_radius;
 }
+
+float LIB_API PointLight::get_radius() const
+{
+    return this->radius;
+}

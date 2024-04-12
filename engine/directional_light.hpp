@@ -18,6 +18,7 @@ public:
     void render(const glm::mat4 view_matrix) const override;
 
     void set_direction(const glm::vec3 new_direction);
+    glm::vec3 get_direction() const;
 private:
     glm::vec3 direction;
 };

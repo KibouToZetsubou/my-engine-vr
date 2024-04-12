@@ -79,6 +79,11 @@ void LIB_API SpotLight::set_cutoff(const float new_cutoff)
     this->cutoff = new_cutoff;
 }
 
+float LIB_API SpotLight::get_cutoff() const
+{
+    return this->cutoff;
+}
+
 /**
  * Sets the radius of the spot light. This is the distance in which the light has an effect.
  *
@@ -87,6 +92,11 @@ void LIB_API SpotLight::set_cutoff(const float new_cutoff)
 void LIB_API SpotLight::set_radius(const float new_radius)
 {
     this->radius = new_radius;
+}
+
+float LIB_API SpotLight::get_radius() const
+{
+    return this->radius;
 }
 
 /**
@@ -103,6 +113,11 @@ void LIB_API SpotLight::set_exponent(const float new_exponent)
     this->exponent = new_exponent;
 }
 
+float LIB_API SpotLight::get_exponent() const
+{
+    return this->exponent;
+}
+
 /**
  * Changes the direction the light is pointing towards.
  *
@@ -113,4 +128,9 @@ void LIB_API SpotLight::set_exponent(const float new_exponent)
 void LIB_API SpotLight::set_direction(const glm::vec3 new_direction)
 {
     this->direction = new_direction;
+}
+
+glm::vec3 LIB_API SpotLight::get_direction() const
+{
+    return this->direction;
 }

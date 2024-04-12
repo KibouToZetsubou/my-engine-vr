@@ -16,6 +16,7 @@ public:
     void render(const glm::mat4 view_matrix) const override;
 
     void set_radius(const float new_radius);
+    float get_radius() const;
 private:
     float radius;
 };

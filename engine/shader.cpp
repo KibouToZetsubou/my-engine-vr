@@ -64,14 +64,39 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
         glUniform1i(uniform_location, i->second);
     }
+
+    for (auto i = this->vector_ints.begin(); i != this->vector_ints.end(); ++i)
+    {
+        // TODO: Handle case where the uniform in the map does not exists in the shader.
+        const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+        glUniform1iv(uniform_location, i->second.size(), i->second.data());
+    }
+
+    for (auto i = this->vector_vec3s.begin(); i != this->vector_vec3s.end(); ++i)
+    {
+        // TODO: Handle case where the uniform in the map does not exists in the shader.
+        const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+        glUniform3fv(uniform_location, i->second.size(), &(i->second.data()[0].x) ); // Very ugly hack to pass the array
+    }
+
+    for (auto i = this->vector_floats.begin(); i != this->vector_floats.end(); ++i)
+    {
+        // TODO: Handle case where the uniform in the map does not exists in the shader.
+        const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+        glUniform1fv(uniform_location, i->second.size(), i->second.data());
+    }
 }
 
 void LIB_API Shader::clear_uniforms()
 {
+    // TODO: Also reset the shader's uniforms
     this->floats.clear();
     this->ints.clear();
     this->vec3s.clear();
     this->bools.clear();
+    this->vector_ints.clear();
+    this->vector_vec3s.clear();
+    this->vector_floats.clear();
 }
 
 void LIB_API Shader::set_float(const std::string name, const float value)
@@ -92,6 +117,24 @@ void LIB_API Shader::set_vec3(const std::string name, const glm::vec3 value)
 void LIB_API Shader::set_bool(const std::string name, const bool value)
 {
     this->bools[name] = value;
+}
+
+// PERFORMANCE: We are creating a copy of the vector, which can be slow!
+void LIB_API Shader::set_vector_int(const std::string name, const std::vector<int> value)
+{
+    this->vector_ints[name] = value;
+}
+
+// PERFORMANCE: We are creating a copy of the vector, which can be slow!
+void LIB_API Shader::set_vector_vec3(const std::string name, const std::vector<glm::vec3> value)
+{
+    this->vector_vec3s[name] = value;
+}
+
+// PERFORMANCE: We are creating a copy of the vector, which can be slow!
+void LIB_API Shader::set_vector_float(const std::string name, const std::vector<float> value)
+{
+    this->vector_floats[name] = value;
 }
 
 void LIB_API Shader::compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source)

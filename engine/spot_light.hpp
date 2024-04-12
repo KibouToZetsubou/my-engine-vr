@@ -16,9 +16,16 @@ public:
     void render(const glm::mat4 view_matrix) const override;
 
     void set_cutoff(const float new_cutoff);
+    float get_cutoff() const;
+
     void set_radius(const float new_radius);
+    float get_radius() const;
+
     void set_exponent(const float new_exponent);
+    float get_exponent() const;
+
     void set_direction(const glm::vec3 new_direction);
+    glm::vec3 get_direction() const;
 private:
     float cutoff;
     float radius;
