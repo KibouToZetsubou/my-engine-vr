@@ -2,11 +2,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include <algorithm>
-#include <memory>
-#include <string>
-#include <utility>
-#include <vector>
+#include <algorithm> // std::sort
 
 #ifdef _linux
 #include <unistd.h>
@@ -14,20 +10,13 @@
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <FreeImage.h>
 
-#include "camera.hpp"
-#include "common.hpp"
 #include "directional_light.hpp"
-#include "material.hpp"
 #include "mesh.hpp"
-#include "object.hpp"
 #include "point_light.hpp"
-#include "shader.hpp"
 #include "simple_shader.hpp"
 #include "spot_light.hpp"
-#include "texture.hpp"
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -153,15 +142,10 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_NORMALIZE);
-    //glEnable(GL_LIGHTING);
     glEnable(GL_CULL_FACE);
-    //glEnable(GL_TEXTURE_2D);
 
     // Configure lighting
     const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
-    //glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambient));
-    //glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0f);
 
     // Initialize FreeImage
     FreeImage_Initialise();
@@ -225,14 +209,6 @@ void LIB_API MyEngine::render()
     }
 
     MyEngine::active_camera->set_window_size(MyEngine::window_width, MyEngine::window_height);
-
-    // Disable all lights
-    /*int max_lights;
-    glGetIntegerv(GL_MAX_LIGHTS, &max_lights);
-    for (int i = 0; i < max_lights; ++i)
-    {
-        glDisable(GL_LIGHT0 + i);
-    }*/
 
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
@@ -395,7 +371,6 @@ void LIB_API MyEngine::render()
     // Re-activate lighting
     glEnable(GL_LIGHTING);*/
 
-    // Inc. frames:
     MyEngine::frames++;
 }
 
@@ -409,8 +384,6 @@ void LIB_API MyEngine::timer_callback(int value)
     MyEngine::fps = MyEngine::frames;
     MyEngine::frames = 0;
     std::cout << "fps: " << MyEngine::fps << std::endl;
-
-    // Register the next update:
     glutTimerFunc(1000, timer_callback, 0);
 }
 

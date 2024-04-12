@@ -1,8 +1,7 @@
 #include "texture.hpp"
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <GL/glew.h>
-
-#include <GL/freeglut.h>
 #include <FreeImage.h>
 
 /**
@@ -21,7 +20,7 @@ LIB_API Texture::Texture(const std::string path)
 
         this->bitmap = nullptr;
 
-        return;
+        throw "Failed to load texture";
     }
 
     this->bitmap = (void*) FreeImage_ConvertTo32Bits(bmp);
@@ -38,7 +37,7 @@ LIB_API Texture::Texture(const std::string path)
     const int width = FreeImage_GetWidth((FIBITMAP*) this->bitmap);
     const int height = FreeImage_GetHeight((FIBITMAP*) this->bitmap);
 
-    //Have GL_RGBA -> GL_RGBA8 to make it work on openvr
+    // Have GL_RGBA -> GL_RGBA8 to make it work on openvr
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*) FreeImage_GetBits((FIBITMAP*) this->bitmap));
 }
 
@@ -67,5 +66,4 @@ LIB_API Texture::~Texture()
 void LIB_API Texture::render(const glm::mat4 view_matrix) const
 {
     glBindTexture(GL_TEXTURE_2D, this->texture_id);
-    //glEnable(GL_TEXTURE_2D);
 }

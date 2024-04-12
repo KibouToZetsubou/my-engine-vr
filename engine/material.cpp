@@ -1,13 +1,4 @@
 #include "material.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
-
-#include <memory>
-
-#include <GL/freeglut.h>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "texture.hpp"
 
 /**
  * Creates a new instance of Material with the following default parameters:
@@ -43,14 +34,6 @@ LIB_API Material::Material()
  */
 void LIB_API Material::render(const glm::mat4 view_matrix) const
 {
-    /*glDisable(GL_TEXTURE_2D);
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, glm::value_ptr(this->emission_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, glm::value_ptr(this->ambient_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, glm::value_ptr(this->diffuse_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, glm::value_ptr(this->specular_color));
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this->shininess);*/
-
     if (this->texture != nullptr)
     {
         this->texture->render(view_matrix);

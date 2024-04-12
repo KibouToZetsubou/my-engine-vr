@@ -1,7 +1,5 @@
 #include "camera.hpp"
 
-#include "common.hpp"
-
 /**
  * Creates a new instance of Camera with the following default parameters:
  *
@@ -15,7 +13,6 @@ LIB_API Camera::Camera()
 {
     this->set_fov(90.0f);
     this->set_clipping(0.01f, 1000.0f);
-    //this->set_window_size(1, 1);
     this->is_active = false;
     this->set_window_size(0, 0);
 }

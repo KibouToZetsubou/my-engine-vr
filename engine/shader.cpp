@@ -1,10 +1,6 @@
 #include "shader.hpp"
 
-#include <map>
-#include <string>
-
 #include <GL/glew.h>
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -39,12 +35,11 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
     for (auto i = this->floats.begin(); i != this->floats.end(); ++i)
     {
-        // TODO: Handle case where the uniform in the map does not exist in the shader.
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform1f(uniform_location, i->second);
@@ -56,7 +51,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform1i(uniform_location, i->second);
@@ -68,7 +63,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform3fv(uniform_location, 1, glm::value_ptr(i->second));
@@ -80,7 +75,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform1i(uniform_location, i->second);
@@ -92,7 +87,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform1iv(uniform_location, i->second.size(), i->second.data());
@@ -104,12 +99,10 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
 
         if (uniform_location == -1)
         {
-            //throw "Uniform not found";
+            throw "Uniform not found";
         }
 
         glUniform3fv(uniform_location, i->second.size(), &(i->second[0].x) ); // Very ugly hack to pass the array
-        //float* tmp = static_cast<const float*>(glm::value_ptr(i->second.front()));
-        //glUniform3fv(uniform_location, i->second.size(), tmp);
     }
 
     for (auto i = this->vector_floats.begin(); i != this->vector_floats.end(); ++i)

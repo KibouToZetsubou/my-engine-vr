@@ -1,10 +1,5 @@
 #include "directional_light.hpp"
 
-#include <glm/glm.hpp>
-
-#include "common.hpp"
-#include "node.hpp"
-
 /**
  * Creates a new instance of DirectionalLight with the following default parameters:
  *

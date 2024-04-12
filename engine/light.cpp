@@ -1,7 +1,5 @@
 #include "light.hpp"
 
-#include "common.hpp"
-
 /**
  * Creates a new instance of Camera with the following default parameters:
  *

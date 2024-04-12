@@ -1,23 +1,13 @@
 #include "ovo_parser.hpp"
 
 #include <iostream>
-#include <memory>
 #include <stack>
-#include <string>
-#include <tuple>
-#include <unordered_map>
-#include <utility>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #pragma warning(disable:4996) // Disable Visual Studio warning
 
-#include <GL/glew.h>
-
-#include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
 
-#include "common.hpp"
 #include "directional_light.hpp"
 #include "material.hpp"
 #include "mesh.hpp"

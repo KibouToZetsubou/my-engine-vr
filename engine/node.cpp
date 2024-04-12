@@ -1,12 +1,6 @@
 #include "node.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 
-#include <GL/freeglut.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "common.hpp"
 
 /**
  * Creates a new instance of Node with the following default parameters:
@@ -115,9 +109,9 @@ glm::mat4 LIB_API Node::get_local_matrix() const
 {
     const glm::mat4 model_position_matrix = glm::translate(glm::mat4(1.0f), this->position);
     const glm::mat4 model_rotation_matrix =
-        glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
-        glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
-        glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+          glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
+          glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
+          glm::rotate(glm::mat4(1.0f), glm::radians(this->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     const glm::mat4 model_scale_matrix = glm::scale(glm::mat4(1.0f), this->scale);
 
     const glm::mat4 offset_matrix = model_position_matrix * model_rotation_matrix * model_scale_matrix;
@@ -136,6 +130,5 @@ glm::mat4 LIB_API Node::get_local_matrix() const
  */
 void LIB_API Node::render(const glm::mat4 view_matrix) const
 {
-    /*glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf(glm::value_ptr(world_matrix));*/
+
 }

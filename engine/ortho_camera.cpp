@@ -1,16 +1,6 @@
 #include "ortho_camera.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <algorithm>
 
-#include <GL/glew.h>
-
-#include <GL/freeglut.h>
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "common.hpp"
-#include "node.hpp"
 
 /**
  * Renders the camera.
@@ -37,9 +27,6 @@ void LIB_API OrthoCamera::render(const glm::mat4 view_matrix) const
     const float h = (height / max) * this->zoom;
 
     const glm::mat4 ortho_matrix = glm::ortho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, this->near_clipping, this->far_clipping);
-
-    /*glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(glm::value_ptr(ortho_matrix));*/
 }
 
 /**
@@ -51,7 +38,7 @@ void LIB_API OrthoCamera::set_zoom(float new_zoom)
 {
     if(new_zoom < 0.0f)
     {
-        new_zoom = 0.0f; //To prevent funny loop around
+        new_zoom = 0.0f; // To prevent funny loop around
     }
 
     this->zoom = new_zoom;
