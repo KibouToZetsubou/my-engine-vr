@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="cube.cpp" />
     <ClCompile Include="directional_light.cpp" />
     <ClCompile Include="engine_test.cpp" />
     <ClCompile Include="light.cpp" />
@@ -35,14 +34,12 @@
     <ClCompile Include="point_light.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="simple_shader.cpp" />
-    <ClCompile Include="sphere.cpp" />
     <ClCompile Include="spot_light.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="common.hpp" />
-    <ClInclude Include="cube.hpp" />
     <ClInclude Include="directional_light.hpp" />
     <ClInclude Include="light.hpp" />
     <ClInclude Include="material.hpp" />
@@ -56,7 +53,6 @@
     <ClInclude Include="point_light.hpp" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="simple_shader.hpp" />
-    <ClInclude Include="sphere.hpp" />
     <ClInclude Include="spot_light.hpp" />
     <ClInclude Include="texture.hpp" />
   </ItemGroup>
