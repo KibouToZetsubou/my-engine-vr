@@ -66,6 +66,9 @@
     <ClCompile Include="simple_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_engine.hpp">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="simple_shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fbo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

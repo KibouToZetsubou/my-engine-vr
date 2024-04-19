@@ -22,6 +22,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="directional_light.cpp" />
     <ClCompile Include="engine_test.cpp" />
+    <ClCompile Include="fbo.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="material.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="directional_light.hpp" />
+    <ClInclude Include="fbo.hpp" />
     <ClInclude Include="light.hpp" />
     <ClInclude Include="material.hpp" />
     <ClInclude Include="mesh.hpp" />

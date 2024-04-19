@@ -5,6 +5,7 @@
 
 LIB_API FBO::FBO()
 {
+    /*
     glGenFramebuffers(1, &this->id);
     glBindFramebuffer(GL_FRAMEBUFFER, this->id);
 
@@ -17,8 +18,12 @@ LIB_API FBO::FBO()
     //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->depth_buffer_id);
 
+    GLenum dBuff[1] = { GL_COLOR_ATTACHMENT0 };
+    glDrawBuffers(1, dBuff);
+
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
         throw "Failed to create the FBO.";
     }
+    */
 }
