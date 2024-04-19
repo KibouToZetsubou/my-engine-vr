@@ -1,6 +1,5 @@
 #include "texture.hpp"
 
-#define GLM_ENABLE_EXPERIMENTAL
 #include <GL/glew.h>
 #include <FreeImage.h>
 

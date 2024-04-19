@@ -57,6 +57,8 @@
 		<Unit filename="common.hpp" />
 		<Unit filename="directional_light.cpp" />
 		<Unit filename="directional_light.hpp" />
+		<Unit filename="fbo.cpp" />
+		<Unit filename="fbo.hpp" />
 		<Unit filename="light.cpp" />
 		<Unit filename="light.hpp" />
 		<Unit filename="material.cpp" />
