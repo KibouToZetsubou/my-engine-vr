@@ -1,22 +1,19 @@
 #pragma once
 
 #include "common.hpp"
-//#include "object.hpp"
 
-class LIB_API FBO //: public Texture
+class LIB_API FBO
 {
 public:
-    FBO();
+    FBO(const int width, const int height);
 
-    bool render();
-
-    unsigned int get_texture_id();
+    void use() const;
+    void use_read() const;
 private:
     unsigned int id;
+    unsigned int color_buffer_id;
     unsigned int depth_buffer_id;
 
-    unsigned int texture_id;
-
-    int size_X;
-    int size_Y;
+    int width;
+    int height;
 };

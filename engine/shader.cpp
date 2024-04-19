@@ -185,7 +185,7 @@ void LIB_API Shader::set_mat4(const std::string name, const glm::mat4 value)
     this->mat4s[name] = value;
 }
 
-void LIB_API Shader::use_shader()
+void LIB_API Shader::use() const
 {
     glUseProgram(this->program_id);
 }

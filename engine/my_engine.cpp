@@ -29,11 +29,10 @@ std::shared_ptr<Camera> MyEngine::active_camera;
 std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
-std::shared_ptr<Material> MyEngine::shadow_material = nullptr;
 
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
-std::shared_ptr<FBO> MyEngine::attemptFBO = nullptr;
+std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 
 // Frames:
 int MyEngine::frames = 0;
@@ -149,48 +148,23 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glutReshapeFunc(resize_callback);
     glutTimerFunc(1000, timer_callback, 0);
 
-    // Configure lighting
-    const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
-
-    // Configure shaders [ppl & passthrough]
+    // Configure shaders
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
-    MyEngine::ppl_shader->use_shader();
-
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
-    MyEngine::passthrough_shader->use_shader();
+    MyEngine::ppl_shader->use();
 
     // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
-    MyEngine::passthrough_shader->bind(0, "in_Position");
-    MyEngine::passthrough_shader->bind(2, "in_TexCoord");
-
-    // Configure the material used to draw shadows.
-    MyEngine::shadow_material = std::make_shared<Material>();
-    MyEngine::shadow_material->set_ambient_color(glm::vec3(0.0f, 0.0f, 0.0f));
-    MyEngine::shadow_material->set_diffuse_color(glm::vec3(0.0f, 0.0f, 0.0f));
-    MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
-    MyEngine::shadow_material->set_shininess(0.0f);
+    //MyEngine::passthrough_shader->bind(0, "in_Position");
+    //MyEngine::passthrough_shader->bind(2, "in_TexCoord");
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    // Load FBO and its texture:
-    GLint prevViewport[4];
-    glGetIntegerv(GL_VIEWPORT, prevViewport);
-
-    //Attempt at creating the FBO
-    MyEngine::attemptFBO = std::make_shared<FBO>();
-
-    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE)
-    {
-        std::cout << "[ERROR] FBO not complete (error: " << status << ")" << std::endl;
-    }
+    MyEngine::left_eye = std::make_shared<FBO>(256, 256);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, prevViewport[2], prevViewport[3]);
-
-
+    glViewport(0, 0, 512, 256);
 
     // Start the engine
     MyEngine::is_initialized_flag = true;
@@ -323,21 +297,9 @@ void LIB_API MyEngine::render()
         }
     }
 
-
-    // Store the current viewport size:
-    GLint prevViewport[4];
-    glGetIntegerv(GL_VIEWPORT, prevViewport);
-
-    //Attempt at rendering with FBO
-    MyEngine::attemptFBO->render();
-
-    // Clear the FBO content:
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-
-    // Setup ppl shader
-    MyEngine::ppl_shader->use_shader();
+    // Render the left eye
+    MyEngine::left_eye->use();
+    MyEngine::ppl_shader->use();
 
     MyEngine::ppl_shader->clear_uniforms();
     MyEngine::ppl_shader->set_int("number_of_lights", number_of_lights);
@@ -377,83 +339,36 @@ void LIB_API MyEngine::render()
         node.first->render(node.second);
     }
 
-    // Done with the attempted FBO, go back to rendering into the window context buffers:
+    // Copy the left eye to the window buffer.
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, prevViewport[2], prevViewport[3]);
+    glViewport(0, 0, 512, 256);
+    MyEngine::left_eye->use_read();
+    glBlitFramebuffer(0, 0, 256, 256, 0, 0, 512, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
+    // Screen rendering
+    //MyEngine::passthrough_shader->use();
 
-    ////////////////
-    // 2D rendering:
+    //const glm::mat4 ortho = glm::ortho(0.0f, (float) MyEngine::window_width, 0.0f, (float) MyEngine::window_height, -1.0f, 1.0f);
+    //MyEngine::passthrough_shader->set_mat4("projection", ortho);
 
-    MyEngine::passthrough_shader->use_shader();
-
-    //Ortho - BMPG
-    const glm::mat4 ortho = glm::ortho(0.0f, (float)MyEngine::window_width, 0.0f, (float)MyEngine::window_height, -1.0f, 1.0f);
-    MyEngine::passthrough_shader->set_mat4("projection", ortho);
-
-    // Set a matrix for the left "eye": [for now the only eye!] {We are a cyclops} - BMPG    
-    glm::mat4 f = glm::mat4(1.0f);
-    MyEngine::passthrough_shader->set_mat4("modelview", f);
+    // Set a matrix for the left "eye": [for now the only eye!] {We are a cyclops} - BMPG
+    //glm::mat4 f = glm::mat4(1.0f);
+    //MyEngine::passthrough_shader->set_mat4("modelview", f);
 
     //Color! Blue... - BMPG
-    MyEngine::passthrough_shader->set_vec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)); //Maybe we need to add support for vec4 - BMPG
+    //MyEngine::passthrough_shader->set_vec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)); //Maybe we need to add support for vec4 - BMPG
 
-    MyEngine::passthrough_shader->render(glm::mat4(1.0f));
+    //MyEngine::passthrough_shader->render(glm::mat4(1.0f));
 
-
-    glDisableVertexAttribArray(1); // We don't need normals for the 2D quad
+    //glDisableVertexAttribArray(1); // We don't need normals for the 2D quad
 
     // Bind the attempted FBO buffer as texture and render:
-    glBindTexture(GL_TEXTURE_2D, MyEngine::attemptFBO->get_texture_id());
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    // Repeat for right eye....
-    // glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    //glBindTexture(GL_TEXTURE_2D, MyEngine::attemptFBO->get_texture_id());
+    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-
-
-
-    // Shadow rendering
-    /*glDepthFunc(GL_LEQUAL);
-    const glm::mat4 shadow_model_scale_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.05f, 1.0f));
-    for (const auto& node : render_list)
-    {
-        std::shared_ptr<Mesh> mesh = std::dynamic_pointer_cast<Mesh>(node.first);
-        if (mesh != nullptr && mesh->get_cast_shadows())
-        {
-            const std::shared_ptr<Material> original_material = mesh->get_material();
-            mesh->set_material(MyEngine::shadow_material);
-            const glm::mat4 shadow_matrix = shadow_model_scale_matrix * node.second;
-            mesh->render(inverse_camera_matrix * shadow_matrix);
-            mesh->set_material(original_material);
-        }
-    }
-    glDepthFunc(GL_LESS);*/
-
-    // Screen text rendering
-    /*glClear(GL_DEPTH_BUFFER_BIT); // Make the text always appear in front
-
-    // Set orthographic projection
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(glm::value_ptr(glm::ortho(0.0f, (float) MyEngine::window_width, 0.0f, (float) MyEngine::window_height, -1.0f, 1.0f)));
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf(glm::value_ptr(glm::mat4(1.0f)));
-
-    // Disable lighting
-    glDisable(GL_LIGHTING);
-
-    // Write the text
-    glColor3f(1.0f, 1.0f, 1.0f);
-
-    glRasterPos2f(16.0f, 5.0f);
-    std::string fps = "FPS: " + std::to_string((int) MyEngine::fps);
-    glutBitmapString(GLUT_BITMAP_8_BY_13, (unsigned char*) fps.c_str());
-
-    glRasterPos2f(16.0f, MyEngine::window_height - 32.0f);
-    glutBitmapString(GLUT_BITMAP_8_BY_13, (unsigned char*) MyEngine::screen_text.c_str());
-
-    // Re-activate lighting
-    glEnable(GL_LIGHTING);*/
+    /*const std::shared_ptr<Plane> left_plane = std::make_shared<Plane>();
+    left_plane->set_position(glm::vec3(0.0f, 0.0f, 5.0f));
+    left_plane->render(f);*/
 
     MyEngine::frames++;
 }

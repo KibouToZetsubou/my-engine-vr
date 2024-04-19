@@ -75,8 +75,12 @@
 		<Unit filename="ortho_camera.hpp" />
 		<Unit filename="ovo_parser.cpp" />
 		<Unit filename="ovo_parser.hpp" />
+		<Unit filename="passthrough_shader.cpp" />
+		<Unit filename="passthrough_shader.hpp" />
 		<Unit filename="perspective_camera.cpp" />
 		<Unit filename="perspective_camera.hpp" />
+		<Unit filename="plane.cpp" />
+		<Unit filename="plane.hpp" />
 		<Unit filename="point_light.cpp" />
 		<Unit filename="point_light.hpp" />
 		<Unit filename="shader.cpp" />

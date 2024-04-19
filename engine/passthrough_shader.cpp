@@ -9,39 +9,39 @@ LIB_API PassthroughShader::PassthroughShader() : Shader(R"(
 
        // Uniforms:
        uniform mat4 projection;
-       uniform mat4 modelview;   
+       uniform mat4 modelview;
 
        // Attributes:
-       layout(location = 0) in vec2 in_Position;   
+       layout(location = 0) in vec2 in_Position;
        layout(location = 2) in vec2 in_TexCoord;
 
-       // Varying:   
+       // Varying:
        out vec2 texCoord;
 
        void main(void)
-       {      
-          gl_Position = projection * modelview * vec4(in_Position, 0.0f, 1.0f);    
+       {
+          gl_Position = projection * modelview * vec4(in_Position, 0.0f, 1.0f);
           texCoord = in_TexCoord;
        }
     )", R"(
         #version 440 core
-   
+
         in vec2 texCoord;
-   
+
         uniform vec4 color;
 
-        out vec4 fragOutput;   
+        out vec4 fragOutput;
 
         // Texture mapping:
         layout(binding = 0) uniform sampler2D texSampler;
 
-        void main(void)   
-        {  
+        void main(void)
+        {
             // Texture element:
-            vec4 texel = texture(texSampler, texCoord);      
-      
+            vec4 texel = texture(texSampler, texCoord);
+
             // Final color:
-            fragOutput = color * texel;       
+            fragOutput = color * texel;
         }
     )")
 {}

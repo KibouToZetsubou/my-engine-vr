@@ -10,8 +10,6 @@
 #include "common.hpp"
 #include "object.hpp"
 
-
-
 class LIB_API Shader : public Object
 {
 public:
@@ -24,19 +22,14 @@ public:
     void set_float(const std::string name, const float value);
     void set_int(const std::string name, const int value);
     void set_vec3(const std::string name, const glm::vec3 value);
-    void set_vec4(const std::string name, const glm::vec4 value); //BMPG
+    void set_vec4(const std::string name, const glm::vec4 value);
     void set_bool(const std::string name, const bool value);
     void set_mat4(const std::string name, const glm::mat4 value);
     void set_vector_int(const std::string name, const std::vector<int> value);
     void set_vector_vec3(const std::string name, const std::vector<glm::vec3> value);
     void set_vector_float(const std::string name, const std::vector<float> value);
 
-    void use_shader();
-
-    inline void bind(int location, const char* attribName)
-    {
-        glBindAttribLocation(this->program_id, location, attribName);
-    }
+    void use() const;
 protected:
     void compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
 
