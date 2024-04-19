@@ -12,7 +12,6 @@
 
 #include "camera.hpp"
 #include "common.hpp"
-#include "material.hpp"
 #include "object.hpp"
 #include "shader.hpp"
 #include "fbo.hpp"

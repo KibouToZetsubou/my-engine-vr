@@ -161,10 +161,10 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    MyEngine::left_eye = std::make_shared<FBO>(256, 256);
+    MyEngine::left_eye = std::make_shared<FBO>(512, 512);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, 512, 256);
+    glViewport(0, 0, window_width, window_height);
 
     // Start the engine
     MyEngine::is_initialized_flag = true;
@@ -299,6 +299,7 @@ void LIB_API MyEngine::render()
 
     // Render the left eye
     MyEngine::left_eye->use();
+    MyEngine::clear_screen();
     MyEngine::ppl_shader->use();
 
     MyEngine::ppl_shader->clear_uniforms();
@@ -313,7 +314,7 @@ void LIB_API MyEngine::render()
     //MyEngine::ppl_shader->set_vector_float("light_cutoff", light_cutoffs);
     //MyEngine::ppl_shader->set_vector_float("light_exponent", light_exponents);
 
-    const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(MyEngine::window_width, MyEngine::window_height);
+    const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(512, 512);
     MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix);
 
     // Normal rendering
@@ -341,9 +342,9 @@ void LIB_API MyEngine::render()
 
     // Copy the left eye to the window buffer.
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, 512, 256);
+    glViewport(0, 0, 1024, 512);
     MyEngine::left_eye->use_read();
-    glBlitFramebuffer(0, 0, 256, 256, 0, 0, 512, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    glBlitFramebuffer(0, 0, 512, 512, 0, 0, 512, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
     // Screen rendering
     //MyEngine::passthrough_shader->use();
