@@ -15,6 +15,7 @@
 #include "material.hpp"
 #include "object.hpp"
 #include "shader.hpp"
+#include "fbo.hpp"
 
 /**
  * The main class of the engine.
@@ -80,4 +81,6 @@ private:
     static std::string screen_text;
     static int frames;
     static float fps;
+
+    static std::shared_ptr<FBO> attemptFBO;
 };

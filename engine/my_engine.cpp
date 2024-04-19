@@ -29,6 +29,8 @@ int MyEngine::window_height = 0;
 std::shared_ptr<Material> MyEngine::shadow_material = nullptr;
 std::shared_ptr<Shader> MyEngine::shader = nullptr;
 
+std::shared_ptr<FBO> MyEngine::attemptFBO = nullptr;
+
 // Frames:
 int MyEngine::frames = 0;
 float MyEngine::fps = 0.0f;
@@ -71,7 +73,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     }
 
     // Initialize GLUT
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitContextVersion(4, 4);
     glutInitContextProfile(GLUT_CORE_PROFILE);
     glutInitContextFlags(GLUT_DEBUG);
@@ -135,6 +137,9 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     std::cout << "   GLSL . . . . :  " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
     std::cout << std::endl;
 
+    // Initialize FreeImage
+    FreeImage_Initialise();
+
     // Setup callbacks
     glutDisplayFunc(render);
     glutReshapeFunc(resize_callback);
@@ -147,9 +152,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Configure lighting
     const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
 
-    // Initialize FreeImage
-    FreeImage_Initialise();
-
     // Configure global shader
     MyEngine::shader = std::make_shared<SimpleShader>();
 
@@ -159,6 +161,18 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::shadow_material->set_diffuse_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_shininess(0.0f);
+
+    // Load FBO and its texture:
+    GLint prevViewport[4];
+    glGetIntegerv(GL_VIEWPORT, prevViewport);
+
+    //Attempt at creating the FBO
+    attemptFBO = std::make_shared<FBO>();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, prevViewport[2], prevViewport[3]);
+
+
 
     // Start the engine
     MyEngine::is_initialized_flag = true;
@@ -291,6 +305,19 @@ void LIB_API MyEngine::render()
         }
     }
 
+
+    // Store the current viewport size:
+    GLint prevViewport[4];
+    glGetIntegerv(GL_VIEWPORT, prevViewport);
+
+    //Attempt at rendering with FBO
+    attemptFBO = std::make_shared<FBO>();
+
+    // Clear the FBO content:
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
     // Setup shader
     MyEngine::shader->clear_uniforms();
     MyEngine::shader->set_int("number_of_lights", number_of_lights);
@@ -329,6 +356,19 @@ void LIB_API MyEngine::render()
         MyEngine::shader->render(node.second);
         node.first->render(node.second);
     }
+
+
+
+    // Done with the attempted FBO, go back to rendering into the window context buffers:
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, prevViewport[2], prevViewport[3]);
+
+    // Bind the attempted FBO buffer as texture and render:
+    glBindTexture(GL_TEXTURE_2D, attemptFBO->get_texture_id());
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+
+
 
     // Shadow rendering
     /*glDepthFunc(GL_LEQUAL);

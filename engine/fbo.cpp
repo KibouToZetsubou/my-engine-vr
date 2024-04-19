@@ -36,3 +36,18 @@ LIB_API FBO::FBO()
         throw "Failed to create the FBO.";
     }
 }
+
+bool LIB_API FBO::render()
+{
+    // Bind buffers:
+    glBindFramebuffer(GL_FRAMEBUFFER, this->id);
+    glViewport(0, 0, this->size_X, this->size_Y);
+
+    //Done
+    return true;
+}
+
+unsigned int LIB_API FBO::get_texture_id()
+{
+    return this->texture_id;
+}
