@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="directional_light.cpp" />
-    <ClCompile Include="engine_test.cpp" />
     <ClCompile Include="fbo.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="material.cpp" />
