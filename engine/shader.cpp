@@ -50,8 +50,6 @@ LIB_API Shader::~Shader()
 
 void LIB_API Shader::render(const glm::mat4 view_matrix) const
 {
-    glUseProgram(this->program_id);
-
     // View matrix
     const int uniform_location_view_matrix = glGetUniformLocation(this->program_id, "view_matrix");
     glUniformMatrix4fv(uniform_location_view_matrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
@@ -82,6 +80,13 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
         glUniform3fv(uniform_location, 1, glm::value_ptr(i->second));
     }
 
+    for (auto i = this->vec4s.begin(); i != this->vec4s.end(); ++i)
+    {
+        const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
+        THROW_IF_NOT_FOUND(uniform_location);
+        glUniform4fv(uniform_location, 1, glm::value_ptr(i->second));
+    }
+
     for (auto i = this->bools.begin(); i != this->bools.end(); ++i)
     {
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
@@ -100,7 +105,7 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
     {
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());
         THROW_IF_NOT_FOUND(uniform_location);
-        glUniform3fv(uniform_location, i->second.size(), &(i->second[0].x) ); // Very ugly hack to pass the array
+        glUniform3fv(uniform_location, i->second.size(), &(i->second[0].x)); // Very ugly hack to pass the array
     }
 
     for (auto i = this->vector_floats.begin(); i != this->vector_floats.end(); ++i)
@@ -124,6 +129,7 @@ void LIB_API Shader::clear_uniforms()
     this->floats.clear();
     this->ints.clear();
     this->vec3s.clear();
+    this->vec4s.clear();
     this->bools.clear();
     this->vector_ints.clear();
     this->vector_vec3s.clear();
@@ -144,6 +150,11 @@ void LIB_API Shader::set_int(const std::string name, const int value)
 void LIB_API Shader::set_vec3(const std::string name, const glm::vec3 value)
 {
     this->vec3s[name] = value;
+}
+
+void LIB_API Shader::set_vec4(const std::string name, const glm::vec4 value)
+{
+    this->vec4s[name] = value;
 }
 
 void LIB_API Shader::set_bool(const std::string name, const bool value)
@@ -172,4 +183,9 @@ void LIB_API Shader::set_vector_float(const std::string name, const std::vector<
 void LIB_API Shader::set_mat4(const std::string name, const glm::mat4 value)
 {
     this->mat4s[name] = value;
+}
+
+void LIB_API Shader::use_shader()
+{
+    glUseProgram(this->program_id);
 }

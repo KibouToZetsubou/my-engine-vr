@@ -13,19 +13,26 @@ LIB_API FBO::FBO()
 
     // TODO: What should this do?
     // I think it's the "color" texture/buffer of the FBO rendering, maybe im wrong - BMPG
+    // TODO: Transform the following gl gen/bind/tex in a single Texture
     glGenTextures(1, &this->texture_id);
     glBindTexture(GL_TEXTURE_2D, this->texture_id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->size_X, this->size_Y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr); //TODO: Change these magic numbers - BMPG
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, this->texture_id, 0);
+
+    glBindTexture(GL_TEXTURE_2D, this->texture_id);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &this->size_X);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &this->size_Y);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, this->id);
 
     // Create depth buffer
     glGenRenderbuffers(1, &this->depth_buffer_id);
-    glBindFramebuffer(GL_RENDERBUFFER, this->depth_buffer_id);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this->size_X, this->size_Y);
+    glBindRenderbuffer(GL_RENDERBUFFER, this->depth_buffer_id);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, this->size_X, this->size_Y);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->depth_buffer_id);
 
     GLenum dBuff[1] = { GL_COLOR_ATTACHMENT0 };

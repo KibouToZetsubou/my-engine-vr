@@ -37,8 +37,6 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
         uniform vec3 material_specular;
         uniform float material_shininess;
         uniform bool use_texture;
-
-        //Possibly gotta add 'layout(binding = 0)' ? -> [Set it to the texture unit where you bound the texture]
         uniform sampler2D material_texture;
 
         // Light

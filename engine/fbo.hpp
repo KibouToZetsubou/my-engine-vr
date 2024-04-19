@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common.hpp"
-#include "object.hpp"
+//#include "object.hpp"
 
 class LIB_API FBO //: public Texture
 {
@@ -17,6 +17,6 @@ private:
 
     unsigned int texture_id;
 
-    unsigned int size_X;
-    unsigned int size_Y;
+    int size_X;
+    int size_Y;
 };

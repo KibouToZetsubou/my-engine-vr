@@ -94,7 +94,7 @@ void start_level(int level_id)
 int main(int argc, char* argv[])
 {
     //Engine setup
-    MyEngine::init("Rush Hour", 800, 600);
+    MyEngine::init("Rush Hour", 1024, 512);
 
     MyEngine::set_keyboard_callback([](const unsigned char key, const int mouse_x, const int mouse_y)
     {

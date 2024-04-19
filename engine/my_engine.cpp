@@ -8,6 +8,8 @@
 #include <unistd.h>
 #endif
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <FreeImage.h>
@@ -16,6 +18,7 @@
 #include "mesh.hpp"
 #include "point_light.hpp"
 #include "simple_shader.hpp"
+#include "passthrough_shader.hpp"
 #include "spot_light.hpp"
 
 bool MyEngine::is_initialized_flag = false;
@@ -27,8 +30,9 @@ std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 std::shared_ptr<Material> MyEngine::shadow_material = nullptr;
-std::shared_ptr<Shader> MyEngine::shader = nullptr;
 
+std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
+std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
 std::shared_ptr<FBO> MyEngine::attemptFBO = nullptr;
 
 // Frames:
@@ -145,15 +149,19 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glutReshapeFunc(resize_callback);
     glutTimerFunc(1000, timer_callback, 0);
 
-    // Configure OpenGL
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-
     // Configure lighting
     const glm::vec4 ambient(0.2f, 0.2f, 0.2f, 1.0f);
 
-    // Configure global shader
-    MyEngine::shader = std::make_shared<SimpleShader>();
+    // Configure shaders [ppl & passthrough]
+    MyEngine::ppl_shader = std::make_shared<SimpleShader>();
+    MyEngine::ppl_shader->use_shader();
+
+    MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
+    MyEngine::passthrough_shader->use_shader();
+
+    // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
+    MyEngine::passthrough_shader->bind(0, "in_Position");
+    MyEngine::passthrough_shader->bind(2, "in_TexCoord");
 
     // Configure the material used to draw shadows.
     MyEngine::shadow_material = std::make_shared<Material>();
@@ -162,12 +170,22 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::shadow_material->set_specular_color(glm::vec3(0.0f, 0.0f, 0.0f));
     MyEngine::shadow_material->set_shininess(0.0f);
 
+    // Configure OpenGL
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
     // Load FBO and its texture:
     GLint prevViewport[4];
     glGetIntegerv(GL_VIEWPORT, prevViewport);
 
     //Attempt at creating the FBO
-    attemptFBO = std::make_shared<FBO>();
+    MyEngine::attemptFBO = std::make_shared<FBO>();
+
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE)
+    {
+        std::cout << "[ERROR] FBO not complete (error: " << status << ")" << std::endl;
+    }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, prevViewport[2], prevViewport[3]);
@@ -311,28 +329,30 @@ void LIB_API MyEngine::render()
     glGetIntegerv(GL_VIEWPORT, prevViewport);
 
     //Attempt at rendering with FBO
-    attemptFBO = std::make_shared<FBO>();
+    MyEngine::attemptFBO->render();
 
     // Clear the FBO content:
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 
-    // Setup shader
-    MyEngine::shader->clear_uniforms();
-    MyEngine::shader->set_int("number_of_lights", number_of_lights);
-    //MyEngine::shader->set_vector_int("light_type", light_types);
-    MyEngine::shader->set_vector_vec3("light_ambient", light_ambients);
-    MyEngine::shader->set_vector_vec3("light_diffuse", light_diffuses);
-    MyEngine::shader->set_vector_vec3("light_specular", light_speculars);
-    MyEngine::shader->set_vector_vec3("light_position", light_positions);
-    //MyEngine::shader->set_vector_vec3("light_direction", light_directions);
-    //MyEngine::shader->set_vector_float("light_radius", light_radiuses);
-    //MyEngine::shader->set_vector_float("light_cutoff", light_cutoffs);
-    //MyEngine::shader->set_vector_float("light_exponent", light_exponents);
+    // Setup ppl shader
+    MyEngine::ppl_shader->use_shader();
+
+    MyEngine::ppl_shader->clear_uniforms();
+    MyEngine::ppl_shader->set_int("number_of_lights", number_of_lights);
+    //MyEngine::ppl_shader->set_vector_int("light_type", light_types);
+    MyEngine::ppl_shader->set_vector_vec3("light_ambient", light_ambients);
+    MyEngine::ppl_shader->set_vector_vec3("light_diffuse", light_diffuses);
+    MyEngine::ppl_shader->set_vector_vec3("light_specular", light_speculars);
+    MyEngine::ppl_shader->set_vector_vec3("light_position", light_positions);
+    //MyEngine::ppl_shader->set_vector_vec3("light_direction", light_directions);
+    //MyEngine::ppl_shader->set_vector_float("light_radius", light_radiuses);
+    //MyEngine::ppl_shader->set_vector_float("light_cutoff", light_cutoffs);
+    //MyEngine::ppl_shader->set_vector_float("light_exponent", light_exponents);
 
     const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(MyEngine::window_width, MyEngine::window_height);
-    MyEngine::shader->set_mat4("projection_matrix", projection_matrix);
+    MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix);
 
     // Normal rendering
     for (const auto& node : render_list)
@@ -343,29 +363,52 @@ void LIB_API MyEngine::render()
             // Load material information into the shader
             const std::shared_ptr<Material> material = mesh->get_material();
             material->render(node.second);
-            MyEngine::shader->set_vec3("material_emission", material->get_emission_color());
-            MyEngine::shader->set_vec3("material_ambient", material->get_ambient_color());
-            MyEngine::shader->set_vec3("material_diffuse", material->get_diffuse_color());
-            MyEngine::shader->set_vec3("material_specular", material->get_specular_color());
-            MyEngine::shader->set_float("material_shininess", material->get_shininess());
+            MyEngine::ppl_shader->set_vec3("material_emission", material->get_emission_color());
+            MyEngine::ppl_shader->set_vec3("material_ambient", material->get_ambient_color());
+            MyEngine::ppl_shader->set_vec3("material_diffuse", material->get_diffuse_color());
+            MyEngine::ppl_shader->set_vec3("material_specular", material->get_specular_color());
+            MyEngine::ppl_shader->set_float("material_shininess", material->get_shininess());
 
             const std::shared_ptr<Texture> texture = material->get_texture();
-            MyEngine::shader->set_bool("use_texture", texture != nullptr);
+            MyEngine::ppl_shader->set_bool("use_texture", texture != nullptr);
         }
 
-        MyEngine::shader->render(node.second);
+        MyEngine::ppl_shader->render(node.second);
         node.first->render(node.second);
     }
-
-
 
     // Done with the attempted FBO, go back to rendering into the window context buffers:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, prevViewport[2], prevViewport[3]);
 
+
+    ////////////////
+    // 2D rendering:
+
+    MyEngine::passthrough_shader->use_shader();
+
+    //Ortho - BMPG
+    const glm::mat4 ortho = glm::ortho(0.0f, (float)MyEngine::window_width, 0.0f, (float)MyEngine::window_height, -1.0f, 1.0f);
+    MyEngine::passthrough_shader->set_mat4("projection", ortho);
+
+    // Set a matrix for the left "eye": [for now the only eye!] {We are a cyclops} - BMPG    
+    glm::mat4 f = glm::mat4(1.0f);
+    MyEngine::passthrough_shader->set_mat4("modelview", f);
+
+    //Color! Blue... - BMPG
+    MyEngine::passthrough_shader->set_vec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)); //Maybe we need to add support for vec4 - BMPG
+
+    MyEngine::passthrough_shader->render(glm::mat4(1.0f));
+
+
+    glDisableVertexAttribArray(1); // We don't need normals for the 2D quad
+
     // Bind the attempted FBO buffer as texture and render:
-    glBindTexture(GL_TEXTURE_2D, attemptFBO->get_texture_id());
+    glBindTexture(GL_TEXTURE_2D, MyEngine::attemptFBO->get_texture_id());
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    // Repeat for right eye....
+    // glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 
 
