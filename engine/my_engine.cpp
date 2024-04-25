@@ -301,13 +301,17 @@ void LIB_API MyEngine::render()
 
     for (int i = 0; i < 2; i++)
     {
+        float interocular_distance = 50.0f;
+
         if (i == 0) //Left
         {
             MyEngine::left_eye->use();
+            interocular_distance /= -2;
         }
         else  //Right
         {
             MyEngine::right_eye->use();
+            interocular_distance /= 2;
         }
 
 
@@ -328,7 +332,8 @@ void LIB_API MyEngine::render()
         //MyEngine::ppl_shader->set_vector_float("light_exponent", light_exponents);
 
         const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(512, 512);
-        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix);
+        const glm::mat4 projection_matrix_per_eye = glm::translate(projection_matrix, glm::vec3(interocular_distance, 0.0f, 0.0f));
+        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
 
         // Normal rendering
         for (const auto& node : render_list)
