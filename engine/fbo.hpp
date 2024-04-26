@@ -9,6 +9,7 @@ public:
 
     void use() const;
     void use_read() const;
+    unsigned int get_color_buffer_id() const;
 private:
     unsigned int id;
     unsigned int color_buffer_id;

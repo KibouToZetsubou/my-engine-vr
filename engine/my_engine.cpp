@@ -57,7 +57,7 @@ int APIENTRY DllMain(HANDLE instDLL, DWORD reason, LPVOID _reserved)
     return true;
 }
 #else
-    #define __stdcall
+#define __stdcall
 #endif
 
 
@@ -107,11 +107,11 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     }
 
     // TODO: Figure out why this is always true, even in release mode.
-    #ifdef _DEBUG
-    // Register OpenGL debug callback
-    glDebugMessageCallback((GLDEBUGPROC) debug_callback, nullptr);
+#ifdef _DEBUG
+// Register OpenGL debug callback
+    glDebugMessageCallback((GLDEBUGPROC)debug_callback, nullptr);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    #endif
+#endif
 
     // Log context properties:
     std::cout << "OpenGL properties:" << std::endl;
@@ -229,7 +229,7 @@ void LIB_API MyEngine::render()
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
         return a.first->get_priority() > b.first->get_priority();
-    });
+        });
 
     const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
     for (auto& item : render_list)
@@ -309,8 +309,21 @@ void LIB_API MyEngine::render()
         }
     }
 
+    //Update user position:
+    ovvr->update();
+    glm::mat4 headPos = ovvr->getModelviewMatrix();
+
     for (int i = 0; i < 2; i++)
     {
+        // Get OpenVR matrices:
+        OvVR::OvEye curEye = (OvVR::OvEye)i;
+        glm::mat4 projMat = ovvr->getProjMatrix(curEye, 1.0f, 1024.0f);
+        glm::mat4 eye2Head = ovvr->getEye2HeadMatrix(curEye);
+
+        glm::mat4 ovrProjMat = projMat * glm::inverse(eye2Head);
+        // Update camera modelview matrix:
+        glm::mat4 ovrModelViewMat = glm::inverse(headPos); // Inverted because this is the camera matrix
+
         float interocular_distance = 50.0f;
 
         if (i == 0) //Left
@@ -343,7 +356,8 @@ void LIB_API MyEngine::render()
 
         const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(512, 512);
         const glm::mat4 projection_matrix_per_eye = glm::translate(projection_matrix, glm::vec3(interocular_distance, 0.0f, 0.0f));
-        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
+        //MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
+        MyEngine::ppl_shader->set_mat4("projection_matrix", ovrProjMat);
 
         // Normal rendering
         for (const auto& node : render_list)
@@ -368,8 +382,23 @@ void LIB_API MyEngine::render()
             node.first->render(node.second);
         }
 
+        MyEngine::ppl_shader->render(ovrModelViewMat);
+
+
+        if (i == 0) //Left
+        {
+            // Send rendered image to the proper OpenVR eye:      
+            ovvr->pass(curEye, MyEngine::left_eye->get_color_buffer_id());
+        }
+        else  //Right
+        {
+            // Send rendered image to the proper OpenVR eye:    
+            ovvr->pass(curEye, MyEngine::right_eye->get_color_buffer_id());
+        }
     }
 
+    // Update internal OpenVR settings:
+    ovvr->render();
 
     // Copy the left eye to the window buffer.
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

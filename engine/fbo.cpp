@@ -52,3 +52,8 @@ void LIB_API FBO::use_read() const
     glBindFramebuffer(GL_READ_FRAMEBUFFER, this->id);
     glViewport(0, 0, this->width, this->height);
 }
+
+unsigned int LIB_API FBO::get_color_buffer_id() const
+{
+    return this->color_buffer_id;
+}
