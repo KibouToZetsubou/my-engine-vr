@@ -13,6 +13,7 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <FreeImage.h>
+#include <openvr.h>
 
 #include "directional_light.hpp"
 #include "mesh.hpp"
@@ -34,6 +35,8 @@ std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
+
+std::shared_ptr<OvVR> MyEngine::ovvr = nullptr;
 
 // Frames:
 int MyEngine::frames = 0;
@@ -143,6 +146,13 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Initialize FreeImage
     FreeImage_Initialise();
+
+    //Init OpenVR:
+    MyEngine::ovvr = std::make_shared<OvVR>();
+    if (ovvr->init() == false)
+    {
+        std::cout << "[ERROR] Unable to init OpenVR" << std::endl;
+    }
 
     // Setup callbacks
     glutDisplayFunc(render);

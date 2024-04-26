@@ -15,6 +15,7 @@
 #include "object.hpp"
 #include "shader.hpp"
 #include "fbo.hpp"
+#include "ovvr.hpp"
 
 /**
  * The main class of the engine.
@@ -79,6 +80,7 @@ private:
     static std::shared_ptr<Shader> passthrough_shader;
     static std::shared_ptr<FBO> left_eye;
     static std::shared_ptr<FBO> right_eye;
+    static std::shared_ptr<OvVR> ovvr;
     static std::string screen_text;
     static int frames;
     static float fps;

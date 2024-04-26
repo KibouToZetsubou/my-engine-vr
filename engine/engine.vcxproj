@@ -30,6 +30,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="ortho_camera.cpp" />
     <ClCompile Include="ovo_parser.cpp" />
+    <ClCompile Include="ovr.cpp" />
     <ClCompile Include="passthrough_shader.cpp" />
     <ClCompile Include="perspective_camera.cpp" />
     <ClCompile Include="point_light.cpp" />
@@ -51,6 +52,8 @@
     <ClInclude Include="object.hpp" />
     <ClInclude Include="ortho_camera.hpp" />
     <ClInclude Include="ovo_parser.hpp" />
+    <ClInclude Include="ovr.hpp" />
+    <ClInclude Include="ovvr.hpp" />
     <ClInclude Include="passthrough_shader.hpp" />
     <ClInclude Include="perspective_camera.hpp" />
     <ClInclude Include="point_light.hpp" />
@@ -151,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\dependencies\openvr\include;..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;..\dependencies\openvr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251;4005</DisableSpecificWarnings>
     </ClCompile>
     <Link>
