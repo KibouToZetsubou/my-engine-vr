@@ -18,12 +18,14 @@
 					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add directory="glm" />
+					<Add directory="../dependencies/openvr/include" />
 				</Compiler>
 				<Linker>
 					<Add library="GL" />
 					<Add library="glut" />
 					<Add library="freeimage" />
 					<Add library="GLEW" />
+					<Add library="openvr_api" />
 				</Linker>
 			</Target>
 			<Target title="Release">
