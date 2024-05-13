@@ -169,8 +169,8 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
     MyEngine::ppl_shader->use();
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
-    
-    std::vector<std::string> cubemapNames =
+    MyEngine::skybox_shader->use();
+    std::vector<std::string> cubemap_names =
     {
        "posx.jpg",
        "negx.jpg",
@@ -179,8 +179,9 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
        "posz.jpg",
        "negz.jpg",
     };
-    std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemapNames);
+    std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemap_names);
 
+    MyEngine::ppl_shader->use();
 
 
     // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
@@ -402,6 +403,7 @@ void LIB_API MyEngine::render()
         }
 
         MyEngine::ppl_shader->render(ovrModelViewMat);
+        MyEngine::skybox_shader->render(ovrModelViewMat);
 
 
         if (i == 0) //Left

@@ -33,7 +33,7 @@ static unsigned short cubeFaces[] =
    1, 6, 2,
 };
 
-LIB_API Skybox::Skybox(std::vector<std::string> cubamepNames)
+LIB_API Skybox::Skybox(std::vector<std::string> cubemapNames)
 {
 
 
@@ -51,7 +51,10 @@ LIB_API Skybox::Skybox(std::vector<std::string> cubamepNames)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->vbo_faces);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeFaces), cubeFaces, GL_STATIC_DRAW);
 
-    generateCubeMap(cubamepNames);
+    generateCubeMap(cubemapNames);
+
+    this->set_scale(glm::vec3(1000.0f));
+
 }
 
 LIB_API Skybox::~Skybox()

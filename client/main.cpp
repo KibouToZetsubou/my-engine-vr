@@ -12,10 +12,22 @@
 
 #include "rush_hour.hpp"
 #include "direction.hpp"
+#include "skybox.hpp"
 
 std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
 std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
 bool perspective_camera_is_used = false;
+
+std::vector<std::string> cubemapNames =
+{
+   "posx.jpg",
+   "negx.jpg",
+   "posy.jpg",
+   "negy.jpg",
+   "posz.jpg",
+   "negz.jpg",
+};
+//std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemapNames);
 
 void start_level(int level_id)
 {
@@ -69,6 +81,9 @@ void start_level(int level_id)
 
     scene_root->add_child(saved_camera_ortho);
     scene_root->add_child(saved_camera_perspec);
+
+    //scene_root->add_child(skybox);
+
     MyEngine::set_active_camera(saved_camera_ortho);
 
     RushHour::set_perspective_camera(saved_camera_perspec);
