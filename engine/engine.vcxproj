@@ -35,6 +35,9 @@
     <ClCompile Include="point_light.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="simple_shader.cpp" />
+    <ClCompile Include="skybox.cpp" />
+    <ClCompile Include="skybox_shader.cpp" />
+    <ClCompile Include="skybox_shader.hpp" />
     <ClCompile Include="spot_light.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
@@ -57,6 +60,7 @@
     <ClInclude Include="point_light.hpp" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="simple_shader.hpp" />
+    <ClInclude Include="skybox.hpp" />
     <ClInclude Include="spot_light.hpp" />
     <ClInclude Include="texture.hpp" />
   </ItemGroup>

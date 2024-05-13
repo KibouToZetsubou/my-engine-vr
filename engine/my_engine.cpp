@@ -21,6 +21,10 @@
 #include "simple_shader.hpp"
 #include "passthrough_shader.hpp"
 #include "spot_light.hpp"
+#include "skybox_shader.hpp"
+#include "skybox.hpp"
+
+
 
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
@@ -32,6 +36,7 @@ int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
+std::shared_ptr<Shader> MyEngine::skybox_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
@@ -163,6 +168,20 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
     MyEngine::ppl_shader->use();
+    MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
+    
+    std::vector<std::string> cubemapNames =
+    {
+       "posx.jpg",
+       "negx.jpg",
+       "posy.jpg",
+       "negy.jpg",
+       "posz.jpg",
+       "negz.jpg",
+    };
+    std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemapNames);
+
+
 
     // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
     //MyEngine::passthrough_shader->bind(0, "in_Position");

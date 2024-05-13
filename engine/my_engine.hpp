@@ -77,6 +77,7 @@ private:
     static std::shared_ptr<Object> scene;
     static std::shared_ptr<Camera> active_camera;
     static std::shared_ptr<Shader> ppl_shader;
+    static std::shared_ptr<Shader> skybox_shader;
     static std::shared_ptr<Shader> passthrough_shader;
     static std::shared_ptr<FBO> left_eye;
     static std::shared_ptr<FBO> right_eye;
