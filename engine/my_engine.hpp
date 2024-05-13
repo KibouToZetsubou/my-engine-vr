@@ -14,6 +14,7 @@
 #include "common.hpp"
 #include "object.hpp"
 #include "shader.hpp"
+#include "skybox.hpp"
 #include "fbo.hpp"
 #include "ovvr.hpp"
 
@@ -79,6 +80,7 @@ private:
     static std::shared_ptr<Shader> ppl_shader;
     static std::shared_ptr<Shader> skybox_shader;
     static std::shared_ptr<Shader> passthrough_shader;
+    static std::shared_ptr<Skybox> skybox;
     static std::shared_ptr<FBO> left_eye;
     static std::shared_ptr<FBO> right_eye;
     static std::shared_ptr<OvVR> ovvr;

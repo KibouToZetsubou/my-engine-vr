@@ -35,8 +35,6 @@ static unsigned short cubeFaces[] =
 
 LIB_API Skybox::Skybox(std::vector<std::string> cubemapNames)
 {
-
-
     glGenVertexArrays(1, &this->vao_id);
     glBindVertexArray(this->vao_id);
 
@@ -53,8 +51,7 @@ LIB_API Skybox::Skybox(std::vector<std::string> cubemapNames)
 
     generateCubeMap(cubemapNames);
 
-    this->set_scale(glm::vec3(1000.0f));
-
+    this->set_scale(glm::vec3(100.0f));
 }
 
 LIB_API Skybox::~Skybox()
@@ -101,7 +98,7 @@ LIB_API void Skybox::generateCubeMap(std::vector<std::string> cubemapNames)
         FreeImage_FlipVertical(fBitmap);    // Correct JPG's upside-down
 
         // Send texture to OpenGL:
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + curSide, 0, intFormat, FreeImage_GetWidth(fBitmap), FreeImage_GetHeight(fBitmap), 0, extFormat, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(fBitmap));
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + curSide, 0, intFormat, FreeImage_GetWidth(fBitmap), FreeImage_GetHeight(fBitmap), 0, extFormat, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(fBitmap)); 
 
         // Free resources:
         FreeImage_Unload(fBitmap);
@@ -110,7 +107,7 @@ LIB_API void Skybox::generateCubeMap(std::vector<std::string> cubemapNames)
 
 void LIB_API Skybox::render(const glm::mat4 view_matrix) const
 {
-    Node::render(view_matrix);
+    //Node::render(view_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, sizeof(cubeFaces) / sizeof(unsigned short), GL_UNSIGNED_SHORT, nullptr);

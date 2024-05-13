@@ -38,6 +38,7 @@ int MyEngine::window_height = 0;
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::skybox_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
+std::shared_ptr<Skybox> MyEngine::skybox = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
 
@@ -167,9 +168,12 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Configure shaders
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
-    MyEngine::ppl_shader->use();
+    //MyEngine::ppl_shader->use();
+
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
     MyEngine::skybox_shader->use();
+    MyEngine::skybox_shader->bind(0, "in_Position");
+
     std::vector<std::string> cubemap_names =
     {
        "posx.jpg",
@@ -179,7 +183,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
        "posz.jpg",
        "negz.jpg",
     };
-    std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemap_names);
+    MyEngine::skybox = std::make_shared<Skybox>(cubemap_names);
 
     MyEngine::ppl_shader->use();
 
@@ -190,7 +194,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 
     MyEngine::left_eye = std::make_shared<FBO>(512, 512);
     MyEngine::right_eye = std::make_shared<FBO>(512, 512);
@@ -403,7 +407,16 @@ void LIB_API MyEngine::render()
         }
 
         MyEngine::ppl_shader->render(ovrModelViewMat);
-        MyEngine::skybox_shader->render(ovrModelViewMat);
+
+        MyEngine::skybox_shader->use();
+        MyEngine::skybox_shader->set_mat4("modelview", glm::mat4(1.0f));
+
+        glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
+        MyEngine::skybox_shader->set_mat4("projection", sky_persp);
+        
+        //MyEngine::skybox_shader->render(ovrModelViewMat);
+        MyEngine::skybox_shader->render(projection_matrix);
+        MyEngine::skybox->render(projection_matrix);
 
 
         if (i == 0) //Left
@@ -593,6 +606,9 @@ void LIB_API MyEngine::resize_callback(const int width, const int height)
     MyEngine::window_height = height;
 
     glViewport(0, 0, width, height);
+
+    //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
+    //MyEngine::skybox_shader->set_mat4("projection", sky_persp);
 }
 
 /**

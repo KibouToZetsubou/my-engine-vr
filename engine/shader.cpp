@@ -43,6 +43,10 @@ LIB_API Shader::Shader(const std::string& vertex_shader_source, const std::strin
     glDeleteShader(fragment_shader_id);
 }
 
+void LIB_API Shader::bind(int location, const char* attribName) {
+    glBindAttribLocation(this->program_id, location, attribName);
+}
+
 LIB_API Shader::~Shader()
 {
     glDeleteProgram(this->program_id);

@@ -29,6 +29,8 @@ public:
     void set_vector_vec3(const std::string name, const std::vector<glm::vec3> value);
     void set_vector_float(const std::string name, const std::vector<float> value);
 
+    void bind(int location, const char* attribName);
+
     void use() const;
 protected:
     void compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source);

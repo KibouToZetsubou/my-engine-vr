@@ -72,9 +72,6 @@
     <ClCompile Include="skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="skybox_shader.hpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="skybox_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="skybox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skybox_shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
