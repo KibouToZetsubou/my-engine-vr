@@ -12,7 +12,7 @@
 
 #include "rush_hour.hpp"
 #include "direction.hpp"
-#include "skybox.hpp"
+//#include "skybox.hpp"
 
 std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
 std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;

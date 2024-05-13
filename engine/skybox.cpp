@@ -51,7 +51,7 @@ LIB_API Skybox::Skybox(std::vector<std::string> cubemapNames)
 
     generateCubeMap(cubemapNames);
 
-    this->set_scale(glm::vec3(100.0f));
+    this->set_scale(glm::vec3(1000.0f));
 }
 
 LIB_API Skybox::~Skybox()
@@ -107,7 +107,7 @@ LIB_API void Skybox::generateCubeMap(std::vector<std::string> cubemapNames)
 
 void LIB_API Skybox::render(const glm::mat4 view_matrix) const
 {
-    //Node::render(view_matrix);
+    Node::render(view_matrix);
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, sizeof(cubeFaces) / sizeof(unsigned short), GL_UNSIGNED_SHORT, nullptr);
