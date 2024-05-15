@@ -59,8 +59,6 @@ public:
     static void set_active_camera(const std::shared_ptr<Camera> new_active_camera);
 
     static std::shared_ptr<Object> find_object_by_name(const std::string name_to_find);
-
-    static void set_screen_text(const std::string new_text);
 private:
     static void resize_callback(const int width, const int height);
 
@@ -84,7 +82,6 @@ private:
     static std::shared_ptr<FBO> left_eye;
     static std::shared_ptr<FBO> right_eye;
     static std::shared_ptr<OvVR> ovvr;
-    static std::string screen_text;
     static int frames;
     static float fps;
 };

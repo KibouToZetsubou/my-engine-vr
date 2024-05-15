@@ -29,7 +29,6 @@ bool MyEngine::is_running_flag = false;
 int MyEngine::window_id = 0;
 std::shared_ptr<Object> MyEngine::scene;
 std::shared_ptr<Camera> MyEngine::active_camera;
-std::string MyEngine::screen_text;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 
@@ -39,7 +38,6 @@ std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
 std::shared_ptr<Skybox> MyEngine::skybox = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
-
 std::shared_ptr<OvVR> MyEngine::ovvr = nullptr;
 
 // Frames:
@@ -111,41 +109,10 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // TODO: Figure out why this is always true, even in release mode.
 #ifdef _DEBUG
-// Register OpenGL debug callback
+    // Register OpenGL debug callback
     glDebugMessageCallback((GLDEBUGPROC)debug_callback, nullptr);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
-
-    // Log context properties:
-    std::cout << "OpenGL properties:" << std::endl;
-    std::cout << "   Vendor . . . :  " << glGetString(GL_VENDOR) << std::endl;
-    std::cout << "   Driver . . . :  " << glGetString(GL_RENDERER) << std::endl;
-
-    int oglVersion[2];
-    glGetIntegerv(GL_MAJOR_VERSION, &oglVersion[0]);
-    glGetIntegerv(GL_MINOR_VERSION, &oglVersion[1]);
-    std::cout << "   Version  . . :  " << glGetString(GL_VERSION) << " [" << oglVersion[0] << "." << oglVersion[1] << "]" << std::endl;
-
-    int oglContextProfile;
-    glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &oglContextProfile);
-    if (oglContextProfile & GL_CONTEXT_CORE_PROFILE_BIT)
-        std::cout << "                :  " << "Core profile" << std::endl;
-    if (oglContextProfile & GL_CONTEXT_COMPATIBILITY_PROFILE_BIT)
-        std::cout << "                :  " << "Compatibility profile" << std::endl;
-
-    int oglContextFlags;
-    glGetIntegerv(GL_CONTEXT_FLAGS, &oglContextFlags);
-    if (oglContextFlags & GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT)
-        std::cout << "                :  " << "Forward compatible" << std::endl;
-    if (oglContextFlags & GL_CONTEXT_FLAG_DEBUG_BIT)
-        std::cout << "                :  " << "Debug flag" << std::endl;
-    if (oglContextFlags & GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT)
-        std::cout << "                :  " << "Robust access flag" << std::endl;
-    if (oglContextFlags & GL_CONTEXT_FLAG_NO_ERROR_BIT)
-        std::cout << "                :  " << "No error flag" << std::endl;
-
-    std::cout << "   GLSL . . . . :  " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-    std::cout << std::endl;
 
     // Initialize FreeImage
     FreeImage_Initialise();
@@ -182,10 +149,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::skybox = std::make_shared<Skybox>(cubemap_names);
 
     MyEngine::ppl_shader->use();
-
-    // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
-    //MyEngine::passthrough_shader->bind(0, "in_Position");
-    //MyEngine::passthrough_shader->bind(2, "in_TexCoord");
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
@@ -248,7 +211,7 @@ void LIB_API MyEngine::render()
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
         return a.first->get_priority() > b.first->get_priority();
-        });
+    });
 
     const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
     for (auto& item : render_list)
@@ -330,34 +293,34 @@ void LIB_API MyEngine::render()
 
     //Update user position:
     ovvr->update();
-    glm::mat4 headPos = ovvr->getModelviewMatrix();
+    const glm::mat4 headPos = ovvr->getModelviewMatrix();
 
     for (int i = 0; i < 2; i++)
     {
         // Get OpenVR matrices:
-        OvVR::OvEye curEye = (OvVR::OvEye)i;
-        glm::mat4 projMat = ovvr->getProjMatrix(curEye, 1.0f, 1024.0f);
-        glm::mat4 eye2Head = ovvr->getEye2HeadMatrix(curEye);
+        const OvVR::OvEye curEye = (OvVR::OvEye) i;
+        const glm::mat4 projMat = ovvr->getProjMatrix(curEye, 1.0f, 1024.0f);
+        const glm::mat4 eye2Head = ovvr->getEye2HeadMatrix(curEye);
 
-        glm::mat4 ovrProjMat = projMat * glm::inverse(eye2Head);
+        const glm::mat4 ovrProjMat = projMat * glm::inverse(eye2Head);
         // Update camera modelview matrix:
-        glm::mat4 ovrModelViewMat = glm::inverse(headPos); // Inverted because this is the camera matrix
+        const glm::mat4 ovrModelViewMat = glm::inverse(headPos); // Inverted because this is the camera matrix
 
+        // TODO: Make this configurable
         float interocular_distance = 50.0f;
 
-        if (i == 0) //Left
+        if (i == 0) // Left
         {
             MyEngine::left_eye->use();
             interocular_distance /= -2;
         }
-        else  //Right
+        else  // Right
         {
             MyEngine::right_eye->use();
             interocular_distance /= 2;
         }
 
 
-        // Render the left eye
         MyEngine::clear_screen();
         MyEngine::ppl_shader->use();
 
@@ -417,12 +380,12 @@ void LIB_API MyEngine::render()
 
         MyEngine::skybox->render(projection_matrix);
 
-        if (i == 0) //Left
+        if (i == 0) // Left
         {
             // Send rendered image to the proper OpenVR eye:      
             ovvr->pass(curEye, MyEngine::left_eye->get_color_buffer_id());
         }
-        else  //Right
+        else  // Right
         {
             // Send rendered image to the proper OpenVR eye:    
             ovvr->pass(curEye, MyEngine::right_eye->get_color_buffer_id());
@@ -436,36 +399,11 @@ void LIB_API MyEngine::render()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, 1024, 512);
 
-    //TODO: maybe remove these magic numbers - BMPG
+    // TODO: maybe remove these magic numbers - BMPG
     MyEngine::left_eye->use_read();
     glBlitFramebuffer(0, 0, 512, 512, 0, 0, 512, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     MyEngine::right_eye->use_read();
     glBlitFramebuffer(0, 0, 512, 512, 512, 0, 1024, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-
-    // Screen rendering
-    //MyEngine::passthrough_shader->use();
-
-    //const glm::mat4 ortho = glm::ortho(0.0f, (float) MyEngine::window_width, 0.0f, (float) MyEngine::window_height, -1.0f, 1.0f);
-    //MyEngine::passthrough_shader->set_mat4("projection", ortho);
-
-    // Set a matrix for the left "eye": [for now the only eye!] {We are a cyclops} - BMPG
-    //glm::mat4 f = glm::mat4(1.0f);
-    //MyEngine::passthrough_shader->set_mat4("modelview", f);
-
-    //Color! Blue... - BMPG
-    //MyEngine::passthrough_shader->set_vec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)); //Maybe we need to add support for vec4 - BMPG
-
-    //MyEngine::passthrough_shader->render(glm::mat4(1.0f));
-
-    //glDisableVertexAttribArray(1); // We don't need normals for the 2D quad
-
-    // Bind the attempted FBO buffer as texture and render:
-    //glBindTexture(GL_TEXTURE_2D, MyEngine::attemptFBO->get_texture_id());
-    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    /*const std::shared_ptr<Plane> left_plane = std::make_shared<Plane>();
-    left_plane->set_position(glm::vec3(0.0f, 0.0f, 5.0f));
-    left_plane->render(f);*/
 
     MyEngine::frames++;
 }
@@ -475,22 +413,12 @@ void LIB_API MyEngine::render()
 *
 * @param value Parameter used by glutTimerFunc().
 */
-void LIB_API MyEngine::timer_callback(int value)
+void LIB_API MyEngine::timer_callback(const int value)
 {
     MyEngine::fps = MyEngine::frames;
     MyEngine::frames = 0;
-    std::cout << "fps: " << MyEngine::fps << std::endl;
+    std::cout << "FPS: " << MyEngine::fps << std::endl;
     glutTimerFunc(1000, timer_callback, 0);
-}
-
-/**
-* Sets the text to be rendered on screen.
-*
-* @param new_text The text to render on screen.
-*/
-void LIB_API MyEngine::set_screen_text(const std::string new_text)
-{
-    MyEngine::screen_text = new_text;
 }
 
 /**

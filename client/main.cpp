@@ -89,21 +89,6 @@ void start_level(int level_id)
     RushHour::set_perspective_camera(saved_camera_perspec);
 
     RushHour::load_level(level_id);
-
-    std::stringstream text;
-    text << "Car:\n";
-    text << "[w & s] - Move vertically\n";
-    text << "[a & d] - Move horizzontally\n";
-    text << "[1 - 9] - Select car\n";
-    text << "Camera:\n";
-    text << "[q & e] - Rotate plane (only ortho)\n";
-    text << "[r & t] - Camera elevation (only ortho)\n";
-    text << "[u & i] - Camera switching\n";
-    text << "Levels:\n";
-    text << "[b] - Level 1\n";
-    text << "[n] - Level 2\n";
-    text << "[m] - Level 3";
-    MyEngine::set_screen_text(text.str());
 }
 
 int main(int argc, char* argv[])
