@@ -24,8 +24,6 @@
 #include "skybox_shader.hpp"
 #include "skybox.hpp"
 
-
-
 bool MyEngine::is_initialized_flag = false;
 bool MyEngine::is_running_flag = false;
 int MyEngine::window_id = 0;
@@ -65,7 +63,6 @@ int APIENTRY DllMain(HANDLE instDLL, DWORD reason, LPVOID _reserved)
 #else
 #define __stdcall
 #endif
-
 
 /**
  * Initializes the engine and creates a new window.
@@ -153,11 +150,11 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Initialize FreeImage
     FreeImage_Initialise();
 
-    //Init OpenVR:
+    // Initialize OpenVR
     MyEngine::ovvr = std::make_shared<OvVR>();
     if (ovvr->init() == false)
     {
-        std::cout << "[ERROR] Unable to init OpenVR" << std::endl;
+        throw "[ERROR] Unable to init OpenVR";
     }
 
     // Setup callbacks
@@ -168,11 +165,9 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Configure shaders
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
-    //MyEngine::ppl_shader->use();
 
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
     MyEngine::skybox_shader->use();
-    MyEngine::skybox_shader->bind(0, "in_Position");
 
     std::vector<std::string> cubemap_names =
     {
@@ -183,6 +178,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
        "posz.jpg",
        "negz.jpg",
     };
+
     MyEngine::skybox = std::make_shared<Skybox>(cubemap_names);
 
     MyEngine::ppl_shader->use();
@@ -418,11 +414,9 @@ void LIB_API MyEngine::render()
         //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
         MyEngine::skybox_shader->set_mat4("projection", ovrProjMat);
 
-
-        MyEngine::skybox_shader->render(glm::mat4(1.0f));
+        MyEngine::skybox_shader->render();
 
         MyEngine::skybox->render(projection_matrix);
-
 
         if (i == 0) //Left
         {
@@ -611,9 +605,6 @@ void LIB_API MyEngine::resize_callback(const int width, const int height)
     MyEngine::window_height = height;
 
     glViewport(0, 0, width, height);
-
-    //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
-    //MyEngine::skybox_shader->set_mat4("projection", sky_persp);
 }
 
 /**

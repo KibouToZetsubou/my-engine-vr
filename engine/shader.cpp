@@ -43,10 +43,6 @@ LIB_API Shader::Shader(const std::string& vertex_shader_source, const std::strin
     glDeleteShader(fragment_shader_id);
 }
 
-void LIB_API Shader::bind(int location, const char* attribName) {
-    glBindAttribLocation(this->program_id, location, attribName);
-}
-
 LIB_API Shader::~Shader()
 {
     glDeleteProgram(this->program_id);
@@ -63,6 +59,11 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
     const int uniform_location_inverse_transpose_world = glGetUniformLocation(this->program_id, "inverse_transpose_world");
     glUniformMatrix4fv(uniform_location_inverse_transpose_world, 1, GL_FALSE, glm::value_ptr(inverse_transpose_world));
 
+    this->render();
+}
+
+void LIB_API Shader::render() const
+{
     for (auto i = this->floats.begin(); i != this->floats.end(); ++i)
     {
         const int uniform_location = glGetUniformLocation(this->program_id, i->first.c_str());

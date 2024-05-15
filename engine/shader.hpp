@@ -17,6 +17,7 @@ public:
     ~Shader();
 
     void render(const glm::mat4 view_matrix) const override;
+    void render() const;
 
     void clear_uniforms();
     void set_float(const std::string name, const float value);
@@ -28,8 +29,6 @@ public:
     void set_vector_int(const std::string name, const std::vector<int> value);
     void set_vector_vec3(const std::string name, const std::vector<glm::vec3> value);
     void set_vector_float(const std::string name, const std::vector<float> value);
-
-    void bind(int location, const char* attribName);
 
     void use() const;
 protected:
