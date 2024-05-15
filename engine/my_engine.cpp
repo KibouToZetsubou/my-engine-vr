@@ -183,14 +183,13 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     MyEngine::ppl_shader->use();
 
-
     // TODO: Generalize and improve this [See frameBufferObject example from teacher] - BMPG
     //MyEngine::passthrough_shader->bind(0, "in_Position");
     //MyEngine::passthrough_shader->bind(2, "in_TexCoord");
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 
     MyEngine::left_eye = std::make_shared<FBO>(512, 512);
     MyEngine::right_eye = std::make_shared<FBO>(512, 512);
