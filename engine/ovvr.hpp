@@ -1,9 +1,3 @@
-/**
- * @file		ovr.h
- * @brief	Self-contained helper class for interfacing OpenGL and OpenVR. Shortened version of Overvision's OvVR module.
- *
- * @author	Achille Peternier (C) SUPSI [achille.peternier@supsi.ch]
- */
 #pragma once
 
 
@@ -26,8 +20,9 @@
 
 // C/C++:
 #include <iostream>
-#include <vector>   
+#include <vector>
 
+#include "common.hpp"
 
 
 ////////////////
@@ -37,7 +32,7 @@
 /**
  * @brief OpenGL-OpenVR interface.
  */
-class OvVR
+class LIB_API OvVR
 {
     //////////
 public: //
