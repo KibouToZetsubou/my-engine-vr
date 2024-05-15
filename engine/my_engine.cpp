@@ -409,13 +409,18 @@ void LIB_API MyEngine::render()
         MyEngine::ppl_shader->render(ovrModelViewMat);
 
         MyEngine::skybox_shader->use();
-        MyEngine::skybox_shader->set_mat4("modelview", ovrModelViewMat);
-        
-        //MyEngine::skybox_shader->render(ovrModelViewMat);
-        //MyEngine::skybox_shader->render(projection_matrix);
+
+        //ovrModelViewMat = glm::translate(ovrModelViewMat, glm::vec3(0.0f, 1.0f, 0.0f));
+        //MyEngine::skybox_shader->set_mat4("modelview", ovrModelViewMat);
+        MyEngine::skybox_shader->set_mat4("modelview", glm::mat4(glm::mat3(ovrModelViewMat)));
+
+        //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
+        MyEngine::skybox_shader->set_mat4("projection", ovrProjMat);
+
+
         MyEngine::skybox_shader->render(glm::mat4(1.0f));
+
         //MyEngine::skybox->render(projection_matrix);
-        MyEngine::skybox->render(projection_matrix);
 
 
         if (i == 0) //Left
@@ -606,8 +611,8 @@ void LIB_API MyEngine::resize_callback(const int width, const int height)
 
     glViewport(0, 0, width, height);
 
-    glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
-    MyEngine::skybox_shader->set_mat4("projection", sky_persp);
+    //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
+    //MyEngine::skybox_shader->set_mat4("projection", sky_persp);
 }
 
 /**

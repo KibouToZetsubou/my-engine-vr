@@ -50,8 +50,6 @@ LIB_API Skybox::Skybox(std::vector<std::string> cubemapNames)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeFaces), cubeFaces, GL_STATIC_DRAW);
 
     generateCubeMap(cubemapNames);
-
-    this->set_scale(glm::vec3(1000.0f));
 }
 
 LIB_API Skybox::~Skybox()
