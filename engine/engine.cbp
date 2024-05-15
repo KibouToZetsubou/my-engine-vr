@@ -89,6 +89,10 @@
 		<Unit filename="shader.hpp" />
 		<Unit filename="simple_shader.cpp" />
 		<Unit filename="simple_shader.hpp" />
+		<Unit filename="skybox.cpp" />
+		<Unit filename="skybox.hpp" />
+		<Unit filename="skybox_shader.cpp" />
+		<Unit filename="skybox_shader.hpp" />
 		<Unit filename="spot_light.cpp" />
 		<Unit filename="spot_light.hpp" />
 		<Unit filename="texture.cpp" />
