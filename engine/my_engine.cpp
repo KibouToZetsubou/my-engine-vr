@@ -380,8 +380,9 @@ void LIB_API MyEngine::render()
 
         const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(512, 512);
         const glm::mat4 projection_matrix_per_eye = glm::translate(projection_matrix, glm::vec3(interocular_distance, 0.0f, 0.0f));
-        //MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
-        MyEngine::ppl_shader->set_mat4("projection_matrix", ovrProjMat);
+        
+        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
+        //MyEngine::ppl_shader->set_mat4("projection_matrix", ovrProjMat);
 
         // Normal rendering
         for (const auto& node : render_list)
@@ -420,7 +421,7 @@ void LIB_API MyEngine::render()
 
         MyEngine::skybox_shader->render(glm::mat4(1.0f));
 
-        //MyEngine::skybox->render(projection_matrix);
+        MyEngine::skybox->render(projection_matrix);
 
 
         if (i == 0) //Left
