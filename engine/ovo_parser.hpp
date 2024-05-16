@@ -2,16 +2,16 @@
 
 #include <memory>
 #include <string>
-#include <glm/glm.hpp>
 #include <unordered_map>
-#include <stack>
+
+#include <glm/glm.hpp>
 
 #include "common.hpp"
+#include "light.hpp"
+#include "material.hpp"
 #include "mesh.hpp"
 #include "node.hpp"
 #include "object.hpp"
-#include "light.hpp"
-#include "material.hpp"
 
 /**
  * Allows loading a scene graph from an OVO file.

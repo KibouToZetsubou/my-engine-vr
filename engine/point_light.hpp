@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include "common.hpp"
 #include "light.hpp"
 
@@ -13,9 +15,10 @@ class LIB_API PointLight : public Light
 public:
     PointLight();
 
-    void render(const glm::mat4 world_matrix) const override;
+    void render(const glm::mat4 view_matrix) const override;
 
     void set_radius(const float new_radius);
+    float get_radius() const;
 private:
     float radius;
 };

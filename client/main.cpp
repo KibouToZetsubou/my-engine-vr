@@ -1,23 +1,22 @@
 #include <iostream>
 #include <memory>
-#include <sstream>
-#include <thread>
-#include <chrono>
 
 #include <my_engine.hpp>
 #include <node.hpp>
+#include <ortho_camera.hpp>
 #include <ovo_parser.hpp>
 #include <perspective_camera.hpp>
-#include <ortho_camera.hpp>
+#include <skybox.hpp>
 
 #include "rush_hour.hpp"
 #include "direction.hpp"
 
-std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
-std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
-bool perspective_camera_is_used = false;
+static std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
+static std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
+static bool perspective_camera_is_used = false;
+static float eye_distance = 8.0f;
 
-void start_level(int level_id) 
+void start_level(int level_id)
 {
     std::shared_ptr<Object> scene_root;
     if(level_id == 1)
@@ -40,7 +39,7 @@ void start_level(int level_id)
         MyEngine::set_sky_color(0.81f, 0.53f, 0.22f);
         MyEngine::set_scene(scene_root);
     }
-    else if (level_id == 3) 
+    else if (level_id == 3)
     {
         scene_root = OVOParser::from_file("./Level3.ovo");
         MyEngine::set_sky_color(0.53f, 0.81f, 0.92f);
@@ -69,35 +68,46 @@ void start_level(int level_id)
 
     scene_root->add_child(saved_camera_ortho);
     scene_root->add_child(saved_camera_perspec);
+
     MyEngine::set_active_camera(saved_camera_ortho);
 
     RushHour::set_perspective_camera(saved_camera_perspec);
 
     RushHour::load_level(level_id);
-
-    std::stringstream text;
-    text << "Car:\n";
-    text << "[w & s] - Move vertically\n";
-    text << "[a & d] - Move horizzontally\n";
-    text << "[1 - 9] - Select car\n";
-    text << "Camera:\n";
-    text << "[q & e] - Rotate plane (only ortho)\n";
-    text << "[r & t] - Camera elevation (only ortho)\n";
-    text << "[u & i] - Camera switching\n";
-    text << "Levels:\n";
-    text << "[b] - Level 1\n";
-    text << "[n] - Level 2\n";
-    text << "[m] - Level 3";
-    MyEngine::set_screen_text(text.str());
 }
 
 int main(int argc, char* argv[])
 {
-    //Engine setup
-    MyEngine::init("Rush Hour", 800, 600);
+    MyEngine::init("Rush Hour", 1024, 512);
+    MyEngine::set_eye_distance(eye_distance);
+
+    const std::vector<std::string> skybox_textures = {
+       "posx.jpg",
+       "negx.jpg",
+       "posy.jpg",
+       "negy.jpg",
+       "posz.jpg",
+       "negz.jpg",
+    };
+
+    const std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(skybox_textures);
+    skybox->set_scale(glm::vec3(512.0f, 512.0f, 512.0f));
+    MyEngine::set_skybox(skybox);
 
     MyEngine::set_keyboard_callback([](const unsigned char key, const int mouse_x, const int mouse_y)
     {
+        if (key == 'o') // Increase eye distance
+        {
+            eye_distance += 1.0f;
+            MyEngine::set_eye_distance(eye_distance);
+
+        }
+        else if (key == 'p') // Decrease eye distance
+        {
+            eye_distance -= 1.0f;
+            MyEngine::set_eye_distance(eye_distance);
+        }
+
         if (key == 27) // ESC
         {
             MyEngine::stop();
@@ -211,8 +221,6 @@ int main(int argc, char* argv[])
         MyEngine::clear_screen();
         MyEngine::render();
         MyEngine::swap_buffers();
-
-        //std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
 
     MyEngine::quit();

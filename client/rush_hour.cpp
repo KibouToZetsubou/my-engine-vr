@@ -45,30 +45,7 @@ void RushHour::move(const Direction direction)
 
 	if (new_game_state.has_won())
 	{
-		std::cout << "WON" << std::endl;
-
-		std::stringstream text;
-		text << "Car:\n";
-		text << "[w & s] - Move vertically\n";
-		text << "[a & d] - Move horizzontally\n";
-		text << "[1 - 9] - Select car\n";
-		text << "Camera:\n";
-		text << "[q & e] - Rotate plane (only ortho)\n";
-		text << "[r & t] - Camera elevation (only ortho)\n";
-		text << "[u & i] - Camera switching\n";
-		text << "Levels:\n";
-		text << "[b] - Level 1\n";
-		text << "[n] - Level 2\n";
-		text << "[m] - Level 3\n";
-		text << " /$$     /$$                                                          /$$\n";
-		text << "|  $$   /$$/                                                         | $$\n";
-		text << " \\  $$ /$$//$$$$$$  /$$   /$$       /$$  /$$  /$$  /$$$$$$  /$$$$$$$ | $$\n";
-		text << "  \\  $$$$//$$__  $$| $$  | $$      | $$ | $$ | $$ /$$__  $$| $$__  $$| $$\n";
-		text << "   \\  $$/| $$  \\ $$| $$  | $$      | $$ | $$ | $$| $$  \\ $$| $$  \\ $$|__/\n";
-		text << "    | $$ | $$  | $$| $$  | $$      | $$ | $$ | $$| $$  | $$| $$  | $$\n";
-		text << "    | $$ |  $$$$$$/|  $$$$$$/      |  $$$$$/$$$$/|  $$$$$$/| $$  | $$ /$$\n";
-		text << "    |__/  \\______/  \\______/        \\_____/\\___/  \\______/ |__/  |__/|__/ \n";
-		MyEngine::set_screen_text(text.str());
+		std::cout << "You won!" << std::endl;
 	}
 
 	std::cout << std::endl;

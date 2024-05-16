@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include "common.hpp"
 #include "node.hpp"
 
@@ -16,15 +18,15 @@ public:
     int get_priority() const override;
 
     void set_ambient_color(const glm::vec3 new_color);
+    glm::vec3 get_ambient_color() const;
+
     void set_diffuse_color(const glm::vec3 new_color);
+    glm::vec3 get_diffuse_color() const;
+
     void set_specular_color(const glm::vec3 new_color);
+    glm::vec3 get_specular_color() const;
 protected:
     glm::vec3 ambient_color;
     glm::vec3 diffuse_color;
     glm::vec3 specular_color;
-
-    int get_current_light(const int light_id) const;
-
-    static int next_light_id;
-    int light_id;
 };

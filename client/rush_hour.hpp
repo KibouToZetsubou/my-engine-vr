@@ -1,11 +1,13 @@
 #pragma once
 
+#include <sstream>
+
 #include "game_board.hpp"
 #include "game_state.hpp"
 #include "direction.hpp"
 
 #include <my_engine.hpp>
-#include <perspective_camera.hpp> 
+#include <perspective_camera.hpp>
 
 class RushHour
 {

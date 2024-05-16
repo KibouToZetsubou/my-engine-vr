@@ -5,16 +5,18 @@
 
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
-#include <sstream>
 
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 #include "camera.hpp"
 #include "common.hpp"
-#include "material.hpp"
 #include "object.hpp"
+#include "shader.hpp"
+#include "skybox.hpp"
+#include "fbo.hpp"
+#include "ovvr.hpp"
 
 /**
  * The main class of the engine.
@@ -36,7 +38,9 @@ public:
 
     static void render();
 
-    static void timerCallback(int value);
+    static void timer_callback(int value);
+
+    static void debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam);
 
     static void update();
 
@@ -54,9 +58,11 @@ public:
 
     static void set_active_camera(const std::shared_ptr<Camera> new_active_camera);
 
-    static std::shared_ptr<Object> find_object_by_name(const std::string name_to_find);
+    static void set_skybox(const std::shared_ptr<Skybox> new_skybox);
 
-    static void set_screen_text(const std::string new_text);
+    static void set_eye_distance(const float new_eye_distance);
+
+    static std::shared_ptr<Object> find_object_by_name(const std::string name_to_find);
 private:
     static void resize_callback(const int width, const int height);
 
@@ -71,10 +77,16 @@ private:
     static int window_width;
     static int window_height;
 
+    static float eye_distance;
+
     static std::shared_ptr<Object> scene;
     static std::shared_ptr<Camera> active_camera;
-    static std::shared_ptr<Material> shadow_material;
-    static std::string screen_text;
+    static std::shared_ptr<Shader> ppl_shader;
+    static std::shared_ptr<Shader> skybox_shader;
+    static std::shared_ptr<Shader> passthrough_shader;
+    static std::shared_ptr<Skybox> skybox;
+    static std::shared_ptr<FBO> left_eye;
+    static std::shared_ptr<FBO> right_eye;
+    static std::shared_ptr<OvVR> ovvr;
     static int frames;
-    static float fps;
 };

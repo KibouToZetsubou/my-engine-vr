@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="cube.cpp" />
     <ClCompile Include="directional_light.cpp" />
-    <ClCompile Include="engine_test.cpp" />
+    <ClCompile Include="fbo.cpp" />
+    <ClCompile Include="leap.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="material.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -31,17 +31,22 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="ortho_camera.cpp" />
     <ClCompile Include="ovo_parser.cpp" />
+    <ClCompile Include="passthrough_shader.cpp" />
     <ClCompile Include="perspective_camera.cpp" />
     <ClCompile Include="point_light.cpp" />
-    <ClCompile Include="sphere.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="simple_shader.cpp" />
+    <ClCompile Include="skybox.cpp" />
+    <ClCompile Include="skybox_shader.cpp" />
     <ClCompile Include="spot_light.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="common.hpp" />
-    <ClInclude Include="cube.hpp" />
     <ClInclude Include="directional_light.hpp" />
+    <ClInclude Include="fbo.hpp" />
+    <ClInclude Include="leap.hpp" />
     <ClInclude Include="light.hpp" />
     <ClInclude Include="material.hpp" />
     <ClInclude Include="mesh.hpp" />
@@ -50,9 +55,14 @@
     <ClInclude Include="object.hpp" />
     <ClInclude Include="ortho_camera.hpp" />
     <ClInclude Include="ovo_parser.hpp" />
+    <ClInclude Include="ovvr.hpp" />
+    <ClInclude Include="passthrough_shader.hpp" />
     <ClInclude Include="perspective_camera.hpp" />
     <ClInclude Include="point_light.hpp" />
-    <ClInclude Include="sphere.hpp" />
+    <ClInclude Include="shader.hpp" />
+    <ClInclude Include="simple_shader.hpp" />
+    <ClInclude Include="skybox.hpp" />
+    <ClInclude Include="skybox_shader.hpp" />
     <ClInclude Include="spot_light.hpp" />
     <ClInclude Include="texture.hpp" />
   </ItemGroup>
@@ -146,16 +156,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\leap\include;..\dependencies\openvr\include;..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4005;4267</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>..\dependencies\glew\lib\$(Platform)\$(Configuration);..\dependencies\freeglut\lib\$(Platform)\$(Configuration);..\dependencies\freeimage\lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImageLib.lib;glew.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\leap\lib\$(Platform);..\dependencies\glew\lib\$(Platform)\$(Configuration);..\dependencies\freeglut\lib\$(Platform)\$(Configuration);..\dependencies\freeimage\lib\$(Platform)\$(Configuration);..\dependencies\openvr\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>LeapC.lib;openvr_api.lib;FreeImageLib.lib;glew.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,11 +175,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;SIMPLEDYNLIB_EXPORTS;GLEW_STATIC;FREEGLUT_STATIC;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\openvr\include;..\dependencies\leap\include;..\dependencies\glew\include;..\dependencies\freeglut\include;..\dependencies\glm\include;..\dependencies\freeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,8 +187,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>..\dependencies\glew\lib\$(Platform)\$(Configuration);..\dependencies\freeglut\lib\$(Platform)\$(Configuration);..\dependencies\freeimage\lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImageLib.lib;glew.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencies\leap\lib\$(Platform);..\dependencies\glew\lib\$(Platform)\$(Configuration);..\dependencies\freeglut\lib\$(Platform)\$(Configuration);..\dependencies\freeimage\lib\$(Platform)\$(Configuration);..\dependencies\openvr\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>LeapC.lib;openvr_api.lib;FreeImageLib.lib;glew.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

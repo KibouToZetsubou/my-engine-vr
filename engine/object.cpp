@@ -1,16 +1,8 @@
 #include "object.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 
-#include <memory>
 #include <sstream>
-#include <string>
-#include <vector>
 
 #include <glm/glm.hpp>
-
-#include "common.hpp"
-
 
 int Object::next_id = 0;
 

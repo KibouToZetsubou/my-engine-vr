@@ -1,13 +1,4 @@
 #include "material.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
-
-#include <memory>
-
-#include <GL/freeglut.h>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "texture.hpp"
 
 /**
  * Creates a new instance of Material with the following default parameters:
@@ -39,21 +30,13 @@ LIB_API Material::Material()
  *
  * This function is called automatically by MyEngine and there's no need to manually call this function.
  *
- * @param world_matrix The world matrix to use to render this object.
+ * @param view_matrix The world matrix to use to render this object.
  */
-void LIB_API Material::render(const glm::mat4 world_matrix) const
+void LIB_API Material::render(const glm::mat4 view_matrix) const
 {
-    glDisable(GL_TEXTURE_2D);
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, glm::value_ptr(this->emission_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, glm::value_ptr(this->ambient_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, glm::value_ptr(this->diffuse_color));
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, glm::value_ptr(this->specular_color));
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this->shininess);
-
     if (this->texture != nullptr)
     {
-        this->texture->render(world_matrix);
+        this->texture->render(view_matrix);
     }
 }
 
@@ -67,6 +50,11 @@ void LIB_API Material::set_emission_color(const glm::vec3 new_color)
     this->emission_color = new_color;
 }
 
+glm::vec3 LIB_API Material::get_emission_color() const
+{
+    return this->emission_color;
+}
+
 /**
  * Changes the ambient color property of this material.
  *
@@ -75,6 +63,11 @@ void LIB_API Material::set_emission_color(const glm::vec3 new_color)
 void LIB_API Material::set_ambient_color(const glm::vec3 new_color)
 {
     this->ambient_color = new_color;
+}
+
+glm::vec3 LIB_API Material::get_ambient_color() const
+{
+    return this->ambient_color;
 }
 
 /**
@@ -87,6 +80,11 @@ void LIB_API Material::set_diffuse_color(const glm::vec3 new_color)
     this->diffuse_color = new_color;
 }
 
+glm::vec3 LIB_API Material::get_diffuse_color() const
+{
+    return this->diffuse_color;
+}
+
 /**
  * Changes the specular color property of this material.
  *
@@ -95,6 +93,11 @@ void LIB_API Material::set_diffuse_color(const glm::vec3 new_color)
 void LIB_API Material::set_specular_color(const glm::vec3 new_color)
 {
     this->specular_color = new_color;
+}
+
+glm::vec3 LIB_API Material::get_specular_color() const
+{
+    return this->specular_color;
 }
 
 /**
@@ -107,6 +110,11 @@ void LIB_API Material::set_shininess(const float new_shininess)
     this->shininess = new_shininess;
 }
 
+float LIB_API Material::get_shininess() const
+{
+    return this->shininess;
+}
+
 /**
  * Sets the texture of this material. If new_texture is nullptr, no texture is applied.
  *
@@ -115,4 +123,9 @@ void LIB_API Material::set_shininess(const float new_shininess)
 void LIB_API Material::set_texture(const std::shared_ptr<Texture> new_texture)
 {
     this->texture = new_texture;
+}
+
+std::shared_ptr<Texture> LIB_API Material::get_texture() const
+{
+    return this->texture;
 }
