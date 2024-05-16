@@ -1,12 +1,57 @@
 #include "leap.hpp"
 
+#include <glm/gtc/matrix_transform.hpp>
 
 LIB_API Leap::Leap() : connection{ nullptr }, curFrame{ nullptr }, lastFrameId{ 0 }
-{}
+{
+    // Build a sphere procedurally:   
+    GLfloat x, y, z, alpha, beta; // Storage for coordinates and angles     
+    GLfloat radius = 5.0f;
+    int gradation = 10;
+    for (alpha = 0.0; alpha < glm::pi<float>(); alpha += glm::pi<float>() / gradation)
+    {
+        for (beta = 0.0f; beta < 2.01f * glm::pi<float>(); beta += glm::pi<float>() / gradation)
+        {
+            x = radius * cos(beta) * sin(alpha);
+            y = radius * sin(beta) * sin(alpha);
+            z = radius * cos(alpha);
+            this->vertices.push_back(glm::vec3(x, y, z));
+            x = radius * cos(beta) * sin(alpha + glm::pi<float>() / gradation);
+            y = radius * sin(beta) * sin(alpha + glm::pi<float>() / gradation);
+            z = radius * cos(alpha + glm::pi<float>() / gradation);
+            this->vertices.push_back(glm::vec3(x, y, z));
+        }
+    }
+
+    std::cout << "vertices size: " << vertices.size() << std::endl;
+
+    // Init buffers:   
+    glGenVertexArrays(1, &this->vao);
+    glBindVertexArray(this->vao);
+
+    glGenBuffers(1, &this->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer((GLuint)0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(0);
+}
 
 LIB_API Leap::~Leap()
-{}
+{
+    glDeleteVertexArrays(1, &this->vao);
+    glDeleteBuffers(1, &this->vbo);
+}
 
+unsigned int LIB_API Leap::get_vertices_size() const
+{
+    return this->vertices.size();
+}
+
+void LIB_API Leap::bind_vao()
+{
+    glBindVertexArray(this->vao);
+}
 
 /**
  * Initializes Leap Motion connection.

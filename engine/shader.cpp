@@ -194,3 +194,8 @@ void LIB_API Shader::use() const
 {
     glUseProgram(this->program_id);
 }
+
+unsigned int LIB_API Shader::get_program_id() const
+{
+    return this->program_id;
+}

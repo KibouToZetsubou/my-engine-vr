@@ -31,6 +31,7 @@ public:
     void set_vector_float(const std::string name, const std::vector<float> value);
 
     void use() const;
+    unsigned int get_program_id() const;
 protected:
     void compile(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
 
