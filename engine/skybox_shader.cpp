@@ -1,34 +1,34 @@
 #include "skybox_shader.hpp"
 
 LIB_API SkyboxShader::SkyboxShader() : Shader(R"(
-   #version 440 core
+        // Vertex shader
+        #version 440 core
 
-   uniform mat4 projection;
-   uniform mat4 modelview;
+        uniform mat4 projection_matrix;
+        uniform mat4 view_matrix;
 
-   layout(location = 0) in vec3 in_Position;      
+        layout(location = 0) in vec3 in_Position;      
 
-   out vec3 texCoord;
+        out vec3 texCoord;
 
-   void main(void)
-   {
-      texCoord = in_Position;
-      gl_Position = projection * modelview * vec4(in_Position, 1.0f);            
-   }
-)", R"(
-   #version 440 core
+        void main(void)
+        {
+            texCoord = in_Position;
+            gl_Position = projection_matrix * view_matrix * vec4(in_Position, 1.0f);            
+        }
+    )", R"(
+        // Fragment shader
+        #version 440 core
    
-   in vec3 texCoord;
+        in vec3 texCoord;
    
-   // Texture mapping (cubemap):
-   layout(binding = 0) uniform samplerCube cubemapSampler;
+        layout(binding = 0) uniform samplerCube cubemapSampler;
 
-   out vec4 fragOutput;
+        out vec4 fragOutput;
 
-   void main(void)
-   {       
-      fragOutput = texture(cubemapSampler, texCoord);
-   }
-)")
+        void main(void)
+        {       
+            fragOutput = texture(cubemapSampler, texCoord);
+        }
+    )")
 {}
-

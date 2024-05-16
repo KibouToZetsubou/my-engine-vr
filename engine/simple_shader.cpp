@@ -92,4 +92,4 @@ LIB_API SimpleShader::SimpleShader() : Shader(R"(
             //fragment = vec4(light_ambient[0], 1.0f);
         }
     )")
-    {}
+{}

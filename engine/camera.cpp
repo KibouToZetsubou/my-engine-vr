@@ -59,3 +59,13 @@ void LIB_API Camera::set_active(const bool new_is_active)
 {
     this->is_active = new_is_active;
 }
+
+float LIB_API Camera::get_near_clipping_plane() const
+{
+    return this->near_clipping;
+}
+
+float LIB_API Camera::get_far_clipping_plane() const
+{
+    return this->far_clipping;
+}
