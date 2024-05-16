@@ -1,7 +1,5 @@
 #include <iostream>
 #include <memory>
-#include <thread>
-#include <chrono>
 
 #include <my_engine.hpp>
 #include <node.hpp>
@@ -223,8 +221,6 @@ int main(int argc, char* argv[])
         MyEngine::clear_screen();
         MyEngine::render();
         MyEngine::swap_buffers();
-
-        //std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
 
     MyEngine::quit();
