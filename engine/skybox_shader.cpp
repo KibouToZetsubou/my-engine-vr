@@ -4,8 +4,8 @@ LIB_API SkyboxShader::SkyboxShader() : Shader(R"(
         // Vertex shader
         #version 440 core
 
-        uniform mat4 projection;
-        uniform mat4 modelview;
+        uniform mat4 projection_matrix;
+        uniform mat4 view_matrix;
 
         layout(location = 0) in vec3 in_Position;      
 
@@ -14,7 +14,7 @@ LIB_API SkyboxShader::SkyboxShader() : Shader(R"(
         void main(void)
         {
             texCoord = in_Position;
-            gl_Position = projection * modelview * vec4(in_Position, 1.0f);            
+            gl_Position = projection_matrix * view_matrix * vec4(in_Position, 1.0f);            
         }
     )", R"(
         // Fragment shader

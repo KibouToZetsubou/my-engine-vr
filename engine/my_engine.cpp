@@ -40,9 +40,7 @@ std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
 std::shared_ptr<OvVR> MyEngine::ovvr = nullptr;
 
-// Frames:
 int MyEngine::frames = 0;
-float MyEngine::fps = 0.0f;
 
 #ifdef _WINDOWS
 #include <Windows.h>
@@ -75,9 +73,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 {
     if (MyEngine::is_initialized_flag)
     {
-        ERROR("Engine has already been initialized.");
-
-        return;
+        throw "Engine has already been initialized.";
     }
 
     // Initialize GLUT
@@ -91,20 +87,15 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     MyEngine::window_id = glutCreateWindow(window_title.c_str());
     glutReshapeWindow(window_width, window_height);
-    GLenum error = glewInit();
-    if (error != GLEW_OK)
+
+    if (glewInit() != GLEW_OK)
     {
-        std::cout << "[ERROR] " << glewGetErrorString(error) << std::endl;
-        return;
+        throw "[ERROR] Failed to initialize GLEW";
     }
-    else if (GLEW_VERSION_4_4)
+    
+    if (GLEW_VERSION_4_4 == false)
     {
-        std::cout << "Driver supports OpenGL 4.4\n" << std::endl;
-    }
-    else
-    {
-        std::cout << "[ERROR] OpenGL 4.4 not supported\n" << std::endl;
-        return;
+        throw "[ERROR] OpenGL 4.4 not supported";
     }
 
     // TODO: Figure out why this is always true, even in release mode.
@@ -132,23 +123,7 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     // Configure shaders
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
-
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
-    MyEngine::skybox_shader->use();
-
-    std::vector<std::string> cubemap_names =
-    {
-       "posx.jpg",
-       "negx.jpg",
-       "posy.jpg",
-       "negy.jpg",
-       "posz.jpg",
-       "negz.jpg",
-    };
-
-    MyEngine::skybox = std::make_shared<Skybox>(cubemap_names);
-
-    MyEngine::ppl_shader->use();
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
@@ -208,16 +183,25 @@ void LIB_API MyEngine::render()
         return;
     }
 
+    // Update OvVR stuff, invoke once per frame.
+    ovvr->update();
+
+    // Build the render list.
     std::vector<std::pair<std::shared_ptr<Object>, glm::mat4>> render_list = MyEngine::build_render_list(MyEngine::scene, glm::mat4(1.0f));
+
+    // TODO: Shouldn't this be the camera's WORLD matrix?
+    const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
+    const glm::mat4 inverse_ovr_matrix = glm::inverse(ovvr->getModelviewMatrix());
+    const glm::mat4 view_matrix = inverse_ovr_matrix * inverse_camera_matrix;
+    for (auto& item : render_list)
+    {
+        item.second = view_matrix * item.second;
+    }
+
+    // Sort the render list based on each object's priority.
     std::sort(render_list.begin(), render_list.end(), [](const std::pair<std::shared_ptr<Object>, glm::mat4> a, const std::pair<std::shared_ptr<Object>, glm::mat4> b) {
         return a.first->get_priority() > b.first->get_priority();
     });
-
-    const glm::mat4 inverse_camera_matrix = glm::inverse(MyEngine::active_camera->get_local_matrix());
-    for (auto& item : render_list)
-    {
-        item.second = inverse_camera_matrix * item.second;
-    }
 
     std::vector<int> light_types; // 0 = No light; 1 = Directional; 2 = Point; 3 = Spot
     std::vector<glm::vec3> light_ambients;
@@ -291,40 +275,48 @@ void LIB_API MyEngine::render()
         }
     }
 
-    //Update user position:
-    ovvr->update();
-    const glm::mat4 headPos = ovvr->getModelviewMatrix();
+    // TODO: Make this configurable.
+    constexpr float interocular_distance = 50.0f;
 
-    for (int i = 0; i < 2; i++)
+    for (unsigned int eye = 0; eye < OvVR::EYE_LAST; ++eye)
     {
-        // Get OpenVR matrices:
-        const OvVR::OvEye curEye = (OvVR::OvEye) i;
-        const glm::mat4 projMat = ovvr->getProjMatrix(curEye, 1.0f, 1024.0f);
-        const glm::mat4 eye2Head = ovvr->getEye2HeadMatrix(curEye);
+        const OvVR::OvEye current_eye = (OvVR::OvEye) eye;
 
-        const glm::mat4 ovrProjMat = projMat * glm::inverse(eye2Head);
-        // Update camera modelview matrix:
-        const glm::mat4 ovrModelViewMat = glm::inverse(headPos); // Inverted because this is the camera matrix
+        // TODO: Handle this!
+        //const float eye_shift = eye == OvVR::OvEye::EYE_LEFT ? interocular_distance / -2.0f : interocular_distance / 2.0f;
 
-        // TODO: Make this configurable
-        float interocular_distance = 50.0f;
-
-        if (i == 0) // Left
+        if (current_eye == OvVR::OvEye::EYE_LEFT)
         {
             MyEngine::left_eye->use();
-            interocular_distance /= -2;
         }
-        else  // Right
+        else if (current_eye == OvVR::OvEye::EYE_RIGHT)
         {
             MyEngine::right_eye->use();
-            interocular_distance /= 2;
         }
 
-
         MyEngine::clear_screen();
-        MyEngine::ppl_shader->use();
 
+        // Calculate matrices.
+        const glm::mat4 eye_to_head = ovvr->getEye2HeadMatrix(current_eye);
+        const float near_clipping_plane = MyEngine::active_camera->get_near_clipping_plane();
+        const float far_clipping_plane = MyEngine::active_camera->get_far_clipping_plane();
+        const glm::mat4 projection_matrix = ovvr->getProjMatrix(current_eye, near_clipping_plane, far_clipping_plane) * glm::inverse(eye_to_head);
+
+        // Skybox rendering
+        if (MyEngine::skybox != nullptr)
+        {
+            MyEngine::skybox_shader->use();
+            MyEngine::skybox_shader->clear_uniforms();
+            MyEngine::skybox_shader->set_mat4("projection_matrix", projection_matrix);
+            MyEngine::skybox_shader->render(glm::mat4(glm::mat3(view_matrix)) * MyEngine::skybox->get_local_matrix()); // Little hack to ignore the position.
+
+            MyEngine::skybox->render(glm::mat4(1.0f)); // NOTE: It actually doesn't matter what matrix we pass...
+        }
+
+        // Configure the Per-Pixel Shader
+        MyEngine::ppl_shader->use();
         MyEngine::ppl_shader->clear_uniforms();
+        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix);
         MyEngine::ppl_shader->set_int("number_of_lights", number_of_lights);
         //MyEngine::ppl_shader->set_vector_int("light_type", light_types);
         MyEngine::ppl_shader->set_vector_vec3("light_ambient", light_ambients);
@@ -335,12 +327,6 @@ void LIB_API MyEngine::render()
         //MyEngine::ppl_shader->set_vector_float("light_radius", light_radiuses);
         //MyEngine::ppl_shader->set_vector_float("light_cutoff", light_cutoffs);
         //MyEngine::ppl_shader->set_vector_float("light_exponent", light_exponents);
-
-        const glm::mat4 projection_matrix = MyEngine::active_camera->get_projection_matrix(512, 512);
-        const glm::mat4 projection_matrix_per_eye = glm::translate(projection_matrix, glm::vec3(interocular_distance, 0.0f, 0.0f));
-        
-        MyEngine::ppl_shader->set_mat4("projection_matrix", projection_matrix_per_eye);
-        //MyEngine::ppl_shader->set_mat4("projection_matrix", ovrProjMat);
 
         // Normal rendering
         for (const auto& node : render_list)
@@ -362,40 +348,22 @@ void LIB_API MyEngine::render()
             }
 
             MyEngine::ppl_shader->render(node.second);
-            node.first->render(node.second);
+            node.first->render(node.second); // NOTE: It actually doesn't matter what matrix we pass...
         }
 
-        MyEngine::ppl_shader->render(ovrModelViewMat);
-
-        MyEngine::skybox_shader->use();
-
-        //ovrModelViewMat = glm::translate(ovrModelViewMat, glm::vec3(0.0f, 1.0f, 0.0f));
-        //MyEngine::skybox_shader->set_mat4("modelview", ovrModelViewMat);
-        MyEngine::skybox_shader->set_mat4("modelview", glm::mat4(glm::mat3(ovrModelViewMat)));
-
-        //glm::mat4 sky_persp = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1024.0f);
-        MyEngine::skybox_shader->set_mat4("projection", ovrProjMat);
-
-        MyEngine::skybox_shader->render();
-
-        MyEngine::skybox->render(projection_matrix);
-
-        if (i == 0) // Left
+        if (current_eye == OvVR::OvEye::EYE_LEFT)
         {
-            // Send rendered image to the proper OpenVR eye:      
-            ovvr->pass(curEye, MyEngine::left_eye->get_color_buffer_id());
+            ovvr->pass(current_eye, MyEngine::left_eye->get_color_buffer_id());
         }
-        else  // Right
+        else if (current_eye == OvVR::OvEye::EYE_RIGHT)
         {
-            // Send rendered image to the proper OpenVR eye:    
-            ovvr->pass(curEye, MyEngine::right_eye->get_color_buffer_id());
+            ovvr->pass(current_eye, MyEngine::right_eye->get_color_buffer_id());
         }
     }
 
-    // Update internal OpenVR settings:
     ovvr->render();
 
-    // Copy the left eye to the window buffer.
+    // Select the window's framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, 1024, 512);
 
@@ -405,7 +373,7 @@ void LIB_API MyEngine::render()
     MyEngine::right_eye->use_read();
     glBlitFramebuffer(0, 0, 512, 512, 512, 0, 1024, 512, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-    MyEngine::frames++;
+    ++MyEngine::frames;
 }
 
 /**
@@ -415,9 +383,8 @@ void LIB_API MyEngine::render()
 */
 void LIB_API MyEngine::timer_callback(const int value)
 {
-    MyEngine::fps = MyEngine::frames;
+    std::cout << "FPS: " << MyEngine::frames << std::endl;
     MyEngine::frames = 0;
-    std::cout << "FPS: " << MyEngine::fps << std::endl;
     glutTimerFunc(1000, timer_callback, 0);
 }
 
@@ -518,6 +485,11 @@ void LIB_API MyEngine::set_active_camera(const std::shared_ptr<Camera> new_activ
     new_active_camera->set_active(true);
 
     MyEngine::active_camera = new_active_camera;
+}
+
+void LIB_API MyEngine::set_skybox(const std::shared_ptr<Skybox> new_skybox)
+{
+    MyEngine::skybox = new_skybox;
 }
 
 /**

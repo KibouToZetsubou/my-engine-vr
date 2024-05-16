@@ -58,6 +58,8 @@ public:
 
     static void set_active_camera(const std::shared_ptr<Camera> new_active_camera);
 
+    static void set_skybox(const std::shared_ptr<Skybox> new_skybox);
+
     static std::shared_ptr<Object> find_object_by_name(const std::string name_to_find);
 private:
     static void resize_callback(const int width, const int height);
@@ -83,5 +85,4 @@ private:
     static std::shared_ptr<FBO> right_eye;
     static std::shared_ptr<OvVR> ovvr;
     static int frames;
-    static float fps;
 };

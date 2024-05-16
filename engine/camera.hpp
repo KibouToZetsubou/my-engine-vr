@@ -22,6 +22,9 @@ public:
     void set_fov(const float new_fov);
     void set_clipping(const float new_near_clipping, const float new_far_clipping);
     void set_active(const bool new_is_active);
+
+    float get_near_clipping_plane() const;
+    float get_far_clipping_plane() const;
 protected:
     float fov;
     float near_clipping;

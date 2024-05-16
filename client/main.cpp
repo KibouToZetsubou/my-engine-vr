@@ -1,33 +1,21 @@
 #include <iostream>
 #include <memory>
-#include <sstream>
 #include <thread>
 #include <chrono>
 
 #include <my_engine.hpp>
 #include <node.hpp>
+#include <ortho_camera.hpp>
 #include <ovo_parser.hpp>
 #include <perspective_camera.hpp>
-#include <ortho_camera.hpp>
+#include <skybox.hpp>
 
 #include "rush_hour.hpp"
 #include "direction.hpp"
-//#include "skybox.hpp"
 
 std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
 std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
 bool perspective_camera_is_used = false;
-
-std::vector<std::string> cubemapNames =
-{
-   "posx.jpg",
-   "negx.jpg",
-   "posy.jpg",
-   "negy.jpg",
-   "posz.jpg",
-   "negz.jpg",
-};
-//std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(cubemapNames);
 
 void start_level(int level_id)
 {
@@ -82,8 +70,6 @@ void start_level(int level_id)
     scene_root->add_child(saved_camera_ortho);
     scene_root->add_child(saved_camera_perspec);
 
-    //scene_root->add_child(skybox);
-
     MyEngine::set_active_camera(saved_camera_ortho);
 
     RushHour::set_perspective_camera(saved_camera_perspec);
@@ -93,8 +79,20 @@ void start_level(int level_id)
 
 int main(int argc, char* argv[])
 {
-    //Engine setup
     MyEngine::init("Rush Hour", 1024, 512);
+
+    const std::vector<std::string> skybox_textures = {
+       "posx.jpg",
+       "negx.jpg",
+       "posy.jpg",
+       "negy.jpg",
+       "posz.jpg",
+       "negz.jpg",
+    };
+
+    const std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(skybox_textures);
+    skybox->set_scale(glm::vec3(512.0f, 512.0f, 512.0f));
+    MyEngine::set_skybox(skybox);
 
     MyEngine::set_keyboard_callback([](const unsigned char key, const int mouse_x, const int mouse_y)
     {
