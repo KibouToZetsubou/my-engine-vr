@@ -82,12 +82,12 @@ int main(int argc, char* argv[])
     MyEngine::set_eye_distance(eye_distance);
 
     const std::vector<std::string> skybox_textures = {
-       "posx.jpg",
-       "negx.jpg",
-       "posy.jpg",
-       "negy.jpg",
-       "posz.jpg",
-       "negz.jpg",
+       "posx.png",
+       "negx.png",
+       "posy.png",
+       "negy.png",
+       "posz.png",
+       "negz.png",
     };
 
     const std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(skybox_textures);
