@@ -78,9 +78,6 @@
     <ClCompile Include="leap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="leap_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_engine.hpp">
@@ -150,9 +147,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="leap.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="leap_shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
