@@ -9,6 +9,8 @@
 #endif
 
 #include <glm/gtc/matrix_transform.hpp>
+#include "glm/gtx/string_cast.hpp"
+#include <limits.h>
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -387,15 +389,79 @@ void LIB_API MyEngine::render()
 
             LEAP_HAND hand = l->pHands[h];
 
-            std::cout << "pinching Dst: " << (hand.pinch_distance) << std::endl;
-            std::cout << "pinching Str: " << (hand.pinch_strength) << std::endl;
+            //std::cout << "pinching Dst: " << (hand.pinch_distance) << std::endl;
+            //std::cout << "pinching Str: " << (hand.pinch_strength) << std::endl;
 
+            //Inside MyEngine::render(), check the "pinchiness".
+            //If it goes over a certain threshold, then the user is pinching.
             if (hand.pinch_strength > 0.7f) {
                 //MyEngine::pinch_callback(hand.index, ); //.......
+
+                /*
+                Call a callback that has been set from the client
+                and pass the closest object and the distance.
+
+                Inside the callback, check if the object is a car
+                and that the distance is below a certain threshold.
+                If it is, the select that car.
+                */
+
+                //Next, go through every object in the render list and extract 
+                //the position from the view matrix(second place inside the tuple).
+                float shortest_distance = std::numeric_limits<float>::infinity();
+                std::shared_ptr<Object> closest_object;
+                for (auto& item : render_list)
+                {
+                    glm::mat4 item_view_matrix = item.second;
+
+                    LEAP_VECTOR thumb = hand.thumb.distal.next_joint; //Arguably either thumb or index is fine
+                    glm::vec3 vec_thumb = { thumb.x, thumb.y, thumb.z };
+
+                    //std::cout << "thumbVector: " << glm::to_string(vec_thumb) << std::endl;
+
+                    glm::vec3 vec_other = { item_view_matrix[3][0], item_view_matrix[3][1], item_view_matrix[3][2] }; //tx, ty, tz
+                    
+
+                    //Next, calculate the distance between the pinching position and the the object.
+                    float current_distance = glm::distance(vec_thumb, vec_other);
+
+                    std::string object_name = item.first->get_name();
+                    std::string car_name("Car00");
+
+                    //https://stackoverflow.com/a/2340316
+                    if (object_name.find(car_name) != std::string::npos) { //We only care about cars
+
+                        //std::cout << "Car: " << object_name << std::endl;
+                        //std::cout << "Distance: " << current_distance << std::endl;
+                        //std::cout << "Matrix: " << glm::to_string(item_view_matrix) << std::endl;
+                        //std::cout << "--------------------------: " << std::endl;
+
+                        //Save the object that is closest.
+                        if (current_distance < shortest_distance)
+                        {
+                            shortest_distance = current_distance;
+                            closest_object = item.first;
+                        }
+                    }
+                }
+
+                //Get car name
+                std::string s = closest_object->get_name();
+
+
+                // Find position of 'C' if it finds 'Car00'
+                int pos = s.find("Car00");
+
+                // Copy substring after pos
+                std::string sub = s.substr(pos + 5);
+
+                std::cout << "Closest Car: " << sub << std::endl;
+
+                //MyEngine::pinch_callback();
             }
 
-            //glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -150.0f, 0.0f));
-            glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -300.0f, -500.0f));
+            //glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -300.0f, -500.0f));
+            glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -150.0f, -250.0f));
 
             //glm::mat4 f = glm::mat4(glm::mat3(ovrModelViewMat));
 
