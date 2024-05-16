@@ -31,6 +31,7 @@ std::shared_ptr<Object> MyEngine::scene;
 std::shared_ptr<Camera> MyEngine::active_camera;
 int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
+float MyEngine::eye_distance = 0.0f;
 
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::skybox_shader = nullptr;
@@ -275,16 +276,13 @@ void LIB_API MyEngine::render()
         }
     }
 
-    // TODO: Make this configurable.
-    constexpr float interocular_distance = 50.0f;
-
     for (unsigned int eye = 0; eye < OvVR::EYE_LAST; ++eye)
     {
         const OvVR::OvEye current_eye = (OvVR::OvEye) eye;
 
-        // TODO: Handle this!
-        //const float eye_shift = eye == OvVR::OvEye::EYE_LEFT ? interocular_distance / -2.0f : interocular_distance / 2.0f;
-
+        const float eye_shift = eye == OvVR::OvEye::EYE_LEFT ? MyEngine::eye_distance / -2.0f : MyEngine::eye_distance / 2.0f;
+        const glm::mat4 eye_shift_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(eye_shift, 0.0f, 0.0f));
+        
         if (current_eye == OvVR::OvEye::EYE_LEFT)
         {
             MyEngine::left_eye->use();
@@ -297,7 +295,7 @@ void LIB_API MyEngine::render()
         MyEngine::clear_screen();
 
         // Calculate matrices.
-        const glm::mat4 eye_to_head = ovvr->getEye2HeadMatrix(current_eye);
+        const glm::mat4 eye_to_head = eye_shift_matrix * ovvr->getEye2HeadMatrix(current_eye);
         const float near_clipping_plane = MyEngine::active_camera->get_near_clipping_plane();
         const float far_clipping_plane = MyEngine::active_camera->get_far_clipping_plane();
         const glm::mat4 projection_matrix = ovvr->getProjMatrix(current_eye, near_clipping_plane, far_clipping_plane) * glm::inverse(eye_to_head);
@@ -490,6 +488,11 @@ void LIB_API MyEngine::set_active_camera(const std::shared_ptr<Camera> new_activ
 void LIB_API MyEngine::set_skybox(const std::shared_ptr<Skybox> new_skybox)
 {
     MyEngine::skybox = new_skybox;
+}
+
+void LIB_API MyEngine::set_eye_distance(const float new_eye_distance)
+{
+    MyEngine::eye_distance = new_eye_distance;
 }
 
 /**

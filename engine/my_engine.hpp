@@ -60,6 +60,8 @@ public:
 
     static void set_skybox(const std::shared_ptr<Skybox> new_skybox);
 
+    static void set_eye_distance(const float new_eye_distance);
+
     static std::shared_ptr<Object> find_object_by_name(const std::string name_to_find);
 private:
     static void resize_callback(const int width, const int height);
@@ -74,6 +76,8 @@ private:
 
     static int window_width;
     static int window_height;
+
+    static float eye_distance;
 
     static std::shared_ptr<Object> scene;
     static std::shared_ptr<Camera> active_camera;

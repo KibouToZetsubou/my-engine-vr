@@ -13,9 +13,10 @@
 #include "rush_hour.hpp"
 #include "direction.hpp"
 
-std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
-std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
-bool perspective_camera_is_used = false;
+static std::shared_ptr<OrthoCamera> saved_camera_ortho = nullptr;
+static std::shared_ptr<PerspectiveCamera> saved_camera_perspec = nullptr;
+static bool perspective_camera_is_used = false;
+static float eye_distance = 8.0f;
 
 void start_level(int level_id)
 {
@@ -80,6 +81,7 @@ void start_level(int level_id)
 int main(int argc, char* argv[])
 {
     MyEngine::init("Rush Hour", 1024, 512);
+    MyEngine::set_eye_distance(eye_distance);
 
     const std::vector<std::string> skybox_textures = {
        "posx.jpg",
@@ -96,6 +98,18 @@ int main(int argc, char* argv[])
 
     MyEngine::set_keyboard_callback([](const unsigned char key, const int mouse_x, const int mouse_y)
     {
+        if (key == 'o') // Increase eye distance
+        {
+            eye_distance += 1.0f;
+            MyEngine::set_eye_distance(eye_distance);
+
+        }
+        else if (key == 'p') // Decrease eye distance
+        {
+            eye_distance -= 1.0f;
+            MyEngine::set_eye_distance(eye_distance);
+        }
+
         if (key == 27) // ESC
         {
             MyEngine::stop();
