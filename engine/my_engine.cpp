@@ -18,9 +18,10 @@
 #include "directional_light.hpp"
 #include "mesh.hpp"
 #include "point_light.hpp"
+#include "spot_light.hpp"
 #include "simple_shader.hpp"
 #include "passthrough_shader.hpp"
-#include "spot_light.hpp"
+#include "leap_shader.hpp"
 #include "skybox_shader.hpp"
 #include "skybox.hpp"
 
@@ -33,10 +34,14 @@ int MyEngine::window_width = 0;
 int MyEngine::window_height = 0;
 float MyEngine::eye_distance = 0.0f;
 
+void (*MyEngine::pinch_callback)(float, float, float);
+
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::skybox_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
+std::shared_ptr<Shader> MyEngine::leap_shader = nullptr;
 std::shared_ptr<Skybox> MyEngine::skybox = nullptr;
+std::shared_ptr<Leap> MyEngine::leap = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
 std::shared_ptr<OvVR> MyEngine::ovvr = nullptr;
@@ -125,6 +130,19 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
     MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
+    MyEngine::leap_shader = std::make_shared<LeapShader>();
+    //MyEngine::leap_shader->use();
+    //MyEngine::leap_shader->bind(0, "in_Position");
+    //glBindAttribLocation(MyEngine::leap_shader->get_program_id(), 0, "in_Position");
+
+    // Leap init:
+    MyEngine::leap = std::make_shared<Leap>();
+    if (!leap->init())
+    {
+        std::cout << "[ERROR] Unable to init Leap Motion" << std::endl;
+        return (void)-1;
+    }
+
 
     // Configure OpenGL
     glEnable(GL_DEPTH_TEST);
@@ -158,6 +176,11 @@ void LIB_API __stdcall MyEngine::debug_callback(GLenum source, GLenum type, GLui
 void LIB_API MyEngine::set_keyboard_callback(void (*new_keyboard_callback) (const unsigned char key, const int mouse_x, const int mouse_y))
 {
     glutKeyboardFunc(new_keyboard_callback);
+}
+
+void LIB_API MyEngine::set_pinch_callback(void (*new_pinch_callback) (float pinch_x, float pinch_y, float pinch_z))
+{
+    MyEngine::pinch_callback = new_pinch_callback;
 }
 
 /**
@@ -349,13 +372,82 @@ void LIB_API MyEngine::render()
             node.first->render(node.second); // NOTE: It actually doesn't matter what matrix we pass...
         }
 
-        if (current_eye == OvVR::OvEye::EYE_LEFT)
+        // Configure the Leap Shader
+        MyEngine::leap_shader->use();
+
+        MyEngine::leap->update();
+        const LEAP_TRACKING_EVENT* l = MyEngine::leap->getCurFrame();
+
+        // Render hands using spheres:
+        for (unsigned int h = 0; h < l->nHands; h++)
         {
-            ovvr->pass(current_eye, MyEngine::left_eye->get_color_buffer_id());
-        }
-        else if (current_eye == OvVR::OvEye::EYE_RIGHT)
-        {
-            ovvr->pass(current_eye, MyEngine::right_eye->get_color_buffer_id());
+            MyEngine::leap->bind_vao();
+
+            //std::cout << "hand " << (h + 1) << std::endl;
+
+            LEAP_HAND hand = l->pHands[h];
+
+            std::cout << "pinching Dst: " << (hand.pinch_distance) << std::endl;
+            std::cout << "pinching Str: " << (hand.pinch_strength) << std::endl;
+
+            if (hand.pinch_strength > 0.7f) {
+                //MyEngine::pinch_callback(hand.index, ); //.......
+            }
+
+            //glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -150.0f, 0.0f));
+            glm::mat4 f = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -300.0f, -500.0f));
+
+            //glm::mat4 f = glm::mat4(glm::mat3(ovrModelViewMat));
+
+            MyEngine::leap_shader->set_vec3("color", glm::vec3((float)h, (float)(1 - h), 0.5f));
+
+            // Elbow:
+            glm::mat4 c = glm::translate(glm::mat4(1.0f), glm::vec3(hand.arm.prev_joint.x, hand.arm.prev_joint.y, hand.arm.prev_joint.z));
+            MyEngine::leap_shader->set_mat4("modelview", f * c);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)MyEngine::leap->get_vertices_size());
+            leap_shader->render();
+
+            // Wrist:
+            c = glm::translate(glm::mat4(1.0f), glm::vec3(hand.arm.next_joint.x, hand.arm.next_joint.y, hand.arm.next_joint.z));
+            MyEngine::leap_shader->set_mat4("modelview", f * c);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)MyEngine::leap->get_vertices_size());
+            leap_shader->render();
+
+            // Palm:
+            c = glm::translate(glm::mat4(1.0f), glm::vec3(hand.palm.position.x, hand.palm.position.y, hand.palm.position.z));
+            MyEngine::leap_shader->set_mat4("modelview", f * c);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)MyEngine::leap->get_vertices_size());
+            leap_shader->render();
+
+            // Distal ends of bones for each digit:
+            for (unsigned int d = 0; d < 5; d++)
+            {
+                LEAP_DIGIT finger = hand.digits[d];
+                for (unsigned int b = 0; b < 4; b++)
+                {
+                    LEAP_BONE bone = finger.bones[b];
+                    c = glm::translate(glm::mat4(1.0f), glm::vec3(bone.next_joint.x, bone.next_joint.y, bone.next_joint.z));
+                    MyEngine::leap_shader->set_mat4("modelview", f * c);
+                    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)MyEngine::leap->get_vertices_size());
+                    leap_shader->render();
+                }
+            }
+
+            glm::mat4 perspective = glm::perspective(glm::radians(45.0f), (float)MyEngine::window_width / (float)MyEngine::window_height, 1.0f, 1000.0f);
+            //leap_shader->set_mat4("projection", ovrProjMat);
+            leap_shader->set_mat4("projection", perspective);
+            leap_shader->render();
+
+            glBindVertexArray(0);
+
+            if (current_eye == OvVR::OvEye::EYE_LEFT)
+            {
+                ovvr->pass(current_eye, MyEngine::left_eye->get_color_buffer_id());
+            }
+            else if (current_eye == OvVR::OvEye::EYE_RIGHT)
+            {
+                ovvr->pass(current_eye, MyEngine::right_eye->get_color_buffer_id());
+            }
         }
     }
 
@@ -421,7 +513,7 @@ void LIB_API MyEngine::stop()
 }
 
 /**
- * De-initializes the engine. This functino should be called only once and no other function should be called after.
+ * De-initializes the engine. This function should be called only once and no other function should be called after.
  *
  * Multiple calls to this function cause undefined behaviour.
  */
@@ -430,6 +522,8 @@ void LIB_API MyEngine::quit()
     FreeImage_DeInitialise();
 
     glutLeaveMainLoop();
+
+    MyEngine::leap->free();
 }
 
 /**

@@ -23,6 +23,7 @@
     <ClCompile Include="directional_light.cpp" />
     <ClCompile Include="fbo.cpp" />
     <ClCompile Include="leap.cpp" />
+    <ClCompile Include="leap_shader.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="material.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="directional_light.hpp" />
     <ClInclude Include="fbo.hpp" />
     <ClInclude Include="leap.hpp" />
+    <ClInclude Include="leap_shader.hpp" />
     <ClInclude Include="light.hpp" />
     <ClInclude Include="material.hpp" />
     <ClInclude Include="mesh.hpp" />

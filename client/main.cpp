@@ -90,6 +90,11 @@ int main(int argc, char* argv[])
        "negz.jpg",
     };
 
+    MyEngine::set_pinch_callback([](float pinch_x, float pinch_y, float pinch_z)
+    {
+        
+    });
+
     const std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>(skybox_textures);
     skybox->set_scale(glm::vec3(512.0f, 512.0f, 512.0f));
     MyEngine::set_skybox(skybox);

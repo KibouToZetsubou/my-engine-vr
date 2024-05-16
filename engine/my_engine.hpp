@@ -15,6 +15,7 @@
 #include "object.hpp"
 #include "shader.hpp"
 #include "skybox.hpp"
+#include "leap.hpp"
 #include "fbo.hpp"
 #include "ovvr.hpp"
 
@@ -31,6 +32,8 @@ public:
     static void init(const std::string window_title, const int window_width, const int window_height);
 
     static void set_keyboard_callback(void (*new_keyboard_callback) (const unsigned char key, const int mouse_x, const int mouse_y));
+
+    static void set_pinch_callback(void (*new_pinch_callback) (float pinch_x, float pinch_y, float pinch_z));
 
     static void set_sky_color(const float red, const float green, const float blue);
 
@@ -79,12 +82,16 @@ private:
 
     static float eye_distance;
 
+    static void (*pinch_callback)(float, float, float);
+
     static std::shared_ptr<Object> scene;
     static std::shared_ptr<Camera> active_camera;
     static std::shared_ptr<Shader> ppl_shader;
     static std::shared_ptr<Shader> skybox_shader;
     static std::shared_ptr<Shader> passthrough_shader;
+    static std::shared_ptr<Shader> leap_shader;
     static std::shared_ptr<Skybox> skybox;
+    static std::shared_ptr<Leap> leap;
     static std::shared_ptr<FBO> left_eye;
     static std::shared_ptr<FBO> right_eye;
     static std::shared_ptr<OvVR> ovvr;
