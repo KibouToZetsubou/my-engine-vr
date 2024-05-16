@@ -1,7 +1,7 @@
 #include "spot_light.hpp"
 
 /**
- * Creates a new instance of PointLight with the following default parameters:
+ * Creates a new instance of SpotLight with the following default parameters:
  *
  * Direction: 0.0f, 1.0f, 0.0f (Down
  *
@@ -45,6 +45,11 @@ void LIB_API SpotLight::set_cutoff(const float new_cutoff)
     this->cutoff = new_cutoff;
 }
 
+/**
+* Used to retrieve the cutoff of a spot light
+* 
+* @return The cutoff of the spot light
+*/
 float LIB_API SpotLight::get_cutoff() const
 {
     return this->cutoff;
@@ -60,6 +65,11 @@ void LIB_API SpotLight::set_radius(const float new_radius)
     this->radius = new_radius;
 }
 
+/**
+* Used to retrieve the radius of a spot light
+*
+* @return The radius of the spot light
+*/
 float LIB_API SpotLight::get_radius() const
 {
     return this->radius;
@@ -79,6 +89,11 @@ void LIB_API SpotLight::set_exponent(const float new_exponent)
     this->exponent = new_exponent;
 }
 
+/**
+* Used to retrieve the exponent of a spot light
+*
+* @return The exponent of the spot light
+*/
 float LIB_API SpotLight::get_exponent() const
 {
     return this->exponent;
@@ -96,6 +111,11 @@ void LIB_API SpotLight::set_direction(const glm::vec3 new_direction)
     this->direction = new_direction;
 }
 
+/**
+* Used to retrieve the direction vector of a spot light
+*
+* @return The direction vector of the spot light
+*/
 glm::vec3 LIB_API SpotLight::get_direction() const
 {
     return this->direction;

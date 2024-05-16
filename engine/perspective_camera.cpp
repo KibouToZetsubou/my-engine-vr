@@ -14,6 +14,11 @@ void LIB_API PerspectiveCamera::render(const glm::mat4 view_matrix) const
     Node::render(view_matrix);
 }
 
+/**
+ * Used to retreive the projection matrix of an perspective camera
+ *
+ * @return The projection matrix of the camera
+ */
 glm::mat4 LIB_API PerspectiveCamera::get_projection_matrix(const unsigned int window_width, const unsigned int window_height) const
 {
     const float aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);

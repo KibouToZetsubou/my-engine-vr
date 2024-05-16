@@ -6,6 +6,12 @@
 
 #define THROW_IF_NOT_FOUND(uniform) if (uniform == -1) { throw "Uniform not found"; }
 
+/**
+* Creates a new instance of Shader with the given Vertex and Fragment shaders
+* 
+* @param vertex_shader_source The source code of the Vertex shader
+* @param fragment_shader_source The source code of the Fragment shader
+*/
 LIB_API Shader::Shader(const std::string& vertex_shader_source, const std::string& fragment_shader_source)
 {
     // Compile vertex shader
@@ -43,11 +49,19 @@ LIB_API Shader::Shader(const std::string& vertex_shader_source, const std::strin
     glDeleteShader(fragment_shader_id);
 }
 
+/**
+* Used to delete the program
+*/
 LIB_API Shader::~Shader()
 {
     glDeleteProgram(this->program_id);
 }
 
+/**
+* Used to set the model view matrix and then set up the program's uniform variables
+* 
+* @param view_matrix The model view matrix
+*/
 void LIB_API Shader::render(const glm::mat4 view_matrix) const
 {
     // View matrix
@@ -62,6 +76,9 @@ void LIB_API Shader::render(const glm::mat4 view_matrix) const
     this->render();
 }
 
+/**
+* Used to set the program's uniform variables
+*/
 void LIB_API Shader::render() const
 {
     for (auto i = this->floats.begin(); i != this->floats.end(); ++i)
@@ -128,6 +145,9 @@ void LIB_API Shader::render() const
     }
 }
 
+/**
+* Used to reset the uniform variables
+*/
 void LIB_API Shader::clear_uniforms()
 {
     // TODO: Also reset the shader's uniforms
@@ -142,59 +162,121 @@ void LIB_API Shader::clear_uniforms()
     this->mat4s.clear();
 }
 
+/**
+* Used to set the value of a float uniform variable
+* 
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_float(const std::string name, const float value)
 {
     this->floats[name] = value;
 }
 
+/**
+* Used to set the value of a int uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_int(const std::string name, const int value)
 {
     this->ints[name] = value;
 }
 
+/**
+* Used to set the value of a vec3 uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_vec3(const std::string name, const glm::vec3 value)
 {
     this->vec3s[name] = value;
 }
 
+/**
+* Used to set the value of a vec4 uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_vec4(const std::string name, const glm::vec4 value)
 {
     this->vec4s[name] = value;
 }
 
+/**
+* Used to set the value of a boolean uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_bool(const std::string name, const bool value)
 {
     this->bools[name] = value;
 }
 
 // PERFORMANCE: We are creating a copy of the vector, which can be slow!
+/**
+* Used to set the value of a integer vector uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_vector_int(const std::string name, const std::vector<int> value)
 {
     this->vector_ints[name] = value;
 }
 
 // PERFORMANCE: We are creating a copy of the vector, which can be slow!
+/**
+* Used to set the value of a vector of vec3 uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_vector_vec3(const std::string name, const std::vector<glm::vec3> value)
 {
     this->vector_vec3s[name] = value;
 }
 
 // PERFORMANCE: We are creating a copy of the vector, which can be slow!
+/**
+* Used to set the value of a vector of floats uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_vector_float(const std::string name, const std::vector<float> value)
 {
     this->vector_floats[name] = value;
 }
 
+/**
+* Used to set the value of a mat4 uniform variable
+*
+* @param name The name of the variable
+* @param value The value of the variable
+*/
 void LIB_API Shader::set_mat4(const std::string name, const glm::mat4 value)
 {
     this->mat4s[name] = value;
 }
 
+/**
+* Used to activate the program
+*/
 void LIB_API Shader::use() const
 {
     glUseProgram(this->program_id);
 }
 
+/**
+* Used to retrieve the program's ID
+* 
+* @return The program's ID
+*/
 unsigned int LIB_API Shader::get_program_id() const
 {
     return this->program_id;

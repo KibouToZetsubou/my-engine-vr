@@ -3,6 +3,13 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
+
+/**
+ * Creates a new instance of a Frame Buffer Object with the given width and height
+ *
+ * @param width The width of the FBO
+ * @param height The height of the FBO
+ */
 LIB_API FBO::FBO(const int width, const int height)
 {
     this->width = width;
@@ -41,18 +48,32 @@ LIB_API FBO::FBO(const int width, const int height)
     }
 }
 
+
+/**
+* Used to bind the FBO
+* 
+*/
 void LIB_API FBO::use() const
 {
     glBindFramebuffer(GL_FRAMEBUFFER, this->id);
     glViewport(0, 0, this->width, this->height);
 }
 
+/**
+* Used to bind the FBO in readonly mode
+*
+*/
 void LIB_API FBO::use_read() const
 {
     glBindFramebuffer(GL_READ_FRAMEBUFFER, this->id);
     glViewport(0, 0, this->width, this->height);
 }
 
+/**
+* Used to retreive the ID of the color buffer
+* 
+* @return The ID of the color buffer
+*/
 unsigned int LIB_API FBO::get_color_buffer_id() const
 {
     return this->color_buffer_id;

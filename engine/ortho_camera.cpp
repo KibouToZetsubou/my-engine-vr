@@ -14,6 +14,11 @@ void LIB_API OrthoCamera::render(const glm::mat4 view_matrix) const
     Node::render(view_matrix);
 }
 
+/**
+ * Used to retreive the projection matrix of an orthogonal camera
+ *
+ * @return The projection matrix of the camera
+ */
 glm::mat4 LIB_API OrthoCamera::get_projection_matrix(const unsigned int window_width, const unsigned int window_height) const
 {
     const float width = static_cast<float>(window_width);

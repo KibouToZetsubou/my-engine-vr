@@ -40,6 +40,11 @@ void LIB_API Light::set_ambient_color(const glm::vec3 new_color)
     this->ambient_color = new_color;
 }
 
+/**
+ * Used to retrieve the ambient color of the light
+ *
+ * @return The ambient color of the light
+ */
 glm::vec3 LIB_API Light::get_ambient_color() const
 {
     return this->ambient_color;
@@ -55,6 +60,11 @@ void LIB_API Light::set_diffuse_color(const glm::vec3 new_color)
     this->diffuse_color = new_color;
 }
 
+/**
+ * Used to retrieve the diffuse color of the light
+ *
+ * @return The diffuse color of the light
+ */
 glm::vec3 LIB_API Light::get_diffuse_color() const
 {
     return this->diffuse_color;
@@ -70,6 +80,11 @@ void LIB_API Light::set_specular_color(const glm::vec3 new_color)
     this->specular_color = new_color;
 }
 
+/**
+ * Used to retrieve the specular color of the light
+ *
+ * @return The specular color of the light
+ */
 glm::vec3 LIB_API Light::get_specular_color() const
 {
     return this->specular_color;

@@ -32,6 +32,11 @@ void LIB_API PointLight::set_radius(const float new_radius)
     this->radius = new_radius;
 }
 
+/**
+ * Used to retrieve the radius of a point light
+ *
+ * @return The radius of the light
+ */
 float LIB_API PointLight::get_radius() const
 {
     return this->radius;

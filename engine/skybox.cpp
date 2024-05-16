@@ -18,6 +18,11 @@ unsigned short LIB_API Skybox::faces[] = {
    1, 2, 6,
 };
 
+/**
+* Used to create a new instance of Skybox
+* 
+* @param textures The list of textures for the skybox
+*/
 LIB_API Skybox::Skybox(const std::vector<std::string> textures)
 {
     float vertices[] = {
@@ -81,6 +86,9 @@ LIB_API Skybox::Skybox(const std::vector<std::string> textures)
     }
 }
 
+/**
+* Used to delete the VAO, VBOs and the cubemap ID
+*/
 LIB_API Skybox::~Skybox()
 {
     glDeleteVertexArrays(1, &this->vao_id);
@@ -90,6 +98,11 @@ LIB_API Skybox::~Skybox()
     glDeleteTextures(1, &this->cubemap_id);
 }
 
+/**
+* Used to render the skybox
+* 
+* @param view_matrix It is unused, use any 4x4 matrix (e.g. identity matrix)
+*/
 void LIB_API Skybox::render(const glm::mat4 view_matrix) const
 {
     Node::render(view_matrix);

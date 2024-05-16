@@ -34,6 +34,11 @@ void LIB_API DirectionalLight::set_direction(const glm::vec3 new_direction)
     this->direction = new_direction;
 }
 
+/**
+ * Function used to get the direction vector of a directional light
+ *
+ * @return The direction vector of a light
+ */
 glm::vec3 LIB_API DirectionalLight::get_direction() const
 {
     return this->direction;

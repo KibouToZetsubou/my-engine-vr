@@ -60,11 +60,21 @@ void LIB_API Camera::set_active(const bool new_is_active)
     this->is_active = new_is_active;
 }
 
+/**
+ * Function used to get the value of the camera's near clipping plane
+ * 
+ * @return The value of the camera's near clipping plane
+ */
 float LIB_API Camera::get_near_clipping_plane() const
 {
     return this->near_clipping;
 }
 
+/**
+ * Function used to get the value of the camera's far clipping plane
+ *
+ * @return The value of the camera's far clipping plane
+ */
 float LIB_API Camera::get_far_clipping_plane() const
 {
     return this->far_clipping;

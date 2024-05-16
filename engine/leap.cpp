@@ -2,6 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+/***
+* Used to create the VAO and VBOs used to render the spheres used to show the tracked hands 
+*/
 LIB_API Leap::Leap() : connection{ nullptr }, curFrame{ nullptr }, lastFrameId{ 0 }
 {
     // Build a sphere procedurally:   
@@ -37,17 +40,29 @@ LIB_API Leap::Leap() : connection{ nullptr }, curFrame{ nullptr }, lastFrameId{ 
     glEnableVertexAttribArray(0);
 }
 
+
+/**
+* Used to delete the VAO and VBOs associated with the leap motion
+*/
 LIB_API Leap::~Leap()
 {
     glDeleteVertexArrays(1, &this->vao);
     glDeleteBuffers(1, &this->vbo);
 }
 
+/**
+* Used to get the number of vertices
+* 
+* @return The number of vertices
+*/
 unsigned int LIB_API Leap::get_vertices_size() const
 {
     return this->vertices.size();
 }
 
+/**
+* Used to bind the VAO
+*/
 void LIB_API Leap::bind_vao()
 {
     glBindVertexArray(this->vao);

@@ -81,6 +81,9 @@ std::shared_ptr<Material> LIB_API Mesh::get_material() const
     return this->material;
 }
 
+/**
+ * Used delete the VAO and all the VBOs of the mesh
+ */
 Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &this->vao_id);

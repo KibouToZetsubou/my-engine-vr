@@ -485,11 +485,21 @@ void LIB_API MyEngine::set_active_camera(const std::shared_ptr<Camera> new_activ
     MyEngine::active_camera = new_active_camera;
 }
 
+/**
+ * Used to set the skybox
+ *
+ * @param new_skybox The skybox to use
+ */
 void LIB_API MyEngine::set_skybox(const std::shared_ptr<Skybox> new_skybox)
 {
     MyEngine::skybox = new_skybox;
 }
 
+/**
+ * Used to set the interocular distance
+ *
+ * @param new_eye_distance The interocular distance
+ */
 void LIB_API MyEngine::set_eye_distance(const float new_eye_distance)
 {
     MyEngine::eye_distance = new_eye_distance;
