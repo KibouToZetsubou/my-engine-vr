@@ -55,12 +55,10 @@ void start_level(int level_id)
         camera_1->set_zoom(350.0f);
         camera_1->set_name("Camera");
         camera_1->set_position(glm::vec3(0.0f, 150.0f, 0.0f));
-        camera_1->set_rotation(glm::vec3(-90.0f, 0.0f, 0.0f));
 
         std::shared_ptr<PerspectiveCamera> camera_2 = std::make_shared<PerspectiveCamera>();
         camera_2->set_name("Camera 2");
         camera_2->set_position(glm::vec3(0.0f, 123.0f, 55.0f));
-        camera_2->set_rotation(glm::vec3(-65.0f, 0.0f, 0.0f));
 
         saved_camera_ortho = camera_1;
         saved_camera_perspec = camera_2;
