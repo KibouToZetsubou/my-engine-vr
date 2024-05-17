@@ -1,0 +1,104 @@
+\doxysection{Skybox\+Shader Class Reference}
+\hypertarget{class_skybox_shader}{}\label{class_skybox_shader}\index{SkyboxShader@{SkyboxShader}}
+Inheritance diagram for Skybox\+Shader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_skybox_shader}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_shader}{Shader}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_shader_a2e1c84028ba04900ea776637baaaf61c}{Shader}} (const std\+::string \&vertex\+\_\+shader\+\_\+source, const std\+::string \&fragment\+\_\+shader\+\_\+source)
+\item 
+\mbox{\hyperlink{class_shader_a84e2cde77549e053bccfced32e58a77b}{\texorpdfstring{$\sim$}{\string~}\+Shader}} ()
+\item 
+void \mbox{\hyperlink{class_shader_a22f1e8ff372efcbe534e4d542598845f}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\item 
+void \mbox{\hyperlink{class_shader_a5689c9238a0eabf7fff6b6042070b10c}{render}} () const
+\item 
+void \mbox{\hyperlink{class_shader_a9e24e55103c82a5e87f3544b074f56ee}{clear\+\_\+uniforms}} ()
+\item 
+void \mbox{\hyperlink{class_shader_ab05db100c00e71b22cbe1c668e79994e}{set\+\_\+float}} (const std\+::string name, const float value)
+\item 
+void \mbox{\hyperlink{class_shader_a7f9725caf6580b0f4c9b264bcea68f85}{set\+\_\+int}} (const std\+::string name, const int value)
+\item 
+void \mbox{\hyperlink{class_shader_a55b986bd2a205ad4a8669ccaad7cae76}{set\+\_\+vec3}} (const std\+::string name, const glm\+::vec3 value)
+\item 
+void \mbox{\hyperlink{class_shader_afe8decf9d403ba374da77989211c79e7}{set\+\_\+vec4}} (const std\+::string name, const glm\+::vec4 value)
+\item 
+void \mbox{\hyperlink{class_shader_aae970a1926477a68defd1ff6649879ad}{set\+\_\+bool}} (const std\+::string name, const bool value)
+\item 
+void \mbox{\hyperlink{class_shader_a417919f16a3c34d0dc7d5a6b4ea15996}{set\+\_\+mat4}} (const std\+::string name, const glm\+::mat4 value)
+\item 
+void \mbox{\hyperlink{class_shader_aa44114eab3e00d6c9020119277847385}{set\+\_\+vector\+\_\+int}} (const std\+::string name, const std\+::vector$<$ int $>$ value)
+\item 
+void \mbox{\hyperlink{class_shader_a9e553ef8f2e638f1158df5c727771180}{set\+\_\+vector\+\_\+vec3}} (const std\+::string name, const std\+::vector$<$ glm\+::vec3 $>$ value)
+\item 
+void \mbox{\hyperlink{class_shader_a7952857ba17158edc0dc8951386e3474}{set\+\_\+vector\+\_\+float}} (const std\+::string name, const std\+::vector$<$ float $>$ value)
+\item 
+void \mbox{\hyperlink{class_shader_a03d83ec9a54a679990ae23e56c152533}{use}} () const
+\item 
+unsigned int \mbox{\hyperlink{class_shader_aa35ab97b58b7020a344295a70506e3f4}{get\+\_\+program\+\_\+id}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual glm\+::mat4 \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{get\+\_\+local\+\_\+matrix}} () const
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_shader}{Shader}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries compile} (const std\+::string \&vertex\+\_\+shader\+\_\+source, const std\+::string \&fragment\+\_\+shader\+\_\+source)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_shader}{Shader}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries program\+\_\+id}
+\item 
+std\+::map$<$ std\+::string, float $>$ {\bfseries floats}
+\item 
+std\+::map$<$ std\+::string, int $>$ {\bfseries ints}
+\item 
+std\+::map$<$ std\+::string, glm\+::vec3 $>$ {\bfseries vec3s}
+\item 
+std\+::map$<$ std\+::string, glm\+::vec4 $>$ {\bfseries vec4s}
+\item 
+std\+::map$<$ std\+::string, bool $>$ {\bfseries bools}
+\item 
+std\+::map$<$ std\+::string, glm\+::mat4 $>$ {\bfseries mat4s}
+\item 
+std\+::map$<$ std\+::string, std\+::vector$<$ int $>$ $>$ {\bfseries vector\+\_\+ints}
+\item 
+std\+::map$<$ std\+::string, std\+::vector$<$ glm\+::vec3 $>$ $>$ {\bfseries vector\+\_\+vec3s}
+\item 
+std\+::map$<$ std\+::string, std\+::vector$<$ float $>$ $>$ {\bfseries vector\+\_\+floats}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/skybox\+\_\+shader.\+hpp\item 
+engine/skybox\+\_\+shader.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,210 @@
+\doxysection{Camera Class Reference}
+\hypertarget{class_camera}{}\label{class_camera}\index{Camera@{Camera}}
+
+
+{\ttfamily \#include $<$camera.\+hpp$>$}
+
+Inheritance diagram for Camera\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_camera}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_camera_a00c237b9716967c46c22a4056d09fd28}{Camera}} ()
+\item 
+int \mbox{\hyperlink{class_camera_a83bd42731a88ebf0858bb9accd09f4f7}{get\+\_\+priority}} () const override
+\item 
+virtual glm\+::mat4 \mbox{\hyperlink{class_camera_a09214f7ed4ce12404853576007ab40a0}{get\+\_\+projection\+\_\+matrix}} (const unsigned int window\+\_\+width, const unsigned int window\+\_\+height) const =0
+\item 
+void \mbox{\hyperlink{class_camera_afced7cbd964178dc9d091487c19d7877}{set\+\_\+fov}} (const float new\+\_\+fov)
+\item 
+void \mbox{\hyperlink{class_camera_a6d9d2932139aee1783c900070ff44c09}{set\+\_\+clipping}} (const float new\+\_\+near\+\_\+clipping, const float new\+\_\+far\+\_\+clipping)
+\item 
+void \mbox{\hyperlink{class_camera_acf66769524710d5747a2efbfd8cc7534}{set\+\_\+active}} (const bool new\+\_\+is\+\_\+active)
+\item 
+float \mbox{\hyperlink{class_camera_aafc319ec2180f1ed35e6b5902af6ad0a}{get\+\_\+near\+\_\+clipping\+\_\+plane}} () const
+\item 
+float \mbox{\hyperlink{class_camera_ab9bd10388482df9e49b380cd3ddf2338}{get\+\_\+far\+\_\+clipping\+\_\+plane}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\item 
+void \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_camera_aff7393c9cfbccd7e369091f00008da93}\label{class_camera_aff7393c9cfbccd7e369091f00008da93} 
+float {\bfseries fov}
+\item 
+\Hypertarget{class_camera_af417a3f77876572989472d79ca18fd25}\label{class_camera_af417a3f77876572989472d79ca18fd25} 
+float {\bfseries near\+\_\+clipping}
+\item 
+\Hypertarget{class_camera_ac99e2149271b2f405edd10e51ab3063e}\label{class_camera_ac99e2149271b2f405edd10e51ab3063e} 
+float {\bfseries far\+\_\+clipping}
+\item 
+\Hypertarget{class_camera_a1a9a398136a81271412f8fb21a694253}\label{class_camera_a1a9a398136a81271412f8fb21a694253} 
+bool {\bfseries is\+\_\+active}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class works as a base to be inherited from to implement cameras into the scene.
+
+A camera renders what it has in front to the screen. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_camera_a00c237b9716967c46c22a4056d09fd28}\label{class_camera_a00c237b9716967c46c22a4056d09fd28} 
+\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Camera()}{Camera()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Camera\+::\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_camera}{Camera} with the following default parameters\+:
+
+FOV\+: 90.\+0f
+
+Near clipping\+: 0.\+01f
+
+Far clipping\+: 1000.\+0f 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_camera_ab9bd10388482df9e49b380cd3ddf2338}\label{class_camera_ab9bd10388482df9e49b380cd3ddf2338} 
+\index{Camera@{Camera}!get\_far\_clipping\_plane@{get\_far\_clipping\_plane}}
+\index{get\_far\_clipping\_plane@{get\_far\_clipping\_plane}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{get\_far\_clipping\_plane()}{get\_far\_clipping\_plane()}}
+{\footnotesize\ttfamily float LIB\+\_\+\+API Camera\+::get\+\_\+far\+\_\+clipping\+\_\+plane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Function used to get the value of the camera\textquotesingle{}s far clipping plane
+
+\begin{DoxyReturn}{Returns}
+The value of the camera\textquotesingle{}s far clipping plane 
+\end{DoxyReturn}
+\Hypertarget{class_camera_aafc319ec2180f1ed35e6b5902af6ad0a}\label{class_camera_aafc319ec2180f1ed35e6b5902af6ad0a} 
+\index{Camera@{Camera}!get\_near\_clipping\_plane@{get\_near\_clipping\_plane}}
+\index{get\_near\_clipping\_plane@{get\_near\_clipping\_plane}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{get\_near\_clipping\_plane()}{get\_near\_clipping\_plane()}}
+{\footnotesize\ttfamily float LIB\+\_\+\+API Camera\+::get\+\_\+near\+\_\+clipping\+\_\+plane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Function used to get the value of the camera\textquotesingle{}s near clipping plane
+
+\begin{DoxyReturn}{Returns}
+The value of the camera\textquotesingle{}s near clipping plane 
+\end{DoxyReturn}
+\Hypertarget{class_camera_a83bd42731a88ebf0858bb9accd09f4f7}\label{class_camera_a83bd42731a88ebf0858bb9accd09f4f7} 
+\index{Camera@{Camera}!get\_priority@{get\_priority}}
+\index{get\_priority@{get\_priority}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{get\_priority()}{get\_priority()}}
+{\footnotesize\ttfamily int LIB\+\_\+\+API Camera\+::get\+\_\+priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the priority of this object.
+
+Cameras have a priority of 200.
+
+\begin{DoxyReturn}{Returns}
+The priority of this object. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{Object}}.
+
+\Hypertarget{class_camera_a09214f7ed4ce12404853576007ab40a0}\label{class_camera_a09214f7ed4ce12404853576007ab40a0} 
+\index{Camera@{Camera}!get\_projection\_matrix@{get\_projection\_matrix}}
+\index{get\_projection\_matrix@{get\_projection\_matrix}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{get\_projection\_matrix()}{get\_projection\_matrix()}}
+{\footnotesize\ttfamily virtual glm\+::mat4 Camera\+::get\+\_\+projection\+\_\+matrix (\begin{DoxyParamCaption}\item[{const unsigned int}]{window\+\_\+width,  }\item[{const unsigned int}]{window\+\_\+height }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_ortho_camera_aef566ae52d4bb98b9291ec51f547cf77}{Ortho\+Camera}}, and \mbox{\hyperlink{class_perspective_camera_a47ae7666699099ac29a0353be9276580}{Perspective\+Camera}}.
+
+\Hypertarget{class_camera_acf66769524710d5747a2efbfd8cc7534}\label{class_camera_acf66769524710d5747a2efbfd8cc7534} 
+\index{Camera@{Camera}!set\_active@{set\_active}}
+\index{set\_active@{set\_active}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{set\_active()}{set\_active()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Camera\+::set\+\_\+active (\begin{DoxyParamCaption}\item[{const bool}]{new\+\_\+is\+\_\+active }\end{DoxyParamCaption})}
+
+Sets the camera activation flag.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+is\+\_\+active} & The new value of the activation flag. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_camera_a6d9d2932139aee1783c900070ff44c09}\label{class_camera_a6d9d2932139aee1783c900070ff44c09} 
+\index{Camera@{Camera}!set\_clipping@{set\_clipping}}
+\index{set\_clipping@{set\_clipping}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{set\_clipping()}{set\_clipping()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Camera\+::set\+\_\+clipping (\begin{DoxyParamCaption}\item[{const float}]{new\+\_\+near\+\_\+clipping,  }\item[{const float}]{new\+\_\+far\+\_\+clipping }\end{DoxyParamCaption})}
+
+Sets the camera far and near clipping planes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+near\+\_\+clipping} & The near clipping plane of the camera. \\
+\hline
+{\em new\+\_\+far\+\_\+clipping} & The far clipping plane of the camera. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_camera_afced7cbd964178dc9d091487c19d7877}\label{class_camera_afced7cbd964178dc9d091487c19d7877} 
+\index{Camera@{Camera}!set\_fov@{set\_fov}}
+\index{set\_fov@{set\_fov}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{set\_fov()}{set\_fov()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Camera\+::set\+\_\+fov (\begin{DoxyParamCaption}\item[{const float}]{new\+\_\+fov }\end{DoxyParamCaption})}
+
+Sets the camera Field of View (FOV).
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+fov} & The new value of the FOV. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/camera.\+hpp\item 
+engine/camera.\+cpp\end{DoxyCompactItemize}

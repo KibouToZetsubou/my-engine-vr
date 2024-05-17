@@ -1,0 +1,35 @@
+\doxysection{texture.\+hpp}
+\hypertarget{texture_8hpp_source}{}\label{texture_8hpp_source}\index{engine/texture.hpp@{engine/texture.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ https://www.opengl.org/registry/specs/EXT/texture\_filter\_anisotropic.txt}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ GL\_TEXTURE\_MAX\_ANISOTROPY\_EXT\ \ \ \ \ \ \ \ 0x84FE}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ GL\_MAX\_TEXTURE\_MAX\_ANISOTROPY\_EXT\ \ \ \ 0x84FF}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ Fix\ for\ OpenGL\ on\ Windows}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ GL\_CLAMP\_TO\_EDGE}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#define\ GL\_CLAMP\_TO\_EDGE\ 0x812F}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}object.hpp"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_texture}{Texture}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_object}{Object}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_texture}{Texture}}(\textcolor{keyword}{const}\ std::string\ path);}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_texture}{\string~Texture}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ render(\textcolor{keyword}{const}\ glm::mat4\ view\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}*\ bitmap;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture\_id;}
+\DoxyCodeLine{00032\ \};}
+
+\end{DoxyCode}

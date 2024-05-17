@@ -1,0 +1,171 @@
+\doxysection{Object Class Reference}
+\hypertarget{class_object}{}\label{class_object}\index{Object@{Object}}
+
+
+{\ttfamily \#include $<$object.\+hpp$>$}
+
+Inheritance diagram for Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.129771cm]{class_object}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+\Hypertarget{class_object_a47b30b0b20b4ac29133c3a452c1918cb}\label{class_object_a47b30b0b20b4ac29133c3a452c1918cb} 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual glm\+::mat4 \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{get\+\_\+local\+\_\+matrix}} () const
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\item 
+virtual void \mbox{\hyperlink{class_object_afed9ee9586d1d403d450378f947686c9}{render}} (const glm\+::mat4 view\+\_\+matrix) const =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_object_a314dc3e418d8a46b5315a1e4264322d2}\label{class_object_a314dc3e418d8a46b5315a1e4264322d2} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class works as a base to be inherited from to implement any type of object. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_object_ad900f5210c5492414a925ae0fe85dd9f}\label{class_object_ad900f5210c5492414a925ae0fe85dd9f} 
+\index{Object@{Object}!Object@{Object}}
+\index{Object@{Object}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{Object()}{Object()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Object\+::\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_node}{Node} with the following default parameters\+:
+
+Name\+: \mbox{[}id\mbox{]}, where id is the auto-\/generated ID. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_object_a8aa2658a4d09ee4731312ce526ea567b}\label{class_object_a8aa2658a4d09ee4731312ce526ea567b} 
+\index{Object@{Object}!add\_child@{add\_child}}
+\index{add\_child@{add\_child}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{add\_child()}{add\_child()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Object\+::add\+\_\+child (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$}]{new\+\_\+child }\end{DoxyParamCaption})}
+
+Adds an object as a child to this object.
+
+NOTE\+: Adding the same object as a child to multiple other objects is undefined behaviour.
+
+NOTE\+: A value of nullptr causes undefined behaviour.
+
+NOTE\+: Adding an object as a child of itself is undefined behaviour. \Hypertarget{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}\label{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c} 
+\index{Object@{Object}!get\_children@{get\_children}}
+\index{get\_children@{get\_children}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{get\_children()}{get\_children()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ LIB\+\_\+\+API Object\+::get\+\_\+children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns a copy of the vector containing the pointers to the child objects.
+
+Modifying this vector does not affect the children, but modifying the children does affect them.
+
+\begin{DoxyReturn}{Returns}
+A copy of the vector of children. 
+\end{DoxyReturn}
+\Hypertarget{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}\label{class_object_a4540ecb3e47ee09e9082db87b4e7b08a} 
+\index{Object@{Object}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}}
+{\footnotesize\ttfamily int LIB\+\_\+\+API Object\+::get\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the auto-\/generated ID of this object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em The} & ID of this object. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}\label{class_object_a2cf8999e205015175b1f56cfa2ceaf4d} 
+\index{Object@{Object}!get\_local\_matrix@{get\_local\_matrix}}
+\index{get\_local\_matrix@{get\_local\_matrix}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{get\_local\_matrix()}{get\_local\_matrix()}}
+{\footnotesize\ttfamily glm\+::mat4 LIB\+\_\+\+API Object\+::get\+\_\+local\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Returns the local model matrix. This is used by the engine.
+
+For objects, the matrix is the identity matrix.
+
+\begin{DoxyReturn}{Returns}
+The model matrix for this object. 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{Node}}.
+
+\Hypertarget{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}\label{class_object_a87e8f25d2eb79f73b6e32788c4421bf2} 
+\index{Object@{Object}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily std\+::string LIB\+\_\+\+API Object\+::get\+\_\+name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the name of this object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em The} & name of this object. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_object_af81ee6113d2ef624e3d79475e7125a54}\label{class_object_af81ee6113d2ef624e3d79475e7125a54} 
+\index{Object@{Object}!get\_priority@{get\_priority}}
+\index{get\_priority@{get\_priority}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{get\_priority()}{get\_priority()}}
+{\footnotesize\ttfamily int LIB\+\_\+\+API Object\+::get\+\_\+priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Returns the priority of this object.
+
+Objects have a priority of 0.
+
+\begin{DoxyReturn}{Returns}
+The priority of this object. 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_camera_a83bd42731a88ebf0858bb9accd09f4f7}{Camera}}, and \mbox{\hyperlink{class_light_ac17769fa1812febb0ae612f274cfd7c6}{Light}}.
+
+\Hypertarget{class_object_afed9ee9586d1d403d450378f947686c9}\label{class_object_afed9ee9586d1d403d450378f947686c9} 
+\index{Object@{Object}!render@{render}}
+\index{render@{render}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily virtual void Object\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{view\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_directional_light_a2ca55f00301a6917d9a8da5f50129476}{Directional\+Light}}, \mbox{\hyperlink{class_material_a30385920b3d4cc39a72d1eee863b027f}{Material}}, \mbox{\hyperlink{class_mesh_a787ab72aff0a6855d069f96f1080f732}{Mesh}}, \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{Node}}, \mbox{\hyperlink{class_ortho_camera_ab880dd952b18499734dcacc1efb53bf7}{Ortho\+Camera}}, \mbox{\hyperlink{class_perspective_camera_a6d50f44f10f3ea20859a71a4286bf29e}{Perspective\+Camera}}, \mbox{\hyperlink{class_point_light_afdb8957e49e36300b5987d619a77230a}{Point\+Light}}, \mbox{\hyperlink{class_shader_a22f1e8ff372efcbe534e4d542598845f}{Shader}}, \mbox{\hyperlink{class_skybox_af48313acfa2f09e26072940be0da35f1}{Skybox}}, \mbox{\hyperlink{class_spot_light_aff5c73e0b1769ed78b494cc5c5acb1d0}{Spot\+Light}}, and \mbox{\hyperlink{class_texture_a3701f471da500862e0e8a2fbd9387607}{Texture}}.
+
+\Hypertarget{class_object_aafe9de929a41cf3626d5869998e1d087}\label{class_object_aafe9de929a41cf3626d5869998e1d087} 
+\index{Object@{Object}!set\_name@{set\_name}}
+\index{set\_name@{set\_name}!Object@{Object}}
+\doxysubsubsection{\texorpdfstring{set\_name()}{set\_name()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Object\+::set\+\_\+name (\begin{DoxyParamCaption}\item[{const std\+::string}]{new\+\_\+name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+name} & The new name of this object. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/object.\+hpp\item 
+engine/object.\+cpp\end{DoxyCompactItemize}

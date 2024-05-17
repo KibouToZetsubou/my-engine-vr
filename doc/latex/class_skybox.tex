@@ -1,0 +1,111 @@
+\doxysection{Skybox Class Reference}
+\hypertarget{class_skybox}{}\label{class_skybox}\index{Skybox@{Skybox}}
+Inheritance diagram for Skybox\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_skybox}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_skybox_ac16f061a8d264b8f1ee734c8d808e64b}{Skybox}} (const std\+::vector$<$ std\+::string $>$ textures)
+\item 
+\mbox{\hyperlink{class_skybox_a65c2be42f017acc9d8022ca0e1d3cf27}{\texorpdfstring{$\sim$}{\string~}\+Skybox}} ()
+\item 
+void \mbox{\hyperlink{class_skybox_af48313acfa2f09e26072940be0da35f1}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_skybox_ac16f061a8d264b8f1ee734c8d808e64b}\label{class_skybox_ac16f061a8d264b8f1ee734c8d808e64b} 
+\index{Skybox@{Skybox}!Skybox@{Skybox}}
+\index{Skybox@{Skybox}!Skybox@{Skybox}}
+\doxysubsubsection{\texorpdfstring{Skybox()}{Skybox()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Skybox\+::\+Skybox (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::string $>$}]{textures }\end{DoxyParamCaption})}
+
+Used to create a new instance of \doxylink{class_skybox}{Skybox}
+
+
+\begin{DoxyParams}{Parameters}
+{\em textures} & The list of textures for the skybox \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_skybox_a65c2be42f017acc9d8022ca0e1d3cf27}\label{class_skybox_a65c2be42f017acc9d8022ca0e1d3cf27} 
+\index{Skybox@{Skybox}!````~Skybox@{\texorpdfstring{$\sim$}{\string~}Skybox}}
+\index{````~Skybox@{\texorpdfstring{$\sim$}{\string~}Skybox}!Skybox@{Skybox}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Skybox()}{\string~Skybox()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Skybox\+::\texorpdfstring{$\sim$}{\string~}\+Skybox (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Used to delete the VAO, VBOs and the cubemap ID 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_skybox_af48313acfa2f09e26072940be0da35f1}\label{class_skybox_af48313acfa2f09e26072940be0da35f1} 
+\index{Skybox@{Skybox}!render@{render}}
+\index{render@{render}!Skybox@{Skybox}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Skybox\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{view\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Used to render the skybox
+
+
+\begin{DoxyParams}{Parameters}
+{\em view\+\_\+matrix} & It is unused, use any 4x4 matrix (e.\+g. identity matrix) \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{Node}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/skybox.\+hpp\item 
+engine/skybox.\+cpp\end{DoxyCompactItemize}

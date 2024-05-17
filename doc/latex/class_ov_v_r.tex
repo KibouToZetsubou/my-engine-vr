@@ -1,0 +1,311 @@
+\doxysection{Ov\+VR Class Reference}
+\hypertarget{class_ov_v_r}{}\label{class_ov_v_r}\index{OvVR@{OvVR}}
+
+
+Open\+GL-\/\+Open\+VR interface.  
+
+
+
+
+{\ttfamily \#include $<$ovvr.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}} \{ {\bfseries EYE\+\_\+\+LEFT} = 0
+, {\bfseries EYE\+\_\+\+RIGHT} = 1
+, {\bfseries EYE\+\_\+\+LAST}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ov_v_r_acd73dcecf353fc195f34ea57157b292b}{Ov\+VR}} ()
+\item 
+\mbox{\hyperlink{class_ov_v_r_ac2758dd89d2105377f29dd25060b0a38}{\texorpdfstring{$\sim$}{\string~}\+Ov\+VR}} ()
+\item 
+bool \mbox{\hyperlink{class_ov_v_r_a1de518160a5faf33b055eeb4764e4deb}{init}} ()
+\begin{DoxyCompactList}\small\item\em Init VR components. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_ov_v_r_a4754480369616f7408889e5d6a752709}{free}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_ov_v_r_a83579d10fd2750ccdbd50b25793ac959}{get\+Tracking\+Sys\+Name}} ()
+\item 
+bool \mbox{\hyperlink{class_ov_v_r_a9e6825dd6386023ba529b72856ea07ee}{print\+Render\+Models}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_ov_v_r_aa4b4072b2505dd24ebaeed986eed0a13}{get\+Manufacturer\+Name}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_ov_v_r_a7d2ba3164ac20fea089e8c4c4fc80bb2}{get\+Model\+Number}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_ov_v_r_a9ed65863a2a0cbec9c589b755744f78b}{get\+Hmd\+Ideal\+Horiz\+Res}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_ov_v_r_afe4533dda38f6dd504be45476b898bbf}{get\+Hmd\+Ideal\+Vert\+Res}} ()
+\item 
+bool \mbox{\hyperlink{class_ov_v_r_aed5d793fb8e116fb71a44d06ebf9f67e}{update}} ()
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_ov_v_r_aa086c8f73e80ae57ce61480204e559d8}{get\+Proj\+Matrix}} (\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}} eye, float near\+Plane, float far\+Plane)
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_ov_v_r_a81dd364790674a963afb64d50fa86ded}{get\+Eye2\+Head\+Matrix}} (\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}} eye)
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_ov_v_r_a4cd9756706c8d9cbdf1eff8d9a744afe}{get\+Modelview\+Matrix}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_ov_v_r_a3b75778953a2a5a1c4a23065800e7bde}{get\+Nr\+Of\+Controllers}} ()
+\item 
+\mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_ov_v_r_a7c5732b56e8015ea3da70ee561737185}{get\+Controller}} (unsigned int pos) const
+\item 
+void \mbox{\hyperlink{class_ov_v_r_a9603402acfb2940d99147fb7b08e2d67}{set\+Reprojection}} (bool flag)
+\item 
+void \mbox{\hyperlink{class_ov_v_r_af1ec6866a0bc8df1d0c52dd7bb588db1}{pass}} (\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}} eye, unsigned int eye\+Texture)
+\item 
+void \mbox{\hyperlink{class_ov_v_r_aa4149082cd8ace8f9b35d5b5e8f5a9eb}{render}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static glm\+::mat4 \mbox{\hyperlink{class_ov_v_r_a2a9183874a43a909d50a9c7472168fa4}{ovr2ogl}} (const vr\+::\+Hmd\+Matrix34\+\_\+t \&matrix)
+\item 
+static glm\+::mat4 \mbox{\hyperlink{class_ov_v_r_a16ea08c69074ee39991ac406812c5540}{ovr2ogl}} (const vr\+::\+Hmd\+Matrix44\+\_\+t \&matrix)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Open\+GL-\/\+Open\+VR interface. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}\label{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c} 
+\index{OvVR@{OvVR}!OvEye@{OvEye}}
+\index{OvEye@{OvEye}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{OvEye}{OvEye}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+VR\+::\+Ov\+Eye}}}
+
+Eye enums 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_ov_v_r_acd73dcecf353fc195f34ea57157b292b}\label{class_ov_v_r_acd73dcecf353fc195f34ea57157b292b} 
+\index{OvVR@{OvVR}!OvVR@{OvVR}}
+\index{OvVR@{OvVR}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{OvVR()}{OvVR()}}
+{\footnotesize\ttfamily Ov\+VR\+::\+Ov\+VR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor \Hypertarget{class_ov_v_r_ac2758dd89d2105377f29dd25060b0a38}\label{class_ov_v_r_ac2758dd89d2105377f29dd25060b0a38} 
+\index{OvVR@{OvVR}!````~OvVR@{\texorpdfstring{$\sim$}{\string~}OvVR}}
+\index{````~OvVR@{\texorpdfstring{$\sim$}{\string~}OvVR}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}OvVR()}{\string~OvVR()}}
+{\footnotesize\ttfamily Ov\+VR\+::\texorpdfstring{$\sim$}{\string~}\+Ov\+VR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_ov_v_r_a4754480369616f7408889e5d6a752709}\label{class_ov_v_r_a4754480369616f7408889e5d6a752709} 
+\index{OvVR@{OvVR}!free@{free}}
+\index{free@{free}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{free()}{free()}}
+{\footnotesize\ttfamily bool Ov\+VR\+::free (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Release VR components. \begin{DoxyReturn}{Returns}
+TF 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a7c5732b56e8015ea3da70ee561737185}\label{class_ov_v_r_a7c5732b56e8015ea3da70ee561737185} 
+\index{OvVR@{OvVR}!getController@{getController}}
+\index{getController@{getController}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getController()}{getController()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}} \texorpdfstring{$\ast$}{*} Ov\+VR\+::get\+Controller (\begin{DoxyParamCaption}\item[{unsigned int}]{pos }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get pointer to internal controller reference. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & controller position in the list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer or nullptr if error 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a81dd364790674a963afb64d50fa86ded}\label{class_ov_v_r_a81dd364790674a963afb64d50fa86ded} 
+\index{OvVR@{OvVR}!getEye2HeadMatrix@{getEye2HeadMatrix}}
+\index{getEye2HeadMatrix@{getEye2HeadMatrix}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getEye2HeadMatrix()}{getEye2HeadMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 Ov\+VR\+::get\+Eye2\+Head\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}}}]{eye }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the eye-\/to-\/head modelview matrix for the given eye. 
+\begin{DoxyParams}{Parameters}
+{\em eye} & left or right eye (use enum) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+eye-\/to-\/head modelview matrix ready for Open\+GL 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a9ed65863a2a0cbec9c589b755744f78b}\label{class_ov_v_r_a9ed65863a2a0cbec9c589b755744f78b} 
+\index{OvVR@{OvVR}!getHmdIdealHorizRes@{getHmdIdealHorizRes}}
+\index{getHmdIdealHorizRes@{getHmdIdealHorizRes}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getHmdIdealHorizRes()}{getHmdIdealHorizRes()}}
+{\footnotesize\ttfamily unsigned int Ov\+VR\+::get\+Hmd\+Ideal\+Horiz\+Res (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get HMD proper horizontal resolution in pixels. \begin{DoxyReturn}{Returns}
+HMD horizontal resolution in pixels 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_afe4533dda38f6dd504be45476b898bbf}\label{class_ov_v_r_afe4533dda38f6dd504be45476b898bbf} 
+\index{OvVR@{OvVR}!getHmdIdealVertRes@{getHmdIdealVertRes}}
+\index{getHmdIdealVertRes@{getHmdIdealVertRes}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getHmdIdealVertRes()}{getHmdIdealVertRes()}}
+{\footnotesize\ttfamily unsigned int Ov\+VR\+::get\+Hmd\+Ideal\+Vert\+Res (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get HMD proper vertical resolution in pixels. \begin{DoxyReturn}{Returns}
+HMD vertical resolution in pixels 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_aa4b4072b2505dd24ebaeed986eed0a13}\label{class_ov_v_r_aa4b4072b2505dd24ebaeed986eed0a13} 
+\index{OvVR@{OvVR}!getManufacturerName@{getManufacturerName}}
+\index{getManufacturerName@{getManufacturerName}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getManufacturerName()}{getManufacturerName()}}
+{\footnotesize\ttfamily std\+::string Ov\+VR\+::get\+Manufacturer\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get manufacturer name. \begin{DoxyReturn}{Returns}
+manufacturer system name 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a7d2ba3164ac20fea089e8c4c4fc80bb2}\label{class_ov_v_r_a7d2ba3164ac20fea089e8c4c4fc80bb2} 
+\index{OvVR@{OvVR}!getModelNumber@{getModelNumber}}
+\index{getModelNumber@{getModelNumber}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getModelNumber()}{getModelNumber()}}
+{\footnotesize\ttfamily std\+::string Ov\+VR\+::get\+Model\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get model number (name). \begin{DoxyReturn}{Returns}
+model number (name) 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a4cd9756706c8d9cbdf1eff8d9a744afe}\label{class_ov_v_r_a4cd9756706c8d9cbdf1eff8d9a744afe} 
+\index{OvVR@{OvVR}!getModelviewMatrix@{getModelviewMatrix}}
+\index{getModelviewMatrix@{getModelviewMatrix}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getModelviewMatrix()}{getModelviewMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 Ov\+VR\+::get\+Modelview\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the user\textquotesingle{}s head modelview position. \begin{DoxyReturn}{Returns}
+modelview matrix ready for Open\+GL 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a3b75778953a2a5a1c4a23065800e7bde}\label{class_ov_v_r_a3b75778953a2a5a1c4a23065800e7bde} 
+\index{OvVR@{OvVR}!getNrOfControllers@{getNrOfControllers}}
+\index{getNrOfControllers@{getNrOfControllers}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getNrOfControllers()}{getNrOfControllers()}}
+{\footnotesize\ttfamily unsigned int Ov\+VR\+::get\+Nr\+Of\+Controllers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the number of identified and initialized controllers. \begin{DoxyReturn}{Returns}
+number of controllers 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_aa086c8f73e80ae57ce61480204e559d8}\label{class_ov_v_r_aa086c8f73e80ae57ce61480204e559d8} 
+\index{OvVR@{OvVR}!getProjMatrix@{getProjMatrix}}
+\index{getProjMatrix@{getProjMatrix}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getProjMatrix()}{getProjMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 Ov\+VR\+::get\+Proj\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}}}]{eye,  }\item[{float}]{near\+Plane,  }\item[{float}]{far\+Plane }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the projection matrix for the given eye and plane params. 
+\begin{DoxyParams}{Parameters}
+{\em eye} & left or right eye (use enum) \\
+\hline
+{\em near\+Plane} & user camera near plane distance \\
+\hline
+{\em far\+Plane} & user camera far plane distance \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+projection matrix ready for Open\+GL 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a83579d10fd2750ccdbd50b25793ac959}\label{class_ov_v_r_a83579d10fd2750ccdbd50b25793ac959} 
+\index{OvVR@{OvVR}!getTrackingSysName@{getTrackingSysName}}
+\index{getTrackingSysName@{getTrackingSysName}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{getTrackingSysName()}{getTrackingSysName()}}
+{\footnotesize\ttfamily std\+::string Ov\+VR\+::get\+Tracking\+Sys\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get tracking system name. \begin{DoxyReturn}{Returns}
+tracking system name 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a1de518160a5faf33b055eeb4764e4deb}\label{class_ov_v_r_a1de518160a5faf33b055eeb4764e4deb} 
+\index{OvVR@{OvVR}!init@{init}}
+\index{init@{init}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool Ov\+VR\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Init VR components. 
+
+\begin{DoxyReturn}{Returns}
+TF 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a2a9183874a43a909d50a9c7472168fa4}\label{class_ov_v_r_a2a9183874a43a909d50a9c7472168fa4} 
+\index{OvVR@{OvVR}!ovr2ogl@{ovr2ogl}}
+\index{ovr2ogl@{ovr2ogl}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{ovr2ogl()}{ovr2ogl()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static glm\+::mat4 Ov\+VR\+::ovr2ogl (\begin{DoxyParamCaption}\item[{const vr\+::\+Hmd\+Matrix34\+\_\+t \&}]{matrix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Converts an Open\+VR 4x3 matrix into an Open\+GL one. 
+\begin{DoxyParams}{Parameters}
+{\em matrix} & Open\+VR 34 matrix \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Open\+GL-\/friendly matrix 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_a16ea08c69074ee39991ac406812c5540}\label{class_ov_v_r_a16ea08c69074ee39991ac406812c5540} 
+\index{OvVR@{OvVR}!ovr2ogl@{ovr2ogl}}
+\index{ovr2ogl@{ovr2ogl}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{ovr2ogl()}{ovr2ogl()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static glm\+::mat4 Ov\+VR\+::ovr2ogl (\begin{DoxyParamCaption}\item[{const vr\+::\+Hmd\+Matrix44\+\_\+t \&}]{matrix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Converts an Open\+VR 4x4 matrix into an Open\+GL one. 
+\begin{DoxyParams}{Parameters}
+{\em matrix} & Open\+VR 44 matrix \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Overvision-\/friendly matrix 
+\end{DoxyReturn}
+\Hypertarget{class_ov_v_r_af1ec6866a0bc8df1d0c52dd7bb588db1}\label{class_ov_v_r_af1ec6866a0bc8df1d0c52dd7bb588db1} 
+\index{OvVR@{OvVR}!pass@{pass}}
+\index{pass@{pass}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{pass()}{pass()}}
+{\footnotesize\ttfamily void Ov\+VR\+::pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{Ov\+Eye}}}]{eye,  }\item[{unsigned int}]{eye\+Texture }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Pass the left and right textures to the HMD. 
+\begin{DoxyParams}{Parameters}
+{\em eye} & left or right eye (use enum) \\
+\hline
+{\em eye\+Texture} & Open\+GL texture handle \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_ov_v_r_a9e6825dd6386023ba529b72856ea07ee}\label{class_ov_v_r_a9e6825dd6386023ba529b72856ea07ee} 
+\index{OvVR@{OvVR}!printRenderModels@{printRenderModels}}
+\index{printRenderModels@{printRenderModels}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{printRenderModels()}{printRenderModels()}}
+{\footnotesize\ttfamily bool Ov\+VR\+::print\+Render\+Models (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Print render models to the screen. \Hypertarget{class_ov_v_r_aa4149082cd8ace8f9b35d5b5e8f5a9eb}\label{class_ov_v_r_aa4149082cd8ace8f9b35d5b5e8f5a9eb} 
+\index{OvVR@{OvVR}!render@{render}}
+\index{render@{render}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Ov\+VR\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Once passed the left and right textures, invoke this method to terminate rendering. \Hypertarget{class_ov_v_r_a9603402acfb2940d99147fb7b08e2d67}\label{class_ov_v_r_a9603402acfb2940d99147fb7b08e2d67} 
+\index{OvVR@{OvVR}!setReprojection@{setReprojection}}
+\index{setReprojection@{setReprojection}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{setReprojection()}{setReprojection()}}
+{\footnotesize\ttfamily void Ov\+VR\+::set\+Reprojection (\begin{DoxyParamCaption}\item[{bool}]{flag }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Enable/disable reprojection 
+\begin{DoxyParams}{Parameters}
+{\em flag} & true or false \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_ov_v_r_aed5d793fb8e116fb71a44d06ebf9f67e}\label{class_ov_v_r_aed5d793fb8e116fb71a44d06ebf9f67e} 
+\index{OvVR@{OvVR}!update@{update}}
+\index{update@{update}!OvVR@{OvVR}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily bool Ov\+VR\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Update poses and internal params. Invoke that once per frame. \begin{DoxyReturn}{Returns}
+TF 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/ovvr.\+hpp\end{DoxyCompactItemize}

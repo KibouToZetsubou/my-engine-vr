@@ -1,0 +1,37 @@
+\doxysection{spot\+\_\+light.\+hpp}
+\hypertarget{spot__light_8hpp_source}{}\label{spot__light_8hpp_source}\index{engine/spot\_light.hpp@{engine/spot\_light.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}light.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_spot_light}{SpotLight}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_light}{Light}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_spot_light}{SpotLight}}();}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{render}}(\textcolor{keyword}{const}\ glm::mat4\ view\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_cutoff(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_cutoff);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{float}\ get\_cutoff()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_radius(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_radius);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ get\_radius()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_exponent(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ new\_exponent);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ get\_exponent()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_direction(\textcolor{keyword}{const}\ glm::vec3\ new\_direction);}
+\DoxyCodeLine{00030\ \ \ \ \ glm::vec3\ get\_direction()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ cutoff;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ radius;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{float}\ exponent;}
+\DoxyCodeLine{00035\ \ \ \ \ glm::vec3\ direction;}
+\DoxyCodeLine{00036\ \};}
+
+\end{DoxyCode}

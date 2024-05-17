@@ -1,0 +1,39 @@
+\doxysection{node.\+hpp}
+\hypertarget{node_8hpp_source}{}\label{node_8hpp_source}\index{engine/node.hpp@{engine/node.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}object.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_node}{Node}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_object}{Object}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}();}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_base\_matrix(\textcolor{keyword}{const}\ glm::mat4\ new\_base\_matrix);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_position(\textcolor{keyword}{const}\ glm::vec3\ new\_position);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_rotation(\textcolor{keyword}{const}\ glm::vec3\ new\_position);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_scale(\textcolor{keyword}{const}\ glm::vec3\ new\_position);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ glm::vec3\ get\_position()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ \ \ \ \ glm::vec3\ get\_rotation()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ glm::vec3\ get\_scale()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ glm::mat4\ \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{get\_local\_matrix}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ render(\textcolor{keyword}{const}\ glm::mat4\ view\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ glm::mat4\ base\_matrix;}
+\DoxyCodeLine{00033\ \ \ \ \ glm::vec3\ position;}
+\DoxyCodeLine{00034\ \ \ \ \ glm::vec3\ rotation;}
+\DoxyCodeLine{00035\ \ \ \ \ glm::vec3\ scale;}
+\DoxyCodeLine{00036\ \};}
+
+\end{DoxyCode}

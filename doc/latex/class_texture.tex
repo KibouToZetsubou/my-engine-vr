@@ -1,0 +1,101 @@
+\doxysection{Texture Class Reference}
+\hypertarget{class_texture}{}\label{class_texture}\index{Texture@{Texture}}
+
+
+{\ttfamily \#include $<$texture.\+hpp$>$}
+
+Inheritance diagram for Texture\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_texture}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_texture_aae3ebfec9b80a47ec176664166488ab1}{Texture}} (const std\+::string path)
+\item 
+\mbox{\hyperlink{class_texture_a7a59f062a08de5b60e35ddc1ea1c7c7e}{\texorpdfstring{$\sim$}{\string~}\+Texture}} ()
+\item 
+void \mbox{\hyperlink{class_texture_a3701f471da500862e0e8a2fbd9387607}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual glm\+::mat4 \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{get\+\_\+local\+\_\+matrix}} () const
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A texture allows placing images on meshes. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_texture_aae3ebfec9b80a47ec176664166488ab1}\label{class_texture_aae3ebfec9b80a47ec176664166488ab1} 
+\index{Texture@{Texture}!Texture@{Texture}}
+\index{Texture@{Texture}!Texture@{Texture}}
+\doxysubsubsection{\texorpdfstring{Texture()}{Texture()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Texture\+::\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string}]{path }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_texture}{Texture} by loading an image file from the specified path.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path of the image file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_texture_a7a59f062a08de5b60e35ddc1ea1c7c7e}\label{class_texture_a7a59f062a08de5b60e35ddc1ea1c7c7e} 
+\index{Texture@{Texture}!````~Texture@{\texorpdfstring{$\sim$}{\string~}Texture}}
+\index{````~Texture@{\texorpdfstring{$\sim$}{\string~}Texture}!Texture@{Texture}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Texture()}{\string~Texture()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Texture\+::\texorpdfstring{$\sim$}{\string~}\+Texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Frees up the memory used by this texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_texture_a3701f471da500862e0e8a2fbd9387607}\label{class_texture_a3701f471da500862e0e8a2fbd9387607} 
+\index{Texture@{Texture}!render@{render}}
+\index{render@{render}!Texture@{Texture}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Texture\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{view\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the texture.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_object}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/texture.\+hpp\item 
+engine/texture.\+cpp\end{DoxyCompactItemize}

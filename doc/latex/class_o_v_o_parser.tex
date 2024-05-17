@@ -1,0 +1,39 @@
+\doxysection{OVOParser Class Reference}
+\hypertarget{class_o_v_o_parser}{}\label{class_o_v_o_parser}\index{OVOParser@{OVOParser}}
+
+
+{\ttfamily \#include $<$ovo\+\_\+parser.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ \mbox{\hyperlink{class_o_v_o_parser_a4b43ef38c228779d932d2c21fbd48715}{from\+\_\+file}} (const std\+::string file\+\_\+path)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Allows loading a scene graph from an OVO file. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_o_v_o_parser_a4b43ef38c228779d932d2c21fbd48715}\label{class_o_v_o_parser_a4b43ef38c228779d932d2c21fbd48715} 
+\index{OVOParser@{OVOParser}!from\_file@{from\_file}}
+\index{from\_file@{from\_file}!OVOParser@{OVOParser}}
+\doxysubsubsection{\texorpdfstring{from\_file()}{from\_file()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ LIB\+\_\+\+API OVOParser\+::from\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string}]{file\+\_\+path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Loads the scene from a .ovo file and returns its scene root.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & The path to the .ovo file.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The root of the scene. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/ovo\+\_\+parser.\+hpp\item 
+engine/ovo\+\_\+parser.\+cpp\end{DoxyCompactItemize}

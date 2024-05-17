@@ -1,0 +1,79 @@
+\doxysection{Ov\+VR\+::Controller Struct Reference}
+\hypertarget{struct_ov_v_r_1_1_controller}{}\label{struct_ov_v_r_1_1_controller}\index{OvVR::Controller@{OvVR::Controller}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 \mbox{\hyperlink{struct_ov_v_r_1_1_controller_a3f2271bbd3773803761d7fc7ffd3ad0c}{get\+Matrix}} ()
+\item 
+glm\+::vec2 \mbox{\hyperlink{struct_ov_v_r_1_1_controller_a3aefda7939e01d9f2a1df9710dd64887}{get\+Axis}} (unsigned int axis\+Id, unsigned long long int \&b\+Pressed, unsigned long long int \&b\+Touched)
+\item 
+bool \mbox{\hyperlink{struct_ov_v_r_1_1_controller_afde6411be65f146dca67accb493964c6}{is\+Button\+Pressed}} (unsigned long long int id, unsigned long long int mask)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_ov_v_r_1_1_controller_ac386634cdbce242fac6ce53d7323a1fb}\label{struct_ov_v_r_1_1_controller_ac386634cdbce242fac6ce53d7323a1fb} 
+unsigned int {\bfseries id}
+\item 
+\Hypertarget{struct_ov_v_r_1_1_controller_a6b1a9bb44c03cd9009898ad74bb29674}\label{struct_ov_v_r_1_1_controller_a6b1a9bb44c03cd9009898ad74bb29674} 
+vr\+::\+VRController\+State\+\_\+t {\bfseries p\+Controller\+State}
+\item 
+\Hypertarget{struct_ov_v_r_1_1_controller_ad8574bc83c46af7e0b3206e4782f138f}\label{struct_ov_v_r_1_1_controller_ad8574bc83c46af7e0b3206e4782f138f} 
+glm\+::mat4 {\bfseries matrix}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_ov_v_r_1_1_controller_a3aefda7939e01d9f2a1df9710dd64887}\label{struct_ov_v_r_1_1_controller_a3aefda7939e01d9f2a1df9710dd64887} 
+\index{OvVR::Controller@{OvVR::Controller}!getAxis@{getAxis}}
+\index{getAxis@{getAxis}!OvVR::Controller@{OvVR::Controller}}
+\doxysubsubsection{\texorpdfstring{getAxis()}{getAxis()}}
+{\footnotesize\ttfamily glm\+::vec2 Ov\+VR\+::\+Controller\+::get\+Axis (\begin{DoxyParamCaption}\item[{unsigned int}]{axis\+Id,  }\item[{unsigned long long int \&}]{b\+Pressed,  }\item[{unsigned long long int \&}]{b\+Touched }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get controller\textquotesingle{}s axis position. 
+\begin{DoxyParams}{Parameters}
+{\em axis} & axis id, between 0 and 4 \\
+\hline
+{\em b\+Pressed} & inout, button pressed (use masks to determine which ones) \\
+\hline
+{\em b\+Touched} & inout, button touched (use masks to determine which ones) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+axis values 
+\end{DoxyReturn}
+\Hypertarget{struct_ov_v_r_1_1_controller_a3f2271bbd3773803761d7fc7ffd3ad0c}\label{struct_ov_v_r_1_1_controller_a3f2271bbd3773803761d7fc7ffd3ad0c} 
+\index{OvVR::Controller@{OvVR::Controller}!getMatrix@{getMatrix}}
+\index{getMatrix@{getMatrix}!OvVR::Controller@{OvVR::Controller}}
+\doxysubsubsection{\texorpdfstring{getMatrix()}{getMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 Ov\+VR\+::\+Controller\+::get\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get controller\textquotesingle{}s position matrix. 
+\begin{DoxyParams}{Parameters}
+{\em id} & controller id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+model matrix ready for Open\+GL 
+\end{DoxyReturn}
+\Hypertarget{struct_ov_v_r_1_1_controller_afde6411be65f146dca67accb493964c6}\label{struct_ov_v_r_1_1_controller_afde6411be65f146dca67accb493964c6} 
+\index{OvVR::Controller@{OvVR::Controller}!isButtonPressed@{isButtonPressed}}
+\index{isButtonPressed@{isButtonPressed}!OvVR::Controller@{OvVR::Controller}}
+\doxysubsubsection{\texorpdfstring{isButtonPressed()}{isButtonPressed()}}
+{\footnotesize\ttfamily bool Ov\+VR\+::\+Controller\+::is\+Button\+Pressed (\begin{DoxyParamCaption}\item[{unsigned long long int}]{id,  }\item[{unsigned long long int}]{mask }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true when the Nth button is enabled (given the input mask). 
+\begin{DoxyParams}{Parameters}
+{\em id} & button id \\
+\hline
+{\em mask} & button mask \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when pressed, false otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/ovvr.\+hpp\end{DoxyCompactItemize}

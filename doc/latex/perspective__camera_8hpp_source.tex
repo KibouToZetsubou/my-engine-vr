@@ -1,0 +1,19 @@
+\doxysection{perspective\+\_\+camera.\+hpp}
+\hypertarget{perspective__camera_8hpp_source}{}\label{perspective__camera_8hpp_source}\index{engine/perspective\_camera.hpp@{engine/perspective\_camera.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}camera.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_perspective_camera}{PerspectiveCamera}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_camera}{Camera}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{render}}(\textcolor{keyword}{const}\ glm::mat4\ view\_matrix)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00015\ \ \ \ \ glm::mat4\ get\_projection\_matrix(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ window\_width,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ window\_height)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00016\ \};}
+
+\end{DoxyCode}

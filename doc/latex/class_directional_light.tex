@@ -1,0 +1,167 @@
+\doxysection{Directional\+Light Class Reference}
+\hypertarget{class_directional_light}{}\label{class_directional_light}\index{DirectionalLight@{DirectionalLight}}
+
+
+{\ttfamily \#include $<$directional\+\_\+light.\+hpp$>$}
+
+Inheritance diagram for Directional\+Light\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_directional_light}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_directional_light_a02ef6a80da70b0fe8616dac958c961d0}{Directional\+Light}} ()
+\item 
+void \mbox{\hyperlink{class_directional_light_a2ca55f00301a6917d9a8da5f50129476}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\item 
+void \mbox{\hyperlink{class_directional_light_ad2bcd0b748c26ddedc9756c65840a7d0}{set\+\_\+direction}} (const glm\+::vec3 new\+\_\+direction)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_directional_light_aefe65ed04346c79a5ce4d0dc88813954}{get\+\_\+direction}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_light_a4e7d08a2f49d65899aaaadec82c53549}{Light}} ()
+\item 
+int \mbox{\hyperlink{class_light_ac17769fa1812febb0ae612f274cfd7c6}{get\+\_\+priority}} () const override
+\item 
+void \mbox{\hyperlink{class_light_a2aba5f164d56040bad9a8ac4665be0a5}{set\+\_\+ambient\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_light_a7aef449e2ee207b027934ae1d7a2f807}{get\+\_\+ambient\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_light_a4eb230f1a67f7265b38581a09ef932c0}{set\+\_\+diffuse\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_light_abff35a10478db0c4beebafd4d532d40c}{get\+\_\+diffuse\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_light_ac3a13f06fd85025a007eb88765d24416}{set\+\_\+specular\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_light_a44b54a9138ba6fcdf57f28348a208994}{get\+\_\+specular\+\_\+color}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_ab63cea815ecf38711d96ef9c12027a00}{Node}} ()
+\item 
+void \mbox{\hyperlink{class_node_a05a04af3fc959cb028c1559805024e0c}{set\+\_\+base\+\_\+matrix}} (const glm\+::mat4 new\+\_\+base\+\_\+matrix)
+\item 
+void \mbox{\hyperlink{class_node_aa6464442af30187f79300e28c91577f5}{set\+\_\+position}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_a633a15221de876b7edeea544c97a6858}{set\+\_\+rotation}} (const glm\+::vec3 new\+\_\+position)
+\item 
+void \mbox{\hyperlink{class_node_ab5c946d1911aace52655249788fada06}{set\+\_\+scale}} (const glm\+::vec3 new\+\_\+position)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ac61fa177237ff638039e8fd298c13053}{get\+\_\+position}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_a570c8058e4a0e61c5000c4b6b58f6c91}{get\+\_\+rotation}} () const
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_node_ab752d2ebdb896835e8c163667c0cbfc6}{get\+\_\+scale}} () const
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_node_a977d3c2462732fc73308039b91714009}{get\+\_\+local\+\_\+matrix}} () const override
+\item 
+void \mbox{\hyperlink{class_node_aa04b2e5261f54c71251155a723840279}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_light}{Light}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries ambient\+\_\+color}
+\item 
+glm\+::vec3 {\bfseries diffuse\+\_\+color}
+\item 
+glm\+::vec3 {\bfseries specular\+\_\+color}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A directional light that can be placed inside a scene.
+
+A directional light is a light that has infinite range and a direction. Example\+: the sun. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_directional_light_a02ef6a80da70b0fe8616dac958c961d0}\label{class_directional_light_a02ef6a80da70b0fe8616dac958c961d0} 
+\index{DirectionalLight@{DirectionalLight}!DirectionalLight@{DirectionalLight}}
+\index{DirectionalLight@{DirectionalLight}!DirectionalLight@{DirectionalLight}}
+\doxysubsubsection{\texorpdfstring{DirectionalLight()}{DirectionalLight()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Directional\+Light\+::\+Directional\+Light (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_directional_light}{Directional\+Light} with the following default parameters\+:
+
+Direction\+: 0.\+0f, 1.\+0f, 0.\+0f (Down) 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_directional_light_aefe65ed04346c79a5ce4d0dc88813954}\label{class_directional_light_aefe65ed04346c79a5ce4d0dc88813954} 
+\index{DirectionalLight@{DirectionalLight}!get\_direction@{get\_direction}}
+\index{get\_direction@{get\_direction}!DirectionalLight@{DirectionalLight}}
+\doxysubsubsection{\texorpdfstring{get\_direction()}{get\_direction()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Directional\+Light\+::get\+\_\+direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Function used to get the direction vector of a directional light
+
+\begin{DoxyReturn}{Returns}
+The direction vector of a light 
+\end{DoxyReturn}
+\Hypertarget{class_directional_light_a2ca55f00301a6917d9a8da5f50129476}\label{class_directional_light_a2ca55f00301a6917d9a8da5f50129476} 
+\index{DirectionalLight@{DirectionalLight}!render@{render}}
+\index{render@{render}!DirectionalLight@{DirectionalLight}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Directional\+Light\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{view\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the directional light.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em view\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_object}{Object}}.
+
+\Hypertarget{class_directional_light_ad2bcd0b748c26ddedc9756c65840a7d0}\label{class_directional_light_ad2bcd0b748c26ddedc9756c65840a7d0} 
+\index{DirectionalLight@{DirectionalLight}!set\_direction@{set\_direction}}
+\index{set\_direction@{set\_direction}!DirectionalLight@{DirectionalLight}}
+\doxysubsubsection{\texorpdfstring{set\_direction()}{set\_direction()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Directional\+Light\+::set\+\_\+direction (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+direction }\end{DoxyParamCaption})}
+
+Changes the direction the light is pointing towards.
+
+It is also possible to change the direction by rotating the node using set\+\_\+rotation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+direction} & The new direction of the light. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/directional\+\_\+light.\+hpp\item 
+engine/directional\+\_\+light.\+cpp\end{DoxyCompactItemize}

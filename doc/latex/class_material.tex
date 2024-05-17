@@ -1,0 +1,266 @@
+\doxysection{Material Class Reference}
+\hypertarget{class_material}{}\label{class_material}\index{Material@{Material}}
+
+
+{\ttfamily \#include $<$material.\+hpp$>$}
+
+Inheritance diagram for Material\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_material}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_material_ac85ac09f2ca0162453e6019aeebd952b}{Material}} ()
+\item 
+void \mbox{\hyperlink{class_material_a30385920b3d4cc39a72d1eee863b027f}{render}} (const glm\+::mat4 view\+\_\+matrix) const override
+\item 
+void \mbox{\hyperlink{class_material_a320da6fea17ff73f537e20626fbed5dd}{set\+\_\+emission\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_material_a2ffc528b22bae7a7cbd139b71a0ed099}{get\+\_\+emission\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_material_a99f7f10b4441596ca009b84c7c231c4c}{set\+\_\+ambient\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_material_abefc72b5905dc8ea20316b380cfe82f0}{get\+\_\+ambient\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_material_a9021763e79abf77c8b1b0a4ba1e0d2f9}{set\+\_\+diffuse\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_material_ae298acaee4861b2d63a8dea65a038bef}{get\+\_\+diffuse\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_material_a0e1368241d0109dcf6af7b4979f1cd32}{set\+\_\+specular\+\_\+color}} (const glm\+::vec3 new\+\_\+color)
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_material_a261e4cdeb35b957529d5b5308db7beb5}{get\+\_\+specular\+\_\+color}} () const
+\item 
+void \mbox{\hyperlink{class_material_a3683dc44c8302c213e1fc876562bc4e4}{set\+\_\+shininess}} (const float new\+\_\+shininess)
+\item 
+float \mbox{\hyperlink{class_material_a374670248a91ce0a9f7d2151a04d3513}{get\+\_\+shininess}} () const
+\item 
+void \mbox{\hyperlink{class_material_a328bfb556a98ebdf4c4c9847d22a8704}{set\+\_\+texture}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_texture}{Texture}} $>$ new\+\_\+texture)
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_texture}{Texture}} $>$ \mbox{\hyperlink{class_material_ac365ab893b77aba4cc9cafeb106ad20d}{get\+\_\+texture}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_object_ad900f5210c5492414a925ae0fe85dd9f}{Object}} ()
+\item 
+{\bfseries Object} (const std\+::string name)
+\item 
+int \mbox{\hyperlink{class_object_a4540ecb3e47ee09e9082db87b4e7b08a}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{class_object_a8aa2658a4d09ee4731312ce526ea567b}{add\+\_\+child}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+child)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ \mbox{\hyperlink{class_object_af45cb15afa5bb4dcfc41254d0ae59e6c}{get\+\_\+children}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_object_a87e8f25d2eb79f73b6e32788c4421bf2}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{class_object_aafe9de929a41cf3626d5869998e1d087}{set\+\_\+name}} (const std\+::string new\+\_\+name)
+\item 
+virtual glm\+::mat4 \mbox{\hyperlink{class_object_a2cf8999e205015175b1f56cfa2ceaf4d}{get\+\_\+local\+\_\+matrix}} () const
+\item 
+virtual int \mbox{\hyperlink{class_object_af81ee6113d2ef624e3d79475e7125a54}{get\+\_\+priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_object}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ $>$ {\bfseries children}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A material gives colors to meshes. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_material_ac85ac09f2ca0162453e6019aeebd952b}\label{class_material_ac85ac09f2ca0162453e6019aeebd952b} 
+\index{Material@{Material}!Material@{Material}}
+\index{Material@{Material}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{Material()}{Material()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Material\+::\+Material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a new instance of \doxylink{class_material}{Material} with the following default parameters\+:
+
+Emission color\+: 0.\+0f, 0.\+0f, 0.\+0f (Black / No emission)
+
+Ambient color\+: 0.\+75f, 0.\+75f, 0.\+75f (\doxylink{class_light}{Light} gray)
+
+Diffuse color\+: 0.\+75f, 0.\+75f, 0.\+75f (\doxylink{class_light}{Light} gray)
+
+Specular color\+: 0.\+75f, 0.\+75f, 0.\+75f (\doxylink{class_light}{Light} gray)
+
+Shininess\+: 64.\+0f
+
+\doxylink{class_texture}{Texture}\+: No texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_material_abefc72b5905dc8ea20316b380cfe82f0}\label{class_material_abefc72b5905dc8ea20316b380cfe82f0} 
+\index{Material@{Material}!get\_ambient\_color@{get\_ambient\_color}}
+\index{get\_ambient\_color@{get\_ambient\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_ambient\_color()}{get\_ambient\_color()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Material\+::get\+\_\+ambient\+\_\+color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the ambient color of the material
+
+\begin{DoxyReturn}{Returns}
+The ambient color of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_ae298acaee4861b2d63a8dea65a038bef}\label{class_material_ae298acaee4861b2d63a8dea65a038bef} 
+\index{Material@{Material}!get\_diffuse\_color@{get\_diffuse\_color}}
+\index{get\_diffuse\_color@{get\_diffuse\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_diffuse\_color()}{get\_diffuse\_color()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Material\+::get\+\_\+diffuse\+\_\+color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the diffuse color of the material
+
+\begin{DoxyReturn}{Returns}
+The diffuse color of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_a2ffc528b22bae7a7cbd139b71a0ed099}\label{class_material_a2ffc528b22bae7a7cbd139b71a0ed099} 
+\index{Material@{Material}!get\_emission\_color@{get\_emission\_color}}
+\index{get\_emission\_color@{get\_emission\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_emission\_color()}{get\_emission\_color()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Material\+::get\+\_\+emission\+\_\+color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the emission color of the material
+
+\begin{DoxyReturn}{Returns}
+The emission color of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_a374670248a91ce0a9f7d2151a04d3513}\label{class_material_a374670248a91ce0a9f7d2151a04d3513} 
+\index{Material@{Material}!get\_shininess@{get\_shininess}}
+\index{get\_shininess@{get\_shininess}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_shininess()}{get\_shininess()}}
+{\footnotesize\ttfamily float LIB\+\_\+\+API Material\+::get\+\_\+shininess (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the shininess of the material
+
+\begin{DoxyReturn}{Returns}
+The shininess color of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_a261e4cdeb35b957529d5b5308db7beb5}\label{class_material_a261e4cdeb35b957529d5b5308db7beb5} 
+\index{Material@{Material}!get\_specular\_color@{get\_specular\_color}}
+\index{get\_specular\_color@{get\_specular\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_specular\_color()}{get\_specular\_color()}}
+{\footnotesize\ttfamily glm\+::vec3 LIB\+\_\+\+API Material\+::get\+\_\+specular\+\_\+color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the specular color of the material
+
+\begin{DoxyReturn}{Returns}
+The specular color of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_ac365ab893b77aba4cc9cafeb106ad20d}\label{class_material_ac365ab893b77aba4cc9cafeb106ad20d} 
+\index{Material@{Material}!get\_texture@{get\_texture}}
+\index{get\_texture@{get\_texture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{get\_texture()}{get\_texture()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_texture}{Texture}} $>$ LIB\+\_\+\+API Material\+::get\+\_\+texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retrieve the texture of the material
+
+\begin{DoxyReturn}{Returns}
+The texture of the material 
+\end{DoxyReturn}
+\Hypertarget{class_material_a30385920b3d4cc39a72d1eee863b027f}\label{class_material_a30385920b3d4cc39a72d1eee863b027f} 
+\index{Material@{Material}!render@{render}}
+\index{render@{render}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::render (\begin{DoxyParamCaption}\item[{const glm\+::mat4}]{view\+\_\+matrix }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the material.
+
+This function is called automatically by \doxylink{class_my_engine}{My\+Engine} and there\textquotesingle{}s no need to manually call this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em view\+\_\+matrix} & The world matrix to use to render this object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_object}{Object}}.
+
+\Hypertarget{class_material_a99f7f10b4441596ca009b84c7c231c4c}\label{class_material_a99f7f10b4441596ca009b84c7c231c4c} 
+\index{Material@{Material}!set\_ambient\_color@{set\_ambient\_color}}
+\index{set\_ambient\_color@{set\_ambient\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_ambient\_color()}{set\_ambient\_color()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+ambient\+\_\+color (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+color }\end{DoxyParamCaption})}
+
+Changes the ambient color property of this material.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+color} & The new ambient color of the material. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_material_a9021763e79abf77c8b1b0a4ba1e0d2f9}\label{class_material_a9021763e79abf77c8b1b0a4ba1e0d2f9} 
+\index{Material@{Material}!set\_diffuse\_color@{set\_diffuse\_color}}
+\index{set\_diffuse\_color@{set\_diffuse\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_diffuse\_color()}{set\_diffuse\_color()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+diffuse\+\_\+color (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+color }\end{DoxyParamCaption})}
+
+Changes the diffuse color property of this material.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+color} & The new diffuse color of the material. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_material_a320da6fea17ff73f537e20626fbed5dd}\label{class_material_a320da6fea17ff73f537e20626fbed5dd} 
+\index{Material@{Material}!set\_emission\_color@{set\_emission\_color}}
+\index{set\_emission\_color@{set\_emission\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_emission\_color()}{set\_emission\_color()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+emission\+\_\+color (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+color }\end{DoxyParamCaption})}
+
+Changes the emission color property of this material.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+color} & The new emission color of the material. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_material_a3683dc44c8302c213e1fc876562bc4e4}\label{class_material_a3683dc44c8302c213e1fc876562bc4e4} 
+\index{Material@{Material}!set\_shininess@{set\_shininess}}
+\index{set\_shininess@{set\_shininess}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_shininess()}{set\_shininess()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+shininess (\begin{DoxyParamCaption}\item[{const float}]{new\+\_\+shininess }\end{DoxyParamCaption})}
+
+Changes the shininess property of this material.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+shininess} & The new shininess of the material. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_material_a0e1368241d0109dcf6af7b4979f1cd32}\label{class_material_a0e1368241d0109dcf6af7b4979f1cd32} 
+\index{Material@{Material}!set\_specular\_color@{set\_specular\_color}}
+\index{set\_specular\_color@{set\_specular\_color}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_specular\_color()}{set\_specular\_color()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+specular\+\_\+color (\begin{DoxyParamCaption}\item[{const glm\+::vec3}]{new\+\_\+color }\end{DoxyParamCaption})}
+
+Changes the specular color property of this material.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+color} & The new specular color of the material. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_material_a328bfb556a98ebdf4c4c9847d22a8704}\label{class_material_a328bfb556a98ebdf4c4c9847d22a8704} 
+\index{Material@{Material}!set\_texture@{set\_texture}}
+\index{set\_texture@{set\_texture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{set\_texture()}{set\_texture()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Material\+::set\+\_\+texture (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_texture}{Texture}} $>$}]{new\+\_\+texture }\end{DoxyParamCaption})}
+
+Sets the texture of this material. If new\+\_\+texture is nullptr, no texture is applied.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+texture} & The new texture. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/material.\+hpp\item 
+engine/material.\+cpp\end{DoxyCompactItemize}

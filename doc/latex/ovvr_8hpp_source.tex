@@ -1,0 +1,378 @@
+\doxysection{ovvr.\+hpp}
+\hypertarget{ovvr_8hpp_source}{}\label{ovvr_8hpp_source}\index{engine/ovvr.hpp@{engine/ovvr.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00006\ \ \textcolor{comment}{//\ \#INCLUDE\ //}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{comment}{//\ GLEW:}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <GL/glew.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ FreeGLUT:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\#include\ <GL/freeglut.h>\ \ \ }}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ GLM:}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <glm/gtc/packing.hpp>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ OpenVR:}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <openvr.h>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ C/C++:}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ CLASS\ OvVR\ //}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }LIB\_API\ \mbox{\hyperlink{class_ov_v_r}{OvVR}}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00038\ \textcolor{keyword}{public}:\ \textcolor{comment}{//}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{OvEye}}}
+\DoxyCodeLine{00047\ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ EYE\_LEFT\ =\ 0,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ EYE\_RIGHT\ =\ 1,}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Terminator:}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ EYE\_LAST}
+\DoxyCodeLine{00053\ \ \ \ \ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_ov_v_r_acd73dcecf353fc195f34ea57157b292b}{OvVR}}()\ :\ vrSys(nullptr),\ vrModels(nullptr),\ vrComp(nullptr)}
+\DoxyCodeLine{00060\ \ \ \ \ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ controllers.clear();}
+\DoxyCodeLine{00062\ \ \ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{class_ov_v_r_ac2758dd89d2105377f29dd25060b0a38}{\string~OvVR}}()}
+\DoxyCodeLine{00069\ \ \ \ \ \{\}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_ov_v_r_a1de518160a5faf33b055eeb4764e4deb}{init}}()}
+\DoxyCodeLine{00077\ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ vr::EVRInitError\ error\ =\ vr::VRInitError\_None;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Init\ VR\ system:}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Using\ OpenVR\ "{}}\ <<\ vr::k\_nSteamVRVersionMajor\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ vr::k\_nSteamVRVersionMinor\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ vr::k\_nSteamVRVersionBuild\ <<\ std::endl;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ vrSys\ =\ vr::VR\_Init(\&error,\ vr::VRApplication\_Scene);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (error\ !=\ vr::VRInitError\_None)}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ vrSys\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[ERROR]\ Unable\ to\ init\ VR\ runtime:\ "{}}\ <<\ vr::VR\_GetVRInitErrorAsEnglishDescription(error)\ <<\ std::endl;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Init\ render\ models:}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ vrModels\ =\ (vr::IVRRenderModels*)vr::VR\_GetGenericInterface(vr::IVRRenderModels\_Version,\ \&error);}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vrModels\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ vrSys\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ vr::VR\_Shutdown();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[ERROR]\ Unable\ to\ get\ render\ model\ interface:\ "{}}\ <<\ vr::VR\_GetVRInitErrorAsEnglishDescription(error)\ <<\ std::endl;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ compositor:}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ vrComp\ =\ vr::VRCompositor();}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!vrComp)}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ vrModels\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ vrSys\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ vr::VR\_Shutdown();}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[ERROR]\ Unable\ to\ get\ VR\ compositor"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tweaks:\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//vrComp-\/>ShowMirrorWindow();\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Init\ controller\ tracking:}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ controllers.clear();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ vr::k\_unMaxTrackedDeviceCount;\ c++)}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vrSys-\/>GetTrackedDeviceClass(c)\ ==\ vr::TrackedDeviceClass\_Controller)}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ Found\ controller\ at\ "{}}\ <<\ c\ <<\ std::endl;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}*\ cont\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cont-\/>id\ =\ c;}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ bufferLen\ =\ vrSys-\/>GetStringTrackedDeviceProperty(c,\ vr::Prop\_RenderModelName\_String,\ \textcolor{keyword}{nullptr},\ 0,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bufferLen\ ==\ 0)}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[ERROR]\ Unable\ to\ get\ controller\ render\ model"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ cont;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.resize(bufferLen);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vrSys-\/>GetStringTrackedDeviceProperty(c,\ vr::Prop\_RenderModelName\_String,\ \&result[0],\ bufferLen,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ Controller\ render\ model:\ '"{}}\ <<\ result\ <<\ \textcolor{stringliteral}{"{}'"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ controllers.push\_back(cont);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done:}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00142\ \ \ \ \ \}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_ov_v_r_a4754480369616f7408889e5d6a752709}{free}}()}
+\DoxyCodeLine{00150\ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ controllers.size();\ c++)}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ controllers[c];}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ controllers.clear();}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ vr::VR\_Shutdown();}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ vrComp\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ vrModels\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ vrSys\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done:\ \ \ \ \ \ }}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00169\ \ \ \ \ std::string\ \mbox{\hyperlink{class_ov_v_r_a83579d10fd2750ccdbd50b25793ac959}{getTrackingSysName}}()}
+\DoxyCodeLine{00170\ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ bufferLen\ =\ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_TrackingSystemName\_String,\ \textcolor{keyword}{nullptr},\ 0,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bufferLen\ ==\ 0)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string();}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ result.resize(bufferLen);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_TrackingSystemName\_String,\ \&result[0],\ bufferLen,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00179\ \ \ \ \ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_ov_v_r_a9e6825dd6386023ba529b72856ea07ee}{printRenderModels}}()}
+\DoxyCodeLine{00186\ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ vrModels-\/>GetRenderModelCount();\ c++)}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[256];}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ vrModels-\/>GetRenderModelName(c,\ buffer,\ 256);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ "{}}\ <<\ c\ <<\ \textcolor{stringliteral}{"{})\ "{}}\ <<\ buffer\ <<\ \textcolor{stringliteral}{"{}\ model"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ d\ =\ 0;\ d\ <\ vrModels-\/>GetComponentCount(buffer);\ d++)}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ cbuffer[256];}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vrModels-\/>GetComponentName(buffer,\ d,\ cbuffer,\ 256);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ \ "{}}\ <<\ d\ <<\ \textcolor{stringliteral}{"{})\ "{}}\ <<\ cbuffer\ <<\ std::endl;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done:}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00203\ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00210\ \ \ \ \ std::string\ \mbox{\hyperlink{class_ov_v_r_aa4b4072b2505dd24ebaeed986eed0a13}{getManufacturerName}}()}
+\DoxyCodeLine{00211\ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ bufferLen\ =\ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_ManufacturerName\_String,\ \textcolor{keyword}{nullptr},\ 0,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bufferLen\ ==\ 0)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string();}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ result.resize(bufferLen);}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_ManufacturerName\_String,\ \&result[0],\ bufferLen,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00220\ \ \ \ \ \}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00227\ \ \ \ \ std::string\ \mbox{\hyperlink{class_ov_v_r_a7d2ba3164ac20fea089e8c4c4fc80bb2}{getModelNumber}}()}
+\DoxyCodeLine{00228\ \ \ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ bufferLen\ =\ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_ModelNumber\_String,\ \textcolor{keyword}{nullptr},\ 0,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bufferLen\ ==\ 0)}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string();}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ result.resize(bufferLen);}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ vrSys-\/>GetStringTrackedDeviceProperty(vr::k\_unTrackedDeviceIndex\_Hmd,\ vr::Prop\_ModelNumber\_String,\ \&result[0],\ bufferLen,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00237\ \ \ \ \ \}}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_ov_v_r_a9ed65863a2a0cbec9c589b755744f78b}{getHmdIdealHorizRes}}()}
+\DoxyCodeLine{00245\ \ \ \ \ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ result,\ dummy;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ vrSys-\/>GetRecommendedRenderTargetSize(\&result,\ \&dummy);}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00249\ \ \ \ \ \}}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_ov_v_r_afe4533dda38f6dd504be45476b898bbf}{getHmdIdealVertRes}}()}
+\DoxyCodeLine{00257\ \ \ \ \ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ result,\ dummy;}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ vrSys-\/>GetRecommendedRenderTargetSize(\&dummy,\ \&result);}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00261\ \ \ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keyword}{static}\ glm::mat4\ \mbox{\hyperlink{class_ov_v_r_a2a9183874a43a909d50a9c7472168fa4}{ovr2ogl}}(\textcolor{keyword}{const}\ vr::HmdMatrix34\_t\&\ matrix)}
+\DoxyCodeLine{00270\ \ \ \ \ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ glm::mat4(matrix.m[0][0],\ matrix.m[1][0],\ matrix.m[2][0],\ 0.0f,}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][1],\ matrix.m[1][1],\ matrix.m[2][1],\ 0.0f,}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][2],\ matrix.m[1][2],\ matrix.m[2][2],\ 0.0f,}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][3],\ matrix.m[1][3],\ matrix.m[2][3],\ 1.0f);}
+\DoxyCodeLine{00275\ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keyword}{static}\ glm::mat4\ \mbox{\hyperlink{class_ov_v_r_a16ea08c69074ee39991ac406812c5540}{ovr2ogl}}(\textcolor{keyword}{const}\ vr::HmdMatrix44\_t\&\ matrix)}
+\DoxyCodeLine{00284\ \ \ \ \ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ glm::mat4(matrix.m[0][0],\ matrix.m[1][0],\ matrix.m[2][0],\ matrix.m[3][0],}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][1],\ matrix.m[1][1],\ matrix.m[2][1],\ matrix.m[3][1],}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][2],\ matrix.m[1][2],\ matrix.m[2][2],\ matrix.m[3][2],}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ matrix.m[0][3],\ matrix.m[1][3],\ matrix.m[2][3],\ matrix.m[3][3]);}
+\DoxyCodeLine{00289\ \ \ \ \ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_ov_v_r_aed5d793fb8e116fb71a44d06ebf9f67e}{update}}()}
+\DoxyCodeLine{00297\ \ \ \ \ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Main\ update\ method:}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ vrComp-\/>WaitGetPoses(vrPoses,\ vr::k\_unMaxTrackedDeviceCount,\ \textcolor{keyword}{nullptr},\ 0);}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ used,\ update\ controllers:}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ c\ :\ controllers)}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vrPoses[c-\/>id].bPoseIsValid)}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>matrix\ =\ ovr2ogl(vrPoses[c-\/>id].mDeviceToAbsoluteTracking);}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done:}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00310\ \ \ \ \ \}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00320\ \ \ \ \ glm::mat4\ \mbox{\hyperlink{class_ov_v_r_aa086c8f73e80ae57ce61480204e559d8}{getProjMatrix}}(\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{OvEye}}\ eye,\ \textcolor{keywordtype}{float}\ nearPlane,\ \textcolor{keywordtype}{float}\ farPlane)}
+\DoxyCodeLine{00321\ \ \ \ \ \{}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (eye)}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_LEFT:\ \textcolor{keywordflow}{return}\ ovr2ogl(vrSys-\/>GetProjectionMatrix(vr::Eye\_Left,\ nearPlane,\ farPlane));\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_RIGHT:\ \textcolor{keywordflow}{return}\ ovr2ogl(vrSys-\/>GetProjectionMatrix(vr::Eye\_Right,\ nearPlane,\ farPlane));\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{return}\ glm::mat4(1.0f);}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00336\ \ \ \ \ glm::mat4\ \mbox{\hyperlink{class_ov_v_r_a81dd364790674a963afb64d50fa86ded}{getEye2HeadMatrix}}(\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{OvEye}}\ eye)}
+\DoxyCodeLine{00337\ \ \ \ \ \{}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (eye)}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_LEFT:\ \textcolor{keywordflow}{return}\ ovr2ogl(vrSys-\/>GetEyeToHeadTransform(vr::Eye\_Left));\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_RIGHT:\ \textcolor{keywordflow}{return}\ ovr2ogl(vrSys-\/>GetEyeToHeadTransform(vr::Eye\_Right));\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{return}\ glm::mat4(1.0f);}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00344\ \ \ \ \ \}}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00351\ \ \ \ \ glm::mat4\ \mbox{\hyperlink{class_ov_v_r_a4cd9756706c8d9cbdf1eff8d9a744afe}{getModelviewMatrix}}()}
+\DoxyCodeLine{00352\ \ \ \ \ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vrPoses[vr::k\_unTrackedDeviceIndex\_Hmd].bPoseIsValid\ ==\ \textcolor{keyword}{false})}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ glm::mat4(1.0f);}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ glm::mat4\ headPos\ =\ ovr2ogl(vrPoses[vr::k\_unTrackedDeviceIndex\_Hmd].mDeviceToAbsoluteTracking);}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ headPos;}
+\DoxyCodeLine{00358\ \ \ \ \ \}}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_ov_v_r_a3b75778953a2a5a1c4a23065800e7bde}{getNrOfControllers}}()}
+\DoxyCodeLine{00366\ \ \ \ \ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})controllers.size();}
+\DoxyCodeLine{00368\ \ \ \ \ \}}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00376\ \ \ \ \ \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}*\ \mbox{\hyperlink{class_ov_v_r_a7c5732b56e8015ea3da70ee561737185}{getController}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ pos)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00377\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ >=\ controllers.size())}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ controllers.at(pos);}
+\DoxyCodeLine{00381\ \ \ \ \ \}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_ov_v_r_a9603402acfb2940d99147fb7b08e2d67}{setReprojection}}(\textcolor{keywordtype}{bool}\ flag)}
+\DoxyCodeLine{00389\ \ \ \ \ \{}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ vrComp-\/>ForceInterleavedReprojectionOn(flag);}
+\DoxyCodeLine{00391\ \ \ \ \ \}}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_ov_v_r_af1ec6866a0bc8df1d0c52dd7bb588db1}{pass}}(\mbox{\hyperlink{class_ov_v_r_a8b38ab58d82e226df450dea42792b20c}{OvEye}}\ eye,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ eyeTexture)}
+\DoxyCodeLine{00400\ \ \ \ \ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vr::Texture\_t\ t\ =\ \{\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(uintptr\_t(eyeTexture)),\ vr::TextureType\_OpenGL,\ vr::ColorSpace\_Linear\ \};}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (eye)}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_LEFT:\ \ vrComp-\/>Submit(vr::Eye\_Left,\ \&t);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EYE\_RIGHT:\ vrComp-\/>Submit(vr::Eye\_Right,\ \&t);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00407\ \ \ \ \ \}}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ }
+\DoxyCodeLine{00413\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_ov_v_r_aa4149082cd8ace8f9b35d5b5e8f5a9eb}{render}}()}
+\DoxyCodeLine{00414\ \ \ \ \ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ vrComp-\/>PostPresentHandoff();}
+\DoxyCodeLine{00416\ \ \ \ \ \}}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ \ \ \ \ \textcolor{comment}{//\ Controller\ data:}}
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}}
+\DoxyCodeLine{00421\ \ \ \ \ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ vr::VRControllerState\_t\ pControllerState;}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ glm::mat4\ matrix;}
+\DoxyCodeLine{00425\ }
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Const/dest:}}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{Controller}}()\ :\ id(0),\ matrix(glm::mat4(1.0f))\ \{\}}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_ov_v_r_1_1_controller}{\string~Controller}}()\ \{\}}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ glm::mat4\ \mbox{\hyperlink{struct_ov_v_r_1_1_controller_a3f2271bbd3773803761d7fc7ffd3ad0c}{getMatrix}}()}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ matrix;}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{struct_ov_v_r_1_1_controller_a3aefda7939e01d9f2a1df9710dd64887}{getAxis}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ axisId,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\&\ bPressed,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\&\ bTouched)}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (axisId\ >=\ vr::k\_unControllerStateAxisCount)}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ glm::vec2(0.0f);}
+\DoxyCodeLine{00453\ }
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ glm::vec2\ res;}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \ \ \ \ res.x\ =\ pControllerState.rAxis[axisId].x;}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ res.y\ =\ pControllerState.rAxis[axisId].y;}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ bPressed\ =\ pControllerState.ulButtonPressed;}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ bTouched\ =\ pControllerState.ulButtonTouched;}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done:}}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_ov_v_r_1_1_controller_afde6411be65f146dca67accb493964c6}{isButtonPressed}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ mask)}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ buttonMask\ =\ 1ull\ <<\ id;}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mask\ \&\ buttonMask)}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00479\ \ \ \ \ \};}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00483\ \textcolor{keyword}{private}:\ \textcolor{comment}{//}}
+\DoxyCodeLine{00485\ }
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \textcolor{comment}{//\ OVR\ objects:\ \ }}
+\DoxyCodeLine{00487\ \ \ \ \ vr::IVRSystem*\ vrSys;}
+\DoxyCodeLine{00488\ \ \ \ \ vr::IVRRenderModels*\ vrModels;}
+\DoxyCodeLine{00489\ \ \ \ \ vr::IVRCompositor*\ vrComp;}
+\DoxyCodeLine{00490\ \ \ \ \ vr::TrackedDevicePose\_t\ vrPoses[vr::k\_unMaxTrackedDeviceCount];}
+\DoxyCodeLine{00491\ \ \ \ \ std::vector<Controller*>\ controllers;}
+\DoxyCodeLine{00492\ \};}
+
+\end{DoxyCode}

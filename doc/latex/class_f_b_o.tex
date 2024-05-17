@@ -1,0 +1,63 @@
+\doxysection{FBO Class Reference}
+\hypertarget{class_f_b_o}{}\label{class_f_b_o}\index{FBO@{FBO}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_b_o_a5ae1833ea823a37a82e34643d41cf559}{FBO}} (const int width, const int height)
+\item 
+void \mbox{\hyperlink{class_f_b_o_abcf253c1ab37f2fa3216a9a562ca8b04}{use}} () const
+\item 
+void \mbox{\hyperlink{class_f_b_o_ac103e7407ce89e12d2fa969bd4e4497e}{use\+\_\+read}} () const
+\item 
+unsigned int \mbox{\hyperlink{class_f_b_o_ad69c24bcbdfb1d7b04e7677e4f80ed56}{get\+\_\+color\+\_\+buffer\+\_\+id}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_f_b_o_a5ae1833ea823a37a82e34643d41cf559}\label{class_f_b_o_a5ae1833ea823a37a82e34643d41cf559} 
+\index{FBO@{FBO}!FBO@{FBO}}
+\index{FBO@{FBO}!FBO@{FBO}}
+\doxysubsubsection{\texorpdfstring{FBO()}{FBO()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API FBO\+::\+FBO (\begin{DoxyParamCaption}\item[{const int}]{width,  }\item[{const int}]{height }\end{DoxyParamCaption})}
+
+Creates a new instance of a Frame Buffer \doxylink{class_object}{Object} with the given width and height
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The width of the \doxylink{class_f_b_o}{FBO} \\
+\hline
+{\em height} & The height of the \doxylink{class_f_b_o}{FBO} \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_f_b_o_ad69c24bcbdfb1d7b04e7677e4f80ed56}\label{class_f_b_o_ad69c24bcbdfb1d7b04e7677e4f80ed56} 
+\index{FBO@{FBO}!get\_color\_buffer\_id@{get\_color\_buffer\_id}}
+\index{get\_color\_buffer\_id@{get\_color\_buffer\_id}!FBO@{FBO}}
+\doxysubsubsection{\texorpdfstring{get\_color\_buffer\_id()}{get\_color\_buffer\_id()}}
+{\footnotesize\ttfamily unsigned int LIB\+\_\+\+API FBO\+::get\+\_\+color\+\_\+buffer\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to retreive the ID of the color buffer
+
+\begin{DoxyReturn}{Returns}
+The ID of the color buffer 
+\end{DoxyReturn}
+\Hypertarget{class_f_b_o_abcf253c1ab37f2fa3216a9a562ca8b04}\label{class_f_b_o_abcf253c1ab37f2fa3216a9a562ca8b04} 
+\index{FBO@{FBO}!use@{use}}
+\index{use@{use}!FBO@{FBO}}
+\doxysubsubsection{\texorpdfstring{use()}{use()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API FBO\+::use (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to bind the \doxylink{class_f_b_o}{FBO} \Hypertarget{class_f_b_o_ac103e7407ce89e12d2fa969bd4e4497e}\label{class_f_b_o_ac103e7407ce89e12d2fa969bd4e4497e} 
+\index{FBO@{FBO}!use\_read@{use\_read}}
+\index{use\_read@{use\_read}!FBO@{FBO}}
+\doxysubsubsection{\texorpdfstring{use\_read()}{use\_read()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API FBO\+::use\+\_\+read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to bind the \doxylink{class_f_b_o}{FBO} in readonly mode 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/fbo.\+hpp\item 
+engine/fbo.\+cpp\end{DoxyCompactItemize}

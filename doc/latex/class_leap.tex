@@ -1,0 +1,78 @@
+\doxysection{Leap Class Reference}
+\hypertarget{class_leap}{}\label{class_leap}\index{Leap@{Leap}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_leap_a5bee3a1925fffa2dcd5d95711491fd59}{\texorpdfstring{$\sim$}{\string~}\+Leap}} ()
+\item 
+bool \mbox{\hyperlink{class_leap_a9f4d4d923d37de60a653216febbed03f}{init}} ()
+\item 
+bool \mbox{\hyperlink{class_leap_af0518e85a70cc6f7e06835b686b8e5cd}{free}} ()
+\item 
+bool \mbox{\hyperlink{class_leap_ab2e08a86fa4645cc1857f0218d5143b4}{update}} ()
+\item 
+const LEAP\+\_\+\+TRACKING\+\_\+\+EVENT \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_leap_aad16a65317d0a2982f0e4a4a4f56285e}{get\+Cur\+Frame}} () const
+\item 
+unsigned int \mbox{\hyperlink{class_leap_aab719c23ceb415f284ae5a1b86fb7351}{get\+\_\+vertices\+\_\+size}} () const
+\item 
+void \mbox{\hyperlink{class_leap_a996cebd37e4a7ec87a90cf6842048773}{bind\+\_\+vao}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_leap_a5bee3a1925fffa2dcd5d95711491fd59}\label{class_leap_a5bee3a1925fffa2dcd5d95711491fd59} 
+\index{Leap@{Leap}!````~Leap@{\texorpdfstring{$\sim$}{\string~}Leap}}
+\index{````~Leap@{\texorpdfstring{$\sim$}{\string~}Leap}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Leap()}{\string~Leap()}}
+{\footnotesize\ttfamily LIB\+\_\+\+API Leap\+::\texorpdfstring{$\sim$}{\string~}\+Leap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Used to delete the VAO and VBOs associated with the leap motion 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_leap_a996cebd37e4a7ec87a90cf6842048773}\label{class_leap_a996cebd37e4a7ec87a90cf6842048773} 
+\index{Leap@{Leap}!bind\_vao@{bind\_vao}}
+\index{bind\_vao@{bind\_vao}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{bind\_vao()}{bind\_vao()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API Leap\+::bind\+\_\+vao (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Used to bind the VAO \Hypertarget{class_leap_af0518e85a70cc6f7e06835b686b8e5cd}\label{class_leap_af0518e85a70cc6f7e06835b686b8e5cd} 
+\index{Leap@{Leap}!free@{free}}
+\index{free@{free}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{free()}{free()}}
+{\footnotesize\ttfamily bool LIB\+\_\+\+API Leap\+::free (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Releases \doxylink{class_leap}{Leap} Motion resources. \Hypertarget{class_leap_aab719c23ceb415f284ae5a1b86fb7351}\label{class_leap_aab719c23ceb415f284ae5a1b86fb7351} 
+\index{Leap@{Leap}!get\_vertices\_size@{get\_vertices\_size}}
+\index{get\_vertices\_size@{get\_vertices\_size}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{get\_vertices\_size()}{get\_vertices\_size()}}
+{\footnotesize\ttfamily unsigned int LIB\+\_\+\+API Leap\+::get\+\_\+vertices\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Used to get the number of vertices
+
+\begin{DoxyReturn}{Returns}
+The number of vertices 
+\end{DoxyReturn}
+\Hypertarget{class_leap_aad16a65317d0a2982f0e4a4a4f56285e}\label{class_leap_aad16a65317d0a2982f0e4a4a4f56285e} 
+\index{Leap@{Leap}!getCurFrame@{getCurFrame}}
+\index{getCurFrame@{getCurFrame}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{getCurFrame()}{getCurFrame()}}
+{\footnotesize\ttfamily const LIB\+\_\+\+API LEAP\+\_\+\+TRACKING\+\_\+\+EVENT \texorpdfstring{$\ast$}{*} Leap\+::get\+Cur\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Gets a pointer to the last updated frame. \Hypertarget{class_leap_a9f4d4d923d37de60a653216febbed03f}\label{class_leap_a9f4d4d923d37de60a653216febbed03f} 
+\index{Leap@{Leap}!init@{init}}
+\index{init@{init}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool LIB\+\_\+\+API Leap\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes \doxylink{class_leap}{Leap} Motion connection. \Hypertarget{class_leap_ab2e08a86fa4645cc1857f0218d5143b4}\label{class_leap_ab2e08a86fa4645cc1857f0218d5143b4} 
+\index{Leap@{Leap}!update@{update}}
+\index{update@{update}!Leap@{Leap}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily bool LIB\+\_\+\+API Leap\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Acquire new events. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/leap.\+hpp\item 
+engine/leap.\+cpp\end{DoxyCompactItemize}

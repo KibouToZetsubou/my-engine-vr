@@ -1,0 +1,265 @@
+\doxysection{My\+Engine Class Reference}
+\hypertarget{class_my_engine}{}\label{class_my_engine}\index{MyEngine@{MyEngine}}
+
+
+{\ttfamily \#include $<$my\+\_\+engine.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_my_engine_aee8241b8e46ff05d57e5487f9a7bdec8}{init}} (const std\+::string window\+\_\+title, const int window\+\_\+width, const int window\+\_\+height)
+\item 
+static void \mbox{\hyperlink{class_my_engine_a66c063e30999fd7d78780bf11108215c}{set\+\_\+keyboard\+\_\+callback}} (void(\texorpdfstring{$\ast$}{*}new\+\_\+keyboard\+\_\+callback)(const unsigned char key, const int mouse\+\_\+x, const int mouse\+\_\+y))
+\item 
+static void \mbox{\hyperlink{class_my_engine_a73a44326b20c526551ece654a44b490b}{set\+\_\+sky\+\_\+color}} (const float red, const float green, const float blue)
+\item 
+static bool \mbox{\hyperlink{class_my_engine_afd0fb046ebd48290942b83efd9b101ee}{is\+\_\+running}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a09547fc743cb5718f0b1e32b1c175731}{render}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a45dc6d549e6b97c423d7ba88dfaa337f}{timer\+\_\+callback}} (int value)
+\item 
+static void \mbox{\hyperlink{class_my_engine_ac2b3abeb7bceaaf5263bd0491ed25932}{debug\+\_\+callback}} (GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar \texorpdfstring{$\ast$}{*}message, GLvoid \texorpdfstring{$\ast$}{*}user\+Param)
+\item 
+static void \mbox{\hyperlink{class_my_engine_ad7bd35ea002fc15809ac269e026cc615}{update}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a3251d453d44b1565657529706b690ebe}{clear\+\_\+screen}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a69f9886b9ec6d557182ad73a19c331a0}{swap\+\_\+buffers}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a8b1f5bc0b2d1f34bc40ad901c52b0331}{stop}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a82c2eab38259b1ae260fa080d8630e82}{quit}} ()
+\item 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ \mbox{\hyperlink{class_my_engine_a79b263e538879b60f0b3f910709903cc}{get\+\_\+scene}} ()
+\item 
+static void \mbox{\hyperlink{class_my_engine_a090b98bfafaf63b6014a460bac81cb4b}{set\+\_\+scene}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ new\+\_\+scene)
+\item 
+static void \mbox{\hyperlink{class_my_engine_a5c9750dfb6c88621c33e8052fefedd06}{set\+\_\+active\+\_\+camera}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_camera}{Camera}} $>$ new\+\_\+active\+\_\+camera)
+\item 
+static void \mbox{\hyperlink{class_my_engine_a43f6ac4390d9184f8c1e0fab01597a43}{set\+\_\+skybox}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_skybox}{Skybox}} $>$ new\+\_\+skybox)
+\item 
+static void \mbox{\hyperlink{class_my_engine_a90986afe473d64e79ea83454c26d0d3b}{set\+\_\+eye\+\_\+distance}} (const float new\+\_\+eye\+\_\+distance)
+\item 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ \mbox{\hyperlink{class_my_engine_a50ca5e2fe0420bf1ab4d42bd91f6b20c}{find\+\_\+object\+\_\+by\+\_\+name}} (const std\+::string name\+\_\+to\+\_\+find)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main class of the engine.
+
+You must call the init function before being able to call any other function.
+
+You must call quit at the end do free up the used memory. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_my_engine_a3251d453d44b1565657529706b690ebe}\label{class_my_engine_a3251d453d44b1565657529706b690ebe} 
+\index{MyEngine@{MyEngine}!clear\_screen@{clear\_screen}}
+\index{clear\_screen@{clear\_screen}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{clear\_screen()}{clear\_screen()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::clear\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Clears the window content. \Hypertarget{class_my_engine_ac2b3abeb7bceaaf5263bd0491ed25932}\label{class_my_engine_ac2b3abeb7bceaaf5263bd0491ed25932} 
+\index{MyEngine@{MyEngine}!debug\_callback@{debug\_callback}}
+\index{debug\_callback@{debug\_callback}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{debug\_callback()}{debug\_callback()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API \+\_\+\+\_\+stdcall My\+Engine\+::debug\+\_\+callback (\begin{DoxyParamCaption}\item[{GLenum}]{source,  }\item[{GLenum}]{type,  }\item[{GLuint}]{id,  }\item[{GLenum}]{severity,  }\item[{GLsizei}]{length,  }\item[{const GLchar \texorpdfstring{$\ast$}{*}}]{message,  }\item[{GLvoid \texorpdfstring{$\ast$}{*}}]{user\+Param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Debug message callback for Open\+GL. See \href{https://www.opengl.org/wiki/Debug_Output}{\texttt{ https\+://www.\+opengl.\+org/wiki/\+Debug\+\_\+\+Output}} \Hypertarget{class_my_engine_a50ca5e2fe0420bf1ab4d42bd91f6b20c}\label{class_my_engine_a50ca5e2fe0420bf1ab4d42bd91f6b20c} 
+\index{MyEngine@{MyEngine}!find\_object\_by\_name@{find\_object\_by\_name}}
+\index{find\_object\_by\_name@{find\_object\_by\_name}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{find\_object\_by\_name()}{find\_object\_by\_name()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ LIB\+\_\+\+API My\+Engine\+::find\+\_\+object\+\_\+by\+\_\+name (\begin{DoxyParamCaption}\item[{const std\+::string}]{name\+\_\+to\+\_\+find }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Find an object in the current scene by name. If multiple objects have the same name, only one is returned. Which one is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name\+\_\+to\+\_\+find} & The name of the object to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the object or nullptr if no object was found with the specified name. 
+\end{DoxyReturn}
+\Hypertarget{class_my_engine_a79b263e538879b60f0b3f910709903cc}\label{class_my_engine_a79b263e538879b60f0b3f910709903cc} 
+\index{MyEngine@{MyEngine}!get\_scene@{get\_scene}}
+\index{get\_scene@{get\_scene}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{get\_scene()}{get\_scene()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$ LIB\+\_\+\+API My\+Engine\+::get\+\_\+scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns the current scene root.
+
+\begin{DoxyReturn}{Returns}
+The root object of the scene. 
+\end{DoxyReturn}
+\Hypertarget{class_my_engine_aee8241b8e46ff05d57e5487f9a7bdec8}\label{class_my_engine_aee8241b8e46ff05d57e5487f9a7bdec8} 
+\index{MyEngine@{MyEngine}!init@{init}}
+\index{init@{init}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::init (\begin{DoxyParamCaption}\item[{const std\+::string}]{window\+\_\+title,  }\item[{const int}]{window\+\_\+width,  }\item[{const int}]{window\+\_\+height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Initializes the engine and creates a new window.
+
+This must be called before being able to call any other function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em window\+\_\+title} & The title of the window. \\
+\hline
+{\em window\+\_\+width} & The width of the window in pixels. \\
+\hline
+{\em window\+\_\+height} & The height of the window in pixels. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_afd0fb046ebd48290942b83efd9b101ee}\label{class_my_engine_afd0fb046ebd48290942b83efd9b101ee} 
+\index{MyEngine@{MyEngine}!is\_running@{is\_running}}
+\index{is\_running@{is\_running}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{is\_running()}{is\_running()}}
+{\footnotesize\ttfamily bool LIB\+\_\+\+API My\+Engine\+::is\+\_\+running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns the status of the running flag. This flag is set to false when calling the stop function.
+
+\begin{DoxyReturn}{Returns}
+The state of the running flag. 
+\end{DoxyReturn}
+\Hypertarget{class_my_engine_a82c2eab38259b1ae260fa080d8630e82}\label{class_my_engine_a82c2eab38259b1ae260fa080d8630e82} 
+\index{MyEngine@{MyEngine}!quit@{quit}}
+\index{quit@{quit}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{quit()}{quit()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::quit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+De-\/initializes the engine. This functino should be called only once and no other function should be called after.
+
+Multiple calls to this function cause undefined behaviour. \Hypertarget{class_my_engine_a09547fc743cb5718f0b1e32b1c175731}\label{class_my_engine_a09547fc743cb5718f0b1e32b1c175731} 
+\index{MyEngine@{MyEngine}!render@{render}}
+\index{render@{render}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Renders the scene.
+
+If the scene is nullptr, the function returns immediately. \Hypertarget{class_my_engine_a5c9750dfb6c88621c33e8052fefedd06}\label{class_my_engine_a5c9750dfb6c88621c33e8052fefedd06} 
+\index{MyEngine@{MyEngine}!set\_active\_camera@{set\_active\_camera}}
+\index{set\_active\_camera@{set\_active\_camera}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_active\_camera()}{set\_active\_camera()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+active\+\_\+camera (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_camera}{Camera}} $>$}]{new\+\_\+active\+\_\+camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets the camera to use to render the scene.
+
+NOTE\+: A value of nullptr causes undefined behaviour.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+active\+\_\+camera} & The new active camera. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a90986afe473d64e79ea83454c26d0d3b}\label{class_my_engine_a90986afe473d64e79ea83454c26d0d3b} 
+\index{MyEngine@{MyEngine}!set\_eye\_distance@{set\_eye\_distance}}
+\index{set\_eye\_distance@{set\_eye\_distance}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_eye\_distance()}{set\_eye\_distance()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+eye\+\_\+distance (\begin{DoxyParamCaption}\item[{const float}]{new\+\_\+eye\+\_\+distance }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Used to set the interocular distance
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+eye\+\_\+distance} & The interocular distance \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a66c063e30999fd7d78780bf11108215c}\label{class_my_engine_a66c063e30999fd7d78780bf11108215c} 
+\index{MyEngine@{MyEngine}!set\_keyboard\_callback@{set\_keyboard\_callback}}
+\index{set\_keyboard\_callback@{set\_keyboard\_callback}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_keyboard\_callback()}{set\_keyboard\_callback()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+keyboard\+\_\+callback (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(const unsigned char key, const int mouse\+\_\+x, const int mouse\+\_\+y)}]{new\+\_\+keyboard\+\_\+callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets a custom callback to be called when the user presses a key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+keyboard\+\_\+callback} & The new function callback. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a090b98bfafaf63b6014a460bac81cb4b}\label{class_my_engine_a090b98bfafaf63b6014a460bac81cb4b} 
+\index{MyEngine@{MyEngine}!set\_scene@{set\_scene}}
+\index{set\_scene@{set\_scene}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_scene()}{set\_scene()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+scene (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_object}{Object}} $>$}]{new\+\_\+scene }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets the scene to be rendered.
+
+NOTE\+: A value of nullptr causes undefined behaviour.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+scene} & The root object of the new scene. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a73a44326b20c526551ece654a44b490b}\label{class_my_engine_a73a44326b20c526551ece654a44b490b} 
+\index{MyEngine@{MyEngine}!set\_sky\_color@{set\_sky\_color}}
+\index{set\_sky\_color@{set\_sky\_color}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_sky\_color()}{set\_sky\_color()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+sky\+\_\+color (\begin{DoxyParamCaption}\item[{const float}]{red,  }\item[{const float}]{green,  }\item[{const float}]{blue }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets the background color of the scene.
+
+
+\begin{DoxyParams}{Parameters}
+{\em red} & The amount of red (0.\+0f -\/ 1.\+0f). \\
+\hline
+{\em green} & The amount of green (0.\+0f -\/ 1.\+0f). \\
+\hline
+{\em blue} & The amount of blue (0.\+0f -\/ 1.\+0f). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a43f6ac4390d9184f8c1e0fab01597a43}\label{class_my_engine_a43f6ac4390d9184f8c1e0fab01597a43} 
+\index{MyEngine@{MyEngine}!set\_skybox@{set\_skybox}}
+\index{set\_skybox@{set\_skybox}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{set\_skybox()}{set\_skybox()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::set\+\_\+skybox (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_skybox}{Skybox}} $>$}]{new\+\_\+skybox }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Used to set the skybox
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+skybox} & The skybox to use \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_a8b1f5bc0b2d1f34bc40ad901c52b0331}\label{class_my_engine_a8b1f5bc0b2d1f34bc40ad901c52b0331} 
+\index{MyEngine@{MyEngine}!stop@{stop}}
+\index{stop@{stop}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Issues a stop directive to the engine. Check if the engine should quit by using the \doxylink{class_my_engine_afd0fb046ebd48290942b83efd9b101ee}{is\+\_\+running()} function.
+
+Multiple calls to this function have no effect. \Hypertarget{class_my_engine_a69f9886b9ec6d557182ad73a19c331a0}\label{class_my_engine_a69f9886b9ec6d557182ad73a19c331a0} 
+\index{MyEngine@{MyEngine}!swap\_buffers@{swap\_buffers}}
+\index{swap\_buffers@{swap\_buffers}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{swap\_buffers()}{swap\_buffers()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::swap\+\_\+buffers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Swaps the front and back buffers. \Hypertarget{class_my_engine_a45dc6d549e6b97c423d7ba88dfaa337f}\label{class_my_engine_a45dc6d549e6b97c423d7ba88dfaa337f} 
+\index{MyEngine@{MyEngine}!timer\_callback@{timer\_callback}}
+\index{timer\_callback@{timer\_callback}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{timer\_callback()}{timer\_callback()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::timer\+\_\+callback (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Handles the FPS counting.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Parameter used by glut\+Timer\+Func(). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_my_engine_ad7bd35ea002fc15809ac269e026cc615}\label{class_my_engine_ad7bd35ea002fc15809ac269e026cc615} 
+\index{MyEngine@{MyEngine}!update@{update}}
+\index{update@{update}!MyEngine@{MyEngine}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+API My\+Engine\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Handles events. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/my\+\_\+engine.\+hpp\item 
+engine/my\+\_\+engine.\+cpp\end{DoxyCompactItemize}
