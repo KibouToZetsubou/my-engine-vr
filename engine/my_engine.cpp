@@ -19,7 +19,6 @@
 #include "mesh.hpp"
 #include "point_light.hpp"
 #include "simple_shader.hpp"
-#include "passthrough_shader.hpp"
 #include "spot_light.hpp"
 #include "skybox_shader.hpp"
 #include "skybox.hpp"
@@ -35,7 +34,6 @@ float MyEngine::eye_distance = 0.0f;
 
 std::shared_ptr<Shader> MyEngine::ppl_shader = nullptr;
 std::shared_ptr<Shader> MyEngine::skybox_shader = nullptr;
-std::shared_ptr<Shader> MyEngine::passthrough_shader = nullptr;
 std::shared_ptr<Skybox> MyEngine::skybox = nullptr;
 std::shared_ptr<FBO> MyEngine::left_eye = nullptr;
 std::shared_ptr<FBO> MyEngine::right_eye = nullptr;
@@ -123,7 +121,6 @@ void LIB_API MyEngine::init(const std::string window_title, const int window_wid
 
     // Configure shaders
     MyEngine::ppl_shader = std::make_shared<SimpleShader>();
-    MyEngine::passthrough_shader = std::make_shared<PassthroughShader>();
     MyEngine::skybox_shader = std::make_shared<SkyboxShader>();
 
     // Configure OpenGL

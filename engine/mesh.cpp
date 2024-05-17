@@ -56,7 +56,6 @@ void LIB_API Mesh::render(const glm::mat4 view_matrix) const
 
     glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, number_of_faces * 3, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
 }
 
 /**

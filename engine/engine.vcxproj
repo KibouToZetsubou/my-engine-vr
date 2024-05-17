@@ -31,7 +31,6 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="ortho_camera.cpp" />
     <ClCompile Include="ovo_parser.cpp" />
-    <ClCompile Include="passthrough_shader.cpp" />
     <ClCompile Include="perspective_camera.cpp" />
     <ClCompile Include="point_light.cpp" />
     <ClCompile Include="shader.cpp" />
@@ -56,7 +55,6 @@
     <ClInclude Include="ortho_camera.hpp" />
     <ClInclude Include="ovo_parser.hpp" />
     <ClInclude Include="ovvr.hpp" />
-    <ClInclude Include="passthrough_shader.hpp" />
     <ClInclude Include="perspective_camera.hpp" />
     <ClInclude Include="point_light.hpp" />
     <ClInclude Include="shader.hpp" />

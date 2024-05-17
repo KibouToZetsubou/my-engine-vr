@@ -14,7 +14,6 @@
 
 #include "common.hpp"
 
-
 class LIB_API Leap
 {
 public:
